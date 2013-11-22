@@ -1,0 +1,121 @@
+#######################################
+#
+# Syntax Coloring Map LCDMenuLib
+#
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+LcdMenu	KEYWORD1
+LCDMenuLib	KEYWORD1
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+# Makros #
+LCDMenuLib_element	KEYWORD2
+LCDMenuLib_init	KEYWORD2
+LCDMenuLib_initObjects	KEYWORD2
+LCDMenuLib_initFunction	KEYWORD2
+LCDMenuLib_lang	KEYWORD2
+LCDMenuLib_setup	KEYWORD2
+LCDMenuLib_loop	KEYWORD2
+LCDMenuLib_control_analog	KEYWORD2
+LCDMenuLib_control_serial	KEYWORD2
+LCDMenuLib_createMenu	KEYWORD2
+LCDMenuLib_menu_struct	KEYWORD2
+LCDMenuLib_jumpToFunc	KEYWORD2
+LCDMenuLib_checkButtonEnter	KEYWORD2
+LCDMenuLib_checkButtonUp	KEYWORD2
+LCDMenuLib_checkButtonDown	KEYWORD2
+LCDMenuLib_checkButtonLeft	KEYWORD2
+LCDMenuLib_checkButtonRight	KEYWORD2
+LCDMenuLib_resetButtonEnter	KEYWORD2
+LCDMenuLib_resetButtonUp	KEYWORD2
+LCDMenuLib_resetButtonDown	KEYWORD2
+LCDMenuLib_resetButtonLeft	KEYWORD2
+LCDMenuLib_resetButtonRight	KEYWORD2
+LCDMenuLib_callbackSetup	KEYWORD2
+LCDMenuLib_callbackLoop	KEYWORD2
+LCDMenuLib_callbackEnd	KEYWORD2
+LCDMenuLib_IS_reStartTime   KEYWORD2
+LCDMenuLib_IS_startDirect   KEYWORD2
+Item	KEYWORD2
+FUNC	KEYWORD2
+backFUNC	KEYWORD2
+
+# Function #
+Button_enter	KEYWORD2
+Button_up_down_left_right	KEYWORD2
+Button_quit	KEYWORD2
+Timer	KEYWORD2
+FuncInit	KEYWORD2
+FuncEnd	KEYWORD2
+checkButtons	KEYWORD2
+checkFuncEnd	KEYWORD2
+FuncEnd	KEYWORD2
+resetButtons	KEYWORD2
+FUNC_init_screen	KEYWORD2
+display	KEYWORD2
+goRoot	KEYWORD2
+
+getFunction	KEYWORD2
+getCurFunction	KEYWORD2
+getLayer	KEYWORD2
+getInitScreenActive	KEYWORD2
+
+setCursor	KEYWORD2
+clear   KEYWORD2
+
+#objects and variables #
+lcd	KEYWORD3
+LCDML	KEYWORD3
+
+
+
+#######################################
+# Constants (LITERAL1)
+#######################################
+_LCDMenuLib_LCD_cols	LITERAL1
+_LCDMenuLib_LCD_rows	LITERAL1
+_LCDMenuLib_LCD_rs	LITERAL1
+_LCDMenuLib_LCD_e	LITERAL1
+_LCDMenuLib_LCD_rw	LITERAL1
+_LCDMenuLib_LCD_dat0	LITERAL1
+_LCDMenuLib_LCD_dat1	LITERAL1
+_LCDMenuLib_LCD_dat2	LITERAL1
+_LCDMenuLib_LCD_dat3	LITERAL1
+_LCDMenuLib_LCD_dat4	LITERAL1
+_LCDMenuLib_LCD_dat5	LITERAL1
+_LCDMenuLib_LCD_dat6	LITERAL1
+_LCDMenuLib_LCD_dat7	LITERAL1
+_LCDMenuLib_LCD_backlight	LITERAL1
+_LCDMenuLib_LCD_backlight_pol	LITERAL1
+_LCDMenuLib_LCD_addr	LITERAL1
+_LCDMenuLib_LCD_srdata	LITERAL1
+_LCDMenuLib_LCD_clk	LITERAL1
+_LCDMenuLib_LCD_enable	LITERAL1
+_LCDMenuLib_cfg_initscreen	LITERAL1
+_LCDMenuLib_cfg_initscreen_time	LITERAL1
+_LCDMenuLib_cfg_scrollbar	LITERAL1
+_LCDMenuLib_cfg_lcd_standard	LITERAL1
+_LCDMenuLib_cfg_press_time	LITERAL1
+_LCDMenuLib_cnt	LITERAL1
+_LCDMenuLib_ENABLE_INIT_SCREEN	LITERAL1
+_LCDMenuLib_INIT_SCREEN_TIME	LITERAL1
+_LCDMenuLib_button_up	LITERAL1
+_LCDMenuLib_button_down	LITERAL1
+_LCDMenuLib_button_left	LITERAL1
+_LCDMenuLib_button_right	LITERAL1
+_BUTTON_press_time	LITERAL1
+_BUTTON_enter_min	LITERAL1
+_BUTTON_enter_max	LITERAL1
+_BUTTON_up_min	LITERAL1
+_BUTTON_up_max	LITERAL1
+_BUTTON_down_min	LITERAL1
+_BUTTON_down_max	LITERAL1
+_BUTTON_left_min	LITERAL1
+_BUTTON_left_max	LITERAL1
+_BUTTON_right_min	LITERAL1
+_BUTTON_right_max	LITERAL1
+_BUTTON_back_min	LITERAL1
+_BUTTON_back_max	LITERAL1
+g_LCDMenuLib_press_time	LITERAL1
