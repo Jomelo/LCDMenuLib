@@ -3,8 +3,7 @@
 /*								LCDMenuLib								*/
 /*																		*/
 /************************************************************************/
-/* Autor:			Nils Feldkämper										*/
-/* Contact:			nilsfeld@gmail.com  (kein Support)					*/
+/* Autor:			Nils Feldkï¿½mper										*/
 /* Create:			03.02.2008											*/
 /* Edit:			26.08.2013											*/
 /************************************************************************/
@@ -17,18 +16,18 @@
 /*																		*/
 /************************************************************************/
 /* Deutsche Beschreibung:												*/
-/* Mit der Lib können LCD Menüs über mehrere Ebenen mit Hilfe des   	*/
-/* Nested Set Models generiert werden. Jeder Menüpunkt kann mit einer   */
+/* Mit der Lib kï¿½nnen LCD Menï¿½s ï¿½ber mehrere Ebenen mit Hilfe des   	*/
+/* Nested Set Models generiert werden. Jeder Menï¿½punkt kann mit einer   */
 /* Funktion hinterlegt werden die durch die Lib aufgerufen wird, sobald */
-/* der Menüpunkt aktiviert wird.										*/
+/* der Menï¿½punkt aktiviert wird.										*/
 /************************************************************************/
 /************************************************************************/
 /*								Wichtig									*/
 /************************************************************************/
 /* Falls ihr die Lib mit I2C oder anderen Schnittstellen betreiben		*/
 /* wollt, muss die LCDMenuLib_config.h angepasst werden. Die Datei		*/
-/* befindet sich im Lib Verzeichnis. Für die Anpassung der Schnitt-		*/
-/* stelle muss der Wert (_LCDMenuLib_cfg_lcd_type) verändert werden.    */
+/* befindet sich im Lib Verzeichnis. Fï¿½r die Anpassung der Schnitt-		*/
+/* stelle muss der Wert (_LCDMenuLib_cfg_lcd_type) verï¿½ndert werden.    */
 /************************************************************************/
 #	include <LCDMenuLib.h>
 
@@ -62,25 +61,25 @@ boolean LCDMenuLib::selectElementDirect(LCDMenu &p_m, uint8_t p_search)
 	uint8_t found = 0;
 			
 	do {
-		//Überprüfen ob das Element Kinder hat
+		//ï¿½berprï¿½fen ob das Element Kinder hat
 		if(tmp=search->getChild(0)) 
 		{
-			//Kinder gefunden, daher kann Enter gedrückt werden
+			//Kinder gefunden, daher kann Enter gedrï¿½ckt werden
 			Button_enter();
 
-			//Überprüfen ob Übereinstimmung vorhanden ist
+			//ï¿½berprï¿½fen ob ï¿½bereinstimmung vorhanden ist
 			if(tmp->name == p_search) 
 			{
 				found = 1;				
 				break;
 			}		
 			
-			//keine Übereinstimmung
+			//keine ï¿½bereinstimmung
 
-			//Rekrosiv Funktion erneut aufruf um eine Ebene tiefer zu überprüfen
+			//Rekrosiv Funktion erneut aufruf um eine Ebene tiefer zu ï¿½berprï¿½fen
 			found = selectElementDirect(*tmp, p_search);
 			
-			//Erneut Prüfen ob eine Übereinstimmung vorhanden ist
+			//Erneut Prï¿½fen ob eine ï¿½bereinstimmung vorhanden ist
 			if(found == 1) 
 			{
 				// gefunden
@@ -88,16 +87,16 @@ boolean LCDMenuLib::selectElementDirect(LCDMenu &p_m, uint8_t p_search)
 			} 
 			else 
 			{
-				// nicht gefunden, wieder eine Ebene nach oben und nächstes Element auswählen
+				// nicht gefunden, wieder eine Ebene nach oben und nï¿½chstes Element auswï¿½hlen
 				Button_quit();
 				Button_up_down_left_right(_LCDMenuLib_button_down);				
 			}				
 		} 
 		else 
 		{
-			// Keine Kinder gefunden, trotzdem Überprüfen ob Übereinstimmung vorhanden ist
+			// Keine Kinder gefunden, trotzdem ï¿½berprï¿½fen ob ï¿½bereinstimmung vorhanden ist
 			
-			//Überprüfen ob Übereinstimmung vorhanden ist
+			//ï¿½berprï¿½fen ob ï¿½bereinstimmung vorhanden ist
 			if(search->name == p_search) 
 			{
 				// passt
@@ -106,7 +105,7 @@ boolean LCDMenuLib::selectElementDirect(LCDMenu &p_m, uint8_t p_search)
 			} 
 			else 
 			{
-				// nächstes Element auswählen
+				// nï¿½chstes Element auswï¿½hlen
 				//Button_down();
 				Button_up_down_left_right(_LCDMenuLib_button_down);
 			}
@@ -418,7 +417,7 @@ uint8_t	LCDMenuLib::checkFuncEnd(uint8_t check)
       return true;
     } 
     
-    //Funktion läuft noch
+    //Funktion lï¿½uft noch
     return false;    
   }
   
@@ -484,7 +483,7 @@ void	LCDMenuLib::Button_quit(uint8_t opt)
   
   if(bitRead(control, _LCDMenuLib_control_initscreen_active) == 1) 
   {
-	   //Lcd löschen      
+	   //Lcd lï¿½schen      
 		lcd->_LCDML_lcd_clear();
 
 	  bitWrite(control, _LCDMenuLib_control_initscreen_active, 0);
@@ -499,7 +498,7 @@ void	LCDMenuLib::Button_quit(uint8_t opt)
   } 
   else 
   { 
-	  // Splash Screen überprüfen, muss vor goBack eingebunden werden
+	  // Splash Screen ï¿½berprï¿½fen, muss vor goBack eingebunden werden
 	  if(opt==1 || (g_function == _LCDMenuLib_NO_FUNC && layer == 0 && opt==0) && bitRead(control, _LCDMenuLib_control_initscreen_enable) == 1) 
 	  {
 		  //enable init screen		  
@@ -513,7 +512,7 @@ void	LCDMenuLib::Button_quit(uint8_t opt)
 		  if(g_function == _LCDMenuLib_NO_FUNC && layer == 0) {
 
 		  } else {
-			  //Lcd löschen      
+			  //Lcd lï¿½schen      
 			lcd->_LCDML_lcd_clear();
 		
 		   //Menu wieder anzeigen
@@ -522,9 +521,9 @@ void	LCDMenuLib::Button_quit(uint8_t opt)
 		    goBack();  
        
 		 
-			//Wenn in einer Menu Funktion, Funktionsspeicher löschen
+			//Wenn in einer Menu Funktion, Funktionsspeicher lï¿½schen
 			g_function = _LCDMenuLib_NO_FUNC;                      
-			//Funktionsstatus löschen          
+			//Funktionsstatus lï¿½schen          
 			bitWrite(control, _LCDMenuLib_control_funcsetup, 0);
     
 			//Display wieder freigeben
@@ -544,7 +543,7 @@ void	LCDMenuLib::Button_quit(uint8_t opt)
 
 boolean	LCDMenuLib::FuncInit(void)
 {
-    //Funktionsstatus überprüfen
+    //Funktionsstatus ï¿½berprï¿½fen
     
 	if(bitRead(control, _LCDMenuLib_control_funcsetup) == false) 
 	{
@@ -555,7 +554,7 @@ boolean	LCDMenuLib::FuncInit(void)
 		{
 			g_function  = curfuncname;
 		}
-		//Buttons zurücksetzen
+		//Buttons zurï¿½cksetzen
 		button = 0;
 		//Menu sperren
 		bitWrite(control, _LCDMenuLib_control_menu_look, 1);    
