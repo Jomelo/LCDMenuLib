@@ -3,8 +3,7 @@
 /*							LCDMenuLib									*/
 /*																		*/
 /************************************************************************/
-/* Autor:			Nils Feldkämper										*/
-/* Contact:			nilsfeld@gmail.com  (kein Support)					*/
+/* Autor:			Nils Feldkï¿½mper										*/
 /* Create:			03.02.2008											*/
 /* Edit:			05.09.2013											*/
 /************************************************************************/
@@ -17,10 +16,10 @@
 /*																		*/
 /************************************************************************/
 /* Deutsche Beschreibung:												*/
-/* Mit der Lib können LCD Menüs über mehrere Ebenen mit Hilfe des   	*/
-/* Nested Set Models generiert werden. Jeder Menüpunkt kann mit einer   */
+/* Mit der Lib kï¿½nnen LCD Menï¿½s ï¿½ber mehrere Ebenen mit Hilfe des   	*/
+/* Nested Set Models generiert werden. Jeder Menï¿½punkt kann mit einer   */
 /* Funktion hinterlegt werden die durch die Lib aufgerufen wird, sobald */
-/* der Menüpunkt aktiviert wird.										*/
+/* der Menï¿½punkt aktiviert wird.										*/
 /************************************************************************/
 /************************************************************************/
 #ifndef LCDMenuLib_h
@@ -51,7 +50,7 @@
 
 /* config */
 #	define _LCDMenuLib_cfg_cursor_deep				6		// Speichert die Position des Kursors bis zur x-ten Ebene
-#	define _LCDMenuLib_cfg_max_string_length		20		// Maximale Länge eines Strings der auf dem Display ausgegeben werden kann
+#	define _LCDMenuLib_cfg_max_string_length		20		// Maximale Lï¿½nge eines Strings der auf dem Display ausgegeben werden kann
 
 
 /* include config */
