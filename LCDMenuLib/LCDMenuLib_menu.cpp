@@ -1,3 +1,44 @@
+/************************************************************************/
+/*																		*/
+/*								LCDMenuLib								*/
+/*																		*/
+/************************************************************************/
+/* Autor:			Nils Feldkämper										*/
+/* Contact:			nilsfeld@gmail.com  (kein Support)					*/
+/* Create:			03.02.2008											*/
+/* Edit:			03.02.2014											*/
+/************************************************************************/
+/* License:			all Free											*/
+/************************************************************************/
+/* Support:																*/
+/* Ich beantworte Frage zu der Lib nur im Forum. Stellt eure Fragen in  */
+/* diesem Thread:														*/
+/* 			http://forum.arduino.cc/index.php?topic=73816.0				*/
+/*																		*/
+/************************************************************************/
+/* Deutsche Beschreibung:												*/
+/* Mit der Lib können LCD Menüs über mehrere Ebenen mit Hilfe des   	*/
+/* Nested Set Models generiert werden. Jeder Menüpunkt kann mit einer   */
+/* Funktion hinterlegt werden die durch die Lib aufgerufen wird, sobald */
+/* der Menüpunkt aktiviert wird.										*/
+/************************************************************************/
+/************************************************************************/
+/* Driver																*/
+/*  - Orginal LiquidCrystal												*/
+/*  --- 4 Bit Mode														*/
+/*  --- 8 Bit Mode														*/
+/*	- New LiquidCrystal													*/
+/*  --- 4 Bit Mode														*/
+/*  --- 8 Bit Mode														*/
+/*  --- I2C																*/
+/*  --- SR																*/
+/*  --- SR2W (74LS164)													*/
+/*  --- SR3W (74HC595N)													*/
+/* - LiquidCrystal_I2C													*/
+/*	--- I2C																*/
+/************************************************************************/
+
+
 #include "LCDMenuLib_menu.h"
 
 LCDMenu::LCDMenu(uint8_t n)

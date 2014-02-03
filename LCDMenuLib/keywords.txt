@@ -38,7 +38,6 @@ LCDMenuLib_callbackLoop	KEYWORD2
 LCDMenuLib_callbackEnd	KEYWORD2
 LCDMenuLib_IS_reStartTime   KEYWORD2
 LCDMenuLib_IS_startDirect   KEYWORD2
-LCDMenuLib_getActiveFuncId	KEYWORD2
 Item	KEYWORD2
 FUNC	KEYWORD2
 backFUNC	KEYWORD2
@@ -58,6 +57,8 @@ FUNC_init_screen	KEYWORD2
 display	KEYWORD2
 goRoot	KEYWORD2
 
+getFunction	KEYWORD2
+getCurFunction	KEYWORD2
 getLayer	KEYWORD2
 getInitScreenActive	KEYWORD2
 
@@ -90,7 +91,8 @@ _LCDMenuLib_LCD_backlight	LITERAL1
 _LCDMenuLib_LCD_backlight_pol	LITERAL1
 _LCDMenuLib_LCD_addr	LITERAL1
 _LCDMenuLib_LCD_srdata	LITERAL1
-_LCDMenuLib_LCD_clk	LITERAL1
+_LCDMenuLib_LCD_srclk	LITERAL1
+_LCDMenuLib_LCD_strobe	LITERAL1
 _LCDMenuLib_LCD_enable	LITERAL1
 _LCDMenuLib_cfg_initscreen	LITERAL1
 _LCDMenuLib_cfg_initscreen_time	LITERAL1

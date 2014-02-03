@@ -1,30 +1,22 @@
 /* =============================================== */
-/* Example: LCD Menu with LiquidCrystal_I2C      */ 
+/* Example: LCD Menu with LiquidCrystal_SR      */ 
 /* =============================================== */
 
 /* include libs */
 /* you have to edit the LCDMenuLib___config.h in the lib dir */
 /* change the value of _LCDMenuLib_cfg_lcd_type */
 #include <Wire.h>
-#include <LiquidCrystal_I2C.h>
+#include <LiquidCrystal_SR.h>
 #include <LCDMenuLib.h>
 
 /* settings for lcd */
 #define _LCDMenuLib_LCD_cols             20
 #define _LCDMenuLib_LCD_rows             4
 
-/* i2c address */ 
-#define _LCDMenuLib_LCD_addr             0x20
-
-//#define _LCDMenuLib_LCD_e				  0
-//#define _LCDMenuLib_LCD_rw				  1
-//#define _LCDMenuLib_LCD_rs				  2
-//#define _LCDMenuLib_LCD_dat4              3
-//#define _LCDMenuLib_LCD_dat5              4
-//#define _LCDMenuLib_LCD_dat6              5
-//#define _LCDMenuLib_LCD_dat7              6
-//#define _LCDMenuLib_LCD_backlight         7
-//#define _LCDMenuLib_LCD_backlight_pol     POSITIVE // NEGATIVE
+/* sr pins */ 
+#define _LCDMenuLib_LCD_srdata           0
+#define _LCDMenuLib_LCD_srclk            0
+#define _LCDMenuLib_LCD_enable          TWO_WIRE
 
 /* lib config */
 #define _LCDMenuLib_cfg_initscreen       1      /* 0=disable, 1=enable */

@@ -3,7 +3,8 @@
 /*								LCDMenuLib								*/
 /*																		*/
 /************************************************************************/
-/* Autor:			Nils Feldkï¿½mper										*/
+/* Autor:			Nils Feldkämper										*/
+/* Contact:			nilsfeld@gmail.com  (kein Support)					*/
 /* Create:			03.02.2008											*/
 /* Edit:			25.08.2013											*/
 /************************************************************************/
@@ -16,10 +17,10 @@
 /*																		*/
 /************************************************************************/
 /* Deutsche Beschreibung:												*/
-/* Mit der Lib kï¿½nnen LCD Menï¿½s ï¿½ber mehrere Ebenen mit Hilfe des   	*/
-/* Nested Set Models generiert werden. Jeder Menï¿½punkt kann mit einer   */
+/* Mit der Lib können LCD Menüs über mehrere Ebenen mit Hilfe des   	*/
+/* Nested Set Models generiert werden. Jeder Menüpunkt kann mit einer   */
 /* Funktion hinterlegt werden die durch die Lib aufgerufen wird, sobald */
-/* der Menï¿½punkt aktiviert wird.										*/
+/* der Menüpunkt aktiviert wird.										*/
 /************************************************************************/
 /************************************************************************/
 

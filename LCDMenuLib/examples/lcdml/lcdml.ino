@@ -1,5 +1,5 @@
 /* =============================================== */
-/* Example 1: LCD Menu with LiquidCrystal          */ 
+/* Example: LCD Menu with LiquidCrystal          */ 
 /* =============================================== */
 
 /* include libs */
@@ -17,6 +17,17 @@
 #define _LCDMenuLib_LCD_dat1             9
 #define _LCDMenuLib_LCD_dat2             7
 #define _LCDMenuLib_LCD_dat3             11 
+
+//#define _LCDMenuLib_LCD_backlight         7
+//#define _LCDMenuLib_LCD_backlight_pol     POSITIVE // NEGATIVE
+
+//#define _LCDMenuLib_LCD_rw			0
+/* 8 bit mode */
+//#define _LCDMenuLib_LCD_dat4          0
+//#define _LCDMenuLib_LCD_dat5          0
+//#define _LCDMenuLib_LCD_dat6          0
+//#define _LCDMenuLib_LCD_dat7          0
+
 
 /* lib config */
 #define _LCDMenuLib_cfg_initscreen       1      /* 0=disable, 1=enable */

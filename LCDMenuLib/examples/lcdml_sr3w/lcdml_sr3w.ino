@@ -1,12 +1,15 @@
 /* =============================================== */
-/* Example: LCD Menu with LiquidCrystal_I2C      */ 
+/* Example: LCD Menu with LiquidCrystal_SR3W      */ 
 /* =============================================== */
 
 /* include libs */
 /* you have to edit the LCDMenuLib___config.h in the lib dir */
 /* change the value of _LCDMenuLib_cfg_lcd_type */
+
+/* Information:  http://playground.arduino.cc/Code/LCD3wires  */
+
 #include <Wire.h>
-#include <LiquidCrystal_I2C.h>
+#include <LiquidCrystal_SR3W.h>
 #include <LCDMenuLib.h>
 
 /* settings for lcd */
@@ -14,17 +17,22 @@
 #define _LCDMenuLib_LCD_rows             4
 
 /* i2c address */ 
-#define _LCDMenuLib_LCD_addr             0x20
+#define _LCDMenuLib_LCD_srdata           0
+#define _LCDMenuLib_LCD_srclk            1
+#define _LCDMenuLib_LCD_strobe           12
 
-//#define _LCDMenuLib_LCD_e				  0
-//#define _LCDMenuLib_LCD_rw				  1
-//#define _LCDMenuLib_LCD_rs				  2
-//#define _LCDMenuLib_LCD_dat4              3
-//#define _LCDMenuLib_LCD_dat5              4
-//#define _LCDMenuLib_LCD_dat6              5
-//#define _LCDMenuLib_LCD_dat7              6
-//#define _LCDMenuLib_LCD_backlight         7
-//#define _LCDMenuLib_LCD_backlight_pol     POSITIVE // NEGATIVE
+#define _LCDMenuLib_LCD_backlight        0
+#define _LCDMenuLib_LCD_backlight_pol    POSITIVE // NEGATIVE
+#define _LCDMenuLib_LCD_e                1
+#define _LCDMenuLib_LCD_rw               2
+#define _LCDMenuLib_LCD_rs               3
+#define _LCDMenuLib_LCD_dat4             4
+#define _LCDMenuLib_LCD_dat5             5
+#define _LCDMenuLib_LCD_dat6             6
+#define _LCDMenuLib_LCD_dat7             7
+
+
+
 
 /* lib config */
 #define _LCDMenuLib_cfg_initscreen       1      /* 0=disable, 1=enable */

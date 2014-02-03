@@ -3,9 +3,10 @@
 /*								LCDMenuLib								*/
 /*																		*/
 /************************************************************************/
-/* Autor:			Nils Feldkï¿½mper										*/
+/* Autor:			Nils Feldkämper										*/
+/* Contact:			nilsfeld@gmail.com  (kein Support)					*/
 /* Create:			03.02.2008											*/
-/* Edit:			25.08.2013											*/
+/* Edit:			03.02.2014											*/
 /************************************************************************/
 /* License:			all Free											*/
 /************************************************************************/
@@ -16,10 +17,10 @@
 /*																		*/
 /************************************************************************/
 /* Deutsche Beschreibung:												*/
-/* Mit der Lib kï¿½nnen LCD Menï¿½s ï¿½ber mehrere Ebenen mit Hilfe des   	*/
-/* Nested Set Models generiert werden. Jeder Menï¿½punkt kann mit einer   */
+/* Mit der Lib können LCD Menüs über mehrere Ebenen mit Hilfe des   	*/
+/* Nested Set Models generiert werden. Jeder Menüpunkt kann mit einer   */
 /* Funktion hinterlegt werden die durch die Lib aufgerufen wird, sobald */
-/* der Menï¿½punkt aktiviert wird.										*/
+/* der Menüpunkt aktiviert wird.										*/
 /************************************************************************/
 /************************************************************************/
 /* Driver																*/
@@ -50,6 +51,7 @@
 //#	define _LCDMenuLib_cfg_lcd_type	5	// 8Bit with rw										(tested)
 //#	define _LCDMenuLib_cfg_lcd_type	6	// 8Bit with backlight								(tested)
 //#	define _LCDMenuLib_cfg_lcd_type	7	// 8Bit with rw,backlight							(tested)
+
 //	====================================================================================================
 //	10:20  LiquidCrystal_I2C from LiquidCrystal_new Version 1.2.1				(I2C)
 //	====================================================================================================
@@ -59,18 +61,24 @@
 //#	define _LCDMenuLib_cfg_lcd_type	13	// I2C with e,rw,rs,backlight
 //#	define _LCDMenuLib_cfg_lcd_type	14	// I2C with e,rw,rs,dat0,dat1,dat2,dat3
 //#	define _LCDMenuLib_cfg_lcd_type	15	// I2C with e,rw,rs,dat0,dat1,dat2,dat3,backlight 
+
 //	====================================================================================================
 //	20:30	LiquidCrystal_SR from LiquidCrystal_new Version 1.2.1				(ShiftRegister)
 //	====================================================================================================
 //#	define _LCDMenuLib_cfg_lcd_type	20	// SR
 
+//	====================================================================================================
+//	30:40	LiquidCrystal_SR from LiquidCrystal_new Version 1.2.1				(ShiftRegister 2W)
+//	====================================================================================================
+//#	define _LCDMenuLib_cfg_lcd_type	30	// SR2W
+
+//	====================================================================================================
+//	40:50	LiquidCrystal_SR from LiquidCrystal_new Version 1.2.1				(ShiftRegister 3W)
+//	====================================================================================================
+//#	define _LCDMenuLib_cfg_lcd_type	40	// SR3W
+//#	define _LCDMenuLib_cfg_lcd_type	41	// SR3W with backlight
+//#	define _LCDMenuLib_cfg_lcd_type	42	// SR3W with control lines
+//#	define _LCDMenuLib_cfg_lcd_type	43	// SR3W with control lines, backlight
+
+
 #endif
-
-
-
-
-
-
-
-
-
