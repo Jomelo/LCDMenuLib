@@ -1,0 +1,12 @@
+1. Arduino Software schließen (alle Instanzen)
+2. LCDMenuLib Ordner in das Arduino/libraries Verzeichnis kopieren (nicht den LCDMenuLib-master Ordner)
+3. Arduino Software öffnen und das Beispiel "lcdml" öffnen 
+4. Programm übersetzten/kompelieren
+   Es sollten keine Fehler auftreten
+
+
+Mögliche Fehler:
+- LCDMenuLib-masters  direkt in libraries Verzeichnis kopiert, dies führt zur Fehlermeldung: 
+  lcdml:xx: error: expected constructor, destructor, or type conversion before '('
+  
+
