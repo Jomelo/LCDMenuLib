@@ -1,22 +1,24 @@
 /* =============================================== */
-/* Example: LCD Menu with LiquidCrystal_SR2W       */ 
+/* Example: LCD Menu with Dog LCD          */ 
 /* =============================================== */
 
 /* include libs */
-/* you have to edit the LCDMenuLib___config.h in the lib dir */
-/* change the value of _LCDMenuLib_cfg_lcd_type */
-#include <Wire.h>
-#include <LiquidCrystal_SR2W.h>
+#include <DogLcd.h>
 #include <LCDMenuLib.h>
 
 /* settings for lcd */
 #define _LCDMenuLib_LCD_cols             20
-#define _LCDMenuLib_LCD_rows             4
+#define _LCDMenuLib_LCD_rows             3
 
-/* sr pins */ 
-#define _LCDMenuLib_LCD_srdata           0
-#define _LCDMenuLib_LCD_srclk            1
-#define _LCDMenuLib_LCD_backlight_pol    POSITIVE // NEGATIVE
+/* pin settings */  
+#define _LCDMenuLib_DogLCD_type	      DOG_LCD_M162
+#define _LCDMenuLib_DogLCD_SI	      2
+#define _LCDMenuLib_DogLCD_CLK	      3
+#define _LCDMenuLib_DogLCD_RS	      4
+#define _LCDMenuLib_DogLCD_CSB	      5
+#define _LCDMenuLib_DogLCD_RESET      -1	
+#define _LCDMenuLib_DogLCD_LIGHT      -1	
+
 
 /* lib config */
 #define _LCDMenuLib_cfg_initscreen       1      /* 0=disable, 1=enable */

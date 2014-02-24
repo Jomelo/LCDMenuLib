@@ -4,24 +4,55 @@
 /*																		*/
 /************************************************************************/
 /* Autor:			Nils Feldkämper										*/
-/* Contact:			nilsfeld@gmail.com  (kein Support)					*/
 /* Create:			03.02.2008											*/
-/* Edit:			25.08.2013											*/
+/* Edit:			23.02.2014											*/
 /************************************************************************/
 /* License:			all Free											*/
 /************************************************************************/
-/* Support:	
-/* Ich beantworte Frage zu der Lib nur im Forum. Stellt eure Fragen in  */
-/* diesem Thread:														*/
-/* 			http://forum.arduino.cc/index.php?topic=73816.0				*/
-/*																		*/
+
 /************************************************************************/
-/* Deutsche Beschreibung:												*/
+/* Description:															*/
+/* With this library, you can create menus with layers on base on the   */
+/* Nested-Set-Model. For every menu element can be create a function    */
+/* to control the content. This function is called automatical from the */
+/* library and runs in a loop, without blocking other programm parts.   */
+/*																		*/
+/* Support:  -- englischen Link einfügen --                             */
+/*                                                                      */
+/************************************************************************/
+
+/************************************************************************/
+/* Description (german):												*/
 /* Mit der Lib können LCD Menüs über mehrere Ebenen mit Hilfe des   	*/
 /* Nested Set Models generiert werden. Jeder Menüpunkt kann mit einer   */
 /* Funktion hinterlegt werden die durch die Lib aufgerufen wird, sobald */
 /* der Menüpunkt aktiviert wird.										*/
+/*																		*/
+/* Support (german):	http://forum.arduino.cc/index.php?topic=73816.0	*/
 /************************************************************************/
+
+/************************************************************************/
+/* Features:															*/
+/* - max 254 menu elements												*/
+/* - max 254 menu elements per layer								    */
+/* - max 6 layers from root, configurable in LCDMenuLib.h				*/
+/* - max support for 6 buttons up, down, left, right, back/quit, enter  */
+/* - min 3 buttons needed up, down, enter                               */
+/* - separation of structural and functional level                      */
+/* - support for initscreen which is shown after x secounds or at begin */
+/* - scrollbar when more menu elments in a layer then rows              */
+/* - last cursor pos is saved											*/
+/* - possibility to jump from one menu elment directly to another       */
+/* - support for many different lcd librarys in LCDMenuLib___config.h   */
+/* - 4bit lcd support													*/
+/* - 8bit lcd support													*/
+/* - i2c lcd support													*/
+/* - shift register lcd support											*/
+/* - DogLcd support														*/
+/*																		*/
+/* - many small function for other things								*/
+/*																		*/
+/* - no support for gaphic displays yet									*/
 /************************************************************************/
 
 #ifndef LCDMenuLib_macros_h
@@ -98,8 +129,8 @@
 /* ************************************************ */
 /* LCDMenuLib_setup									*/
 /* ************************************************ */
-#define LCDMenuLib_setup(N)\	
-	lcd.begin(_LCDMenuLib_LCD_rows,_LCDMenuLib_LCD_cols);\
+#define LCDMenuLib_setup(N)\
+	_LCDML_lcd_begin();\	
 	\
 	if(_LCDMenuLib_cfg_initscreen == 1) {\
 		bitWrite(LCDML.control, _LCDMenuLib_control_initscreen_enable, 1);\
@@ -213,6 +244,14 @@
 #define LCDMenuLib_createMenu(N)\
 	PROGMEM const char *g_LCDMenuLib_lang_table[] = { LCDMenuLib_lang_repeat(N) }; LCDMenuLib_initObjects()
 
+
+
+/* noch in arbeit */
+#define LCDMenuLib_element_scrolltext
+#define LCDMenuLib_element_settings_vertical
+#define LCDMenuLib_element_settings_horizontal
+#define LCDMenuLib_element_time
+#define LCDMenuLib_element_time_setting
 
 
 

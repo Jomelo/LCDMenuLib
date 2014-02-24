@@ -1,34 +1,60 @@
 /************************************************************************/
 /*																		*/
-/*							LCDMenuLib									*/
+/*								LCDMenuLib								*/
 /*																		*/
 /************************************************************************/
 /* Autor:			Nils Feldkämper										*/
 /* Create:			03.02.2008											*/
-/* Edit:			05.09.2013											*/
+/* Edit:			23.02.2014											*/
 /************************************************************************/
 /* License:			all Free											*/
 /************************************************************************/
-/* Support:	
-/* Ich beantworte Frage zu der Lib nur im Forum. Stellt eure Fragen in  */
-/* diesem Thread:														*/
-/* 			http://forum.arduino.cc/index.php?topic=73816.0				*/
-/*																		*/
+
 /************************************************************************/
-/* Deutsche Beschreibung:												*/
+/* Description:															*/
+/* With this library, you can create menus with layers on base on the   */
+/* Nested-Set-Model. For every menu element can be create a function    */
+/* to control the content. This function is called automatical from the */
+/* library and runs in a loop, without blocking other programm parts.   */
+/*																		*/
+/* Support:  -- englischen Link einfügen --                             */
+/*                                                                      */
+/************************************************************************/
+
+/************************************************************************/
+/* Description (german):												*/
 /* Mit der Lib können LCD Menüs über mehrere Ebenen mit Hilfe des   	*/
 /* Nested Set Models generiert werden. Jeder Menüpunkt kann mit einer   */
 /* Funktion hinterlegt werden die durch die Lib aufgerufen wird, sobald */
 /* der Menüpunkt aktiviert wird.										*/
+/*																		*/
+/* Support (german):	http://forum.arduino.cc/index.php?topic=73816.0	*/
 /************************************************************************/
-/************************************************************************/
-/* To Do:
-/* - Möglichkeit eigene Buttons zu erstellen die von der Lib verwenden werden können 
-/* - - in Bezug auf check Buttons
-/* - - in Bezug auf FuncEnd
-
 
 /************************************************************************/
+/* Features:															*/
+/* - max 254 menu elements												*/
+/* - max 254 menu elements per layer								    */
+/* - max 6 layers from root, configurable in LCDMenuLib.h				*/
+/* - max support for 6 buttons up, down, left, right, back/quit, enter  */
+/* - min 3 buttons needed up, down, enter                               */
+/* - separation of structural and functional level                      */
+/* - support for initscreen which is shown after x secounds or at begin */
+/* - scrollbar when more menu elments in a layer then rows              */
+/* - last cursor pos is saved											*/
+/* - possibility to jump from one menu elment directly to another       */
+/* - support for many different lcd librarys in LCDMenuLib___config.h   */
+/* - 4bit lcd support													*/
+/* - 8bit lcd support													*/
+/* - i2c lcd support													*/
+/* - shift register lcd support											*/
+/* - DogLcd support														*/
+/*																		*/
+/* - many small function for other things								*/
+/*																		*/
+/* - no support for gaphic displays yet									*/
+/************************************************************************/
+
 #ifndef LCDMenuLib_h
 #	define LCDMenuLib_h
 
@@ -58,7 +84,6 @@
 /* config */
 #	define _LCDMenuLib_cfg_cursor_deep				6		// Speichert die Position des Kursors bis zur x-ten Ebene
 #	define _LCDMenuLib_cfg_max_string_length		25		// Maximale Länge eines Strings der auf dem Display ausgegeben werden kann
-
 
 /* include config */
 #	include <LCDMenuLib___config.h>
@@ -140,6 +165,8 @@
 			void goMenu(LCDMenu &m);   
 			/* works with jump to element on globale function */
 			boolean selectElementDirect(LCDMenu &p_m, uint8_t p_search);
+
+			uint8_t anzahl();
 					
 		public:			
 			/* Constructor */

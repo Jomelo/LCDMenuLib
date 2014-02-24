@@ -4,38 +4,55 @@
 /*																		*/
 /************************************************************************/
 /* Autor:			Nils Feldkämper										*/
-/* Contact:			nilsfeld@gmail.com  (kein Support)					*/
 /* Create:			03.02.2008											*/
-/* Edit:			03.02.2014											*/
+/* Edit:			23.02.2014											*/
 /************************************************************************/
 /* License:			all Free											*/
 /************************************************************************/
-/* Support:																*/
-/* Ich beantworte Frage zu der Lib nur im Forum. Stellt eure Fragen in  */
-/* diesem Thread:														*/
-/* 			http://forum.arduino.cc/index.php?topic=73816.0				*/
-/*																		*/
+
 /************************************************************************/
-/* Deutsche Beschreibung:												*/
+/* Description:															*/
+/* With this library, you can create menus with layers on base on the   */
+/* Nested-Set-Model. For every menu element can be create a function    */
+/* to control the content. This function is called automatical from the */
+/* library and runs in a loop, without blocking other programm parts.   */
+/*																		*/
+/* Support:  -- englischen Link einfügen --                             */
+/*                                                                      */
+/************************************************************************/
+
+/************************************************************************/
+/* Description (german):												*/
 /* Mit der Lib können LCD Menüs über mehrere Ebenen mit Hilfe des   	*/
 /* Nested Set Models generiert werden. Jeder Menüpunkt kann mit einer   */
 /* Funktion hinterlegt werden die durch die Lib aufgerufen wird, sobald */
 /* der Menüpunkt aktiviert wird.										*/
+/*																		*/
+/* Support (german):	http://forum.arduino.cc/index.php?topic=73816.0	*/
 /************************************************************************/
+
 /************************************************************************/
-/* Driver																*/
-/*  - Orginal LiquidCrystal												*/
-/*  --- 4 Bit Mode														*/
-/*  --- 8 Bit Mode														*/
-/*	- New LiquidCrystal													*/
-/*  --- 4 Bit Mode														*/
-/*  --- 8 Bit Mode														*/
-/*  --- I2C																*/
-/*  --- SR																*/
-/*  --- SR2W (74LS164)													*/
-/*  --- SR3W (74HC595N)													*/
-/* - LiquidCrystal_I2C													*/
-/*	--- I2C																*/
+/* Features:															*/
+/* - max 254 menu elements												*/
+/* - max 254 menu elements per layer								    */
+/* - max 6 layers from root, configurable in LCDMenuLib.h				*/
+/* - max support for 6 buttons up, down, left, right, back/quit, enter  */
+/* - min 3 buttons needed up, down, enter                               */
+/* - separation of structural and functional level                      */
+/* - support for initscreen which is shown after x secounds or at begin */
+/* - scrollbar when more menu elments in a layer then rows              */
+/* - last cursor pos is saved											*/
+/* - possibility to jump from one menu elment directly to another       */
+/* - support for many different lcd librarys in LCDMenuLib___config.h   */
+/* - 4bit lcd support													*/
+/* - 8bit lcd support													*/
+/* - i2c lcd support													*/
+/* - shift register lcd support											*/
+/* - DogLcd support														*/
+/*																		*/
+/* - many small function for other things								*/
+/*																		*/
+/* - no support for gaphic displays yet									*/
 /************************************************************************/
 #ifndef LCDMenuLib___config_h
 #	define LCDMenuLib___config_h
@@ -59,8 +76,8 @@
 //#	define _LCDMenuLib_cfg_lcd_type	11	// I2C with backlight								(tested)
 //#	define _LCDMenuLib_cfg_lcd_type	12	// I2C with e,rw,rs									
 //#	define _LCDMenuLib_cfg_lcd_type	13	// I2C with e,rw,rs,backlight
-//#	define _LCDMenuLib_cfg_lcd_type	14	// I2C with e,rw,rs,dat0,dat1,dat2,dat3
-//#	define _LCDMenuLib_cfg_lcd_type	15	// I2C with e,rw,rs,dat0,dat1,dat2,dat3,backlight 
+//#	define _LCDMenuLib_cfg_lcd_type	14	// I2C with e,rw,rs,dat4,dat5,dat6,dat7
+//#	define _LCDMenuLib_cfg_lcd_type	15	// I2C with e,rw,rs,dat4,dat5,dat6,dat7,backlight 
 
 //	====================================================================================================
 //	20:30	LiquidCrystal_SR from LiquidCrystal_new Version 1.2.1				(ShiftRegister)
@@ -75,10 +92,15 @@
 //	====================================================================================================
 //	40:50	LiquidCrystal_SR from LiquidCrystal_new Version 1.2.1				(ShiftRegister 3W)
 //	====================================================================================================
-//#	define _LCDMenuLib_cfg_lcd_type	40	// SR3W
-//#	define _LCDMenuLib_cfg_lcd_type	41	// SR3W with backlight
-//#	define _LCDMenuLib_cfg_lcd_type	42	// SR3W with control lines
-//#	define _LCDMenuLib_cfg_lcd_type	43	// SR3W with control lines, backlight
+//#	define _LCDMenuLib_cfg_lcd_type	40	// SR3W												(tested)
+//#	define _LCDMenuLib_cfg_lcd_type	41	// SR3W with backlight								(tested)
+//#	define _LCDMenuLib_cfg_lcd_type	42	// SR3W with control lines							(tested)
+//#	define _LCDMenuLib_cfg_lcd_type	43	// SR3W with control lines, backlight				(tested)
+
+//	====================================================================================================
+//	100:110	DogLcd
+//	====================================================================================================
+//#define _LCDMenuLib_cfg_lcd_type 100
 
 
 #endif

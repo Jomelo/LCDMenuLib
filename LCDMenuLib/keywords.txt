@@ -94,6 +94,13 @@ _LCDMenuLib_LCD_srdata	LITERAL1
 _LCDMenuLib_LCD_srclk	LITERAL1
 _LCDMenuLib_LCD_strobe	LITERAL1
 _LCDMenuLib_LCD_enable	LITERAL1
+_LCDMenuLib_DogLCD_type	LITERAL1
+_LCDMenuLib_DogLCD_SI	LITERAL1
+_LCDMenuLib_DogLCD_CLK	LITERAL1
+_LCDMenuLib_DogLCD_RS	LITERAL1
+_LCDMenuLib_DogLCD_CSB	LITERAL1
+_LCDMenuLib_DogLCD_RESET	LITERAL1
+_LCDMenuLib_DogLCD_LIGHT	LITERAL1
 _LCDMenuLib_cfg_initscreen	LITERAL1
 _LCDMenuLib_cfg_initscreen_time	LITERAL1
 _LCDMenuLib_cfg_scrollbar	LITERAL1

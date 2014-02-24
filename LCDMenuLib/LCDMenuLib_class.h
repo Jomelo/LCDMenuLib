@@ -4,38 +4,55 @@
 /*																		*/
 /************************************************************************/
 /* Autor:			Nils Feldkämper										*/
-/* Contact:			nilsfeld@gmail.com  (kein Support)					*/
 /* Create:			03.02.2008											*/
-/* Edit:			03.02.2014											*/
+/* Edit:			23.02.2014											*/
 /************************************************************************/
 /* License:			all Free											*/
 /************************************************************************/
-/* Support:																*/
-/* Ich beantworte Frage zu der Lib nur im Forum. Stellt eure Fragen in  */
-/* diesem Thread:														*/
-/* 			http://forum.arduino.cc/index.php?topic=73816.0				*/
-/*																		*/
+
 /************************************************************************/
-/* Deutsche Beschreibung:												*/
+/* Description:															*/
+/* With this library, you can create menus with layers on base on the   */
+/* Nested-Set-Model. For every menu element can be create a function    */
+/* to control the content. This function is called automatical from the */
+/* library and runs in a loop, without blocking other programm parts.   */
+/*																		*/
+/* Support:  -- englischen Link einfügen --                             */
+/*                                                                      */
+/************************************************************************/
+
+/************************************************************************/
+/* Description (german):												*/
 /* Mit der Lib können LCD Menüs über mehrere Ebenen mit Hilfe des   	*/
 /* Nested Set Models generiert werden. Jeder Menüpunkt kann mit einer   */
 /* Funktion hinterlegt werden die durch die Lib aufgerufen wird, sobald */
 /* der Menüpunkt aktiviert wird.										*/
+/*																		*/
+/* Support (german):	http://forum.arduino.cc/index.php?topic=73816.0	*/
 /************************************************************************/
+
 /************************************************************************/
-/* Driver																*/
-/*  - Orginal LiquidCrystal												*/
-/*  --- 4 Bit Mode														*/
-/*  --- 8 Bit Mode														*/
-/*	- New LiquidCrystal													*/
-/*  --- 4 Bit Mode														*/
-/*  --- 8 Bit Mode														*/
-/*  --- I2C																*/
-/*  --- SR																*/
-/*  --- SR2W (74LS164)													*/
-/*  --- SR3W (74HC595N)													*/
-/* - LiquidCrystal_I2C													*/
-/*	--- I2C																*/
+/* Features:															*/
+/* - max 254 menu elements												*/
+/* - max 254 menu elements per layer								    */
+/* - max 6 layers from root, configurable in LCDMenuLib.h				*/
+/* - max support for 6 buttons up, down, left, right, back/quit, enter  */
+/* - min 3 buttons needed up, down, enter                               */
+/* - separation of structural and functional level                      */
+/* - support for initscreen which is shown after x secounds or at begin */
+/* - scrollbar when more menu elments in a layer then rows              */
+/* - last cursor pos is saved											*/
+/* - possibility to jump from one menu elment directly to another       */
+/* - support for many different lcd librarys in LCDMenuLib___config.h   */
+/* - 4bit lcd support													*/
+/* - 8bit lcd support													*/
+/* - i2c lcd support													*/
+/* - shift register lcd support											*/
+/* - DogLcd support														*/
+/*																		*/
+/* - many small function for other things								*/
+/*																		*/
+/* - no support for gaphic displays yet									*/
 /************************************************************************/
 
 #ifndef LCDMenuLib_class_h
@@ -50,6 +67,7 @@
 #			define _LCDML_lcd_write(content)			write(content)
 #			define _LCDML_lcd_clear()					clear()
 #			define _LCDML_lcd_print(content)			print(content)
+#			define _LCDML_lcd_begin()					lcd.begin(_LCDMenuLib_LCD_rows,_LCDMenuLib_LCD_cols);
 
 	// ================================================================================
 	// LiquidCrystal
@@ -152,6 +170,28 @@
 #					define _LCDML_lcd_obj	LiquidCrystal_SR3W lcd(_LCDMenuLib_LCD_srdata, _LCDMenuLib_LCD_srclk, _LCDMenuLib_LCD_strobe, _LCDMenuLib_LCD_e, _LCDMenuLib_LCD_rw, _LCDMenuLib_LCD_rs, _LCDMenuLib_LCD_dat4, _LCDMenuLib_LCD_dat5, _LCDMenuLib_LCD_dat6, _LCDMenuLib_LCD_dat7);
 #				elif(_LCDMenuLib_cfg_lcd_type == 43)	//SR3W with control lines, backlight
 #					define _LCDML_lcd_obj	LiquidCrystal_SR3W lcd(_LCDMenuLib_LCD_srdata, _LCDMenuLib_LCD_srclk, _LCDMenuLib_LCD_strobe, _LCDMenuLib_LCD_e, _LCDMenuLib_LCD_rw, _LCDMenuLib_LCD_rs, _LCDMenuLib_LCD_dat4, _LCDMenuLib_LCD_dat5, _LCDMenuLib_LCD_dat6, _LCDMenuLib_LCD_dat7, _LCDMenuLib_LCD_backlight, _LCDMenuLib_LCD_backlight_pol);
+#				endif
+#			endif
+#		elif(_LCDMenuLib_cfg_lcd_type >= 100 && _LCDMenuLib_cfg_lcd_type < 200)
+		//LCD Function
+#			define _LCDML_lcd_createChar(pos,char)		createChar(pos,char)
+#			define _LCDML_lcd_setCursor(col,row)		setCursor(col,row)
+#			define _LCDML_lcd_write(content)			write(content)
+#			define _LCDML_lcd_clear()					clear()
+#			define _LCDML_lcd_print(content)			print(content)
+#			define _LCDML_lcd_begin()					lcd.begin(_LCDMenuLib_DogLCD_type);
+
+	// ================================================================================
+	// DogLcd
+	// ================================================================================
+#			if(_LCDMenuLib_cfg_lcd_type >= 100 && _LCDMenuLib_cfg_lcd_type < 110)
+				//LCD type
+#				define _LCDML_lcd_type		DogLcd
+				//LCD include
+#				include <DogLcd.h>
+				//LCD objects
+#				if(_LCDMenuLib_cfg_lcd_type == 100)		//4Bit	
+#					define _LCDML_lcd_obj	DogLcd lcd(_LCDMenuLib_DogLCD_SI, _LCDMenuLib_DogLCD_CLK, _LCDMenuLib_DogLCD_RS, _LCDMenuLib_DogLCD_CSB, _LCDMenuLib_DogLCD_RESET, _LCDMenuLib_DogLCD_LIGHT);
 #				endif
 #			endif
 #		endif
