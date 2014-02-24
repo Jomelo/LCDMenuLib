@@ -1,34 +1,35 @@
-Arduino LCDMenuLib with Layers, 4Bit LCD, 8Bit LCD, I2C, ShiftReg
+Arduino LCDMenuLib with Layers, 4Bit LCD, 8Bit LCD, I2C, ShiftReg, DogLCD
 ====================================================
 
-
-* 254 menu elements (max)
-* 254 menu elements on one layer / no layer limit
-* automatischer Funktionsaufruf / Callback Funktionen
-* Trennung von Struktur- und Funktionsebene durch mehrere Tabs
-* Leitfaden für den sauberen Programmaufbau / saubere Strukturierung
-* Ansteuerung über mindestens 3 Taster / Funktionen (up, down, enter)
-* maximal 6 Taster werden unterstützt (up, down, enter, quit/back, left, right)
-* Ansteuerung z.B. auch über Drehgeber oder andere Möglichkeiten möglich
-* InitScreen aktivierbar, dieser wird nach X Sekunden und/oder zu Beginn angezeigt
-* Scrollbalken aktivierbar
-* Scrollbalken wird nur angezeigt, wenn mehr Menuelemente wie Zeilen im Display vorhanden sind
-* Cursor Position wird gespeichert, nachdem eine Ebene zurück gegangen wird
-* Möglichkeit direkt zwischen Menüelementen hin und her zu springen
-* Möglichkeit die Menüelement ID abzufragen
-* normale LiquidCrystal Lib wird unterstützt
-* mit einer neueren LiquidCrystal Lib wird auch I2C und andere Schnittstellen unterstützt. Die folgende Lib wird benötigt: LiquidCrystal New 1.2.1
-* Menupunktbezeichnungen werden im Flash Speicher abgelegt
-* die letzte Position beim zurückgehen durch die Ebenen wird gespeichert
-* Funktionsnamen von vorgegebenen Funktionen werden graphisch hervorgehoben
-* es werden keine graphischen Displays unterstützt
-
+*  max 254 menu elements												
+*  max 254 menu elements per layer								    
+*  max 6 layers from root, configurable in LCDMenuLib.h				
+*  max support for 6 buttons up, down, left, right, back/quit, enter  
+*  min 3 buttons needed up, down, enter                               
+*  separation of structural and functional level                     
+*  support for initscreen which is shown after x secounds or at begin 
+*  scrollbar when more menu elments in a layer then rows              
+*  last cursor pos is saved											
+*  possibility to jump from one menu elment directly to another       
+*  support for many different lcd librarys in LCDMenuLib___config.h   
+*  4bit lcd support													
+*  8bit lcd support													
+*  i2c lcd support													
+*  shift register lcd support											
+*  DogLcd support														
+*																		
+*  many small function for other things								
+*																		
+*  no support for gaphic displays yet									
 
 
 Download: 
 https://github.com/Jomelo/LCDMenuLib/archive/master.zip
 
-Anleitung unter:
+Description & Support (english)
+link einfügen
+
+Description & Support (german):
 http://forum.arduino.cc/index.php?topic=73816.0
 
 
