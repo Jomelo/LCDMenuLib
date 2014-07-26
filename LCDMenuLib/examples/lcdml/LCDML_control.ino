@@ -54,16 +54,16 @@ void LCDMenuLib_control_analog()
 
 void LCDMenuLib_control_digital()
 {
-  #define _BUTTON_digital_enter         1    
-  #define _BUTTON_digital_up            2
-  #define _BUTTON_digital_down          3
+  #define _BUTTON_digital_enter         8    
+  #define _BUTTON_digital_up            9
+  #define _BUTTON_digital_down          10
   //optional
   #define _BUTTON_digital_enable_quit   1
-  #define _BUTTON_digital_quit          4
+  #define _BUTTON_digital_quit          11
   //optional
   #define _BUTTON_digital_enable_lr     1
-  #define _BUTTON_digital_left          5
-  #define _BUTTON_digital_right         6
+  #define _BUTTON_digital_left          12
+  #define _BUTTON_digital_right         13
   
   if(digitalRead(_BUTTON_digital_enter) || digitalRead(_BUTTON_digital_up) || digitalRead(_BUTTON_digital_down)
     || (digitalRead(_BUTTON_digital_quit) && _BUTTON_digital_enable_quit == 1)

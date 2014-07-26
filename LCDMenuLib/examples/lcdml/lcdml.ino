@@ -11,12 +11,12 @@
 #define _LCDMenuLib_LCD_rows             4
 
 /* pin settings */  
-#define _LCDMenuLib_LCD_rs               4
-#define _LCDMenuLib_LCD_e                5
-#define _LCDMenuLib_LCD_dat0             8
-#define _LCDMenuLib_LCD_dat1             9
-#define _LCDMenuLib_LCD_dat2             7
-#define _LCDMenuLib_LCD_dat3             11 
+#define _LCDMenuLib_LCD_rs               2
+#define _LCDMenuLib_LCD_e                3
+#define _LCDMenuLib_LCD_dat0             4
+#define _LCDMenuLib_LCD_dat1             5
+#define _LCDMenuLib_LCD_dat2             6
+#define _LCDMenuLib_LCD_dat3             7 
 
 //#define _LCDMenuLib_LCD_backlight         7
 //#define _LCDMenuLib_LCD_backlight_pol     POSITIVE // NEGATIVE

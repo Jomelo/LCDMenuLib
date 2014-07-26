@@ -38,6 +38,7 @@ LCDMenuLib_callbackLoop	KEYWORD2
 LCDMenuLib_callbackEnd	KEYWORD2
 LCDMenuLib_IS_reStartTime   KEYWORD2
 LCDMenuLib_IS_startDirect   KEYWORD2
+
 Item	KEYWORD2
 FUNC	KEYWORD2
 backFUNC	KEYWORD2
@@ -61,6 +62,8 @@ getFunction	KEYWORD2
 getCurFunction	KEYWORD2
 getLayer	KEYWORD2
 getInitScreenActive	KEYWORD2
+getCursorPos	KEYWORD2
+getElementName	KEYWORD2
 
 setCursor	KEYWORD2
 clear   KEYWORD2

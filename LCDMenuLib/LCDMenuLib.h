@@ -82,8 +82,9 @@
 #	define _LCDMenuLib_control_funcsetup			0
 
 /* config */
-#	define _LCDMenuLib_cfg_cursor_deep				6		// Speichert die Position des Kursors bis zur x-ten Ebene
-#	define _LCDMenuLib_cfg_max_string_length		25		// Maximale Länge eines Strings der auf dem Display ausgegeben werden kann
+#	define _LCDMenuLib_cfg_cursor_deep				6		// save the last position of the cursor until layer xx
+#	define _LCDMenuLib_cfg_cursor					0x7E	// cursor char
+#	define _LCDMenuLib_cfg_max_string_length		25		// max string length witch can be display
 
 /* include config */
 #	include <LCDMenuLib___config.h>
@@ -208,7 +209,11 @@
 			/* get the layer where the cursor stands in the menu */
 			uint8_t		getLayer();
 			/* get the init screen enable bit */
-			uint8_t		getInitScreenActive();		
+			uint8_t		getInitScreenActive();	
+			/* get the corrent cursor position */
+			uint8_t		getCursorPos();	
+			/* get the current name of an element */
+			uint8_t		getElementName(char *, uint8_t element_id);
 	};
 #endif
 

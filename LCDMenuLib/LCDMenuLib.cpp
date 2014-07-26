@@ -234,7 +234,7 @@ void	LCDMenuLib::setCursor()
 
 	//set cursor 
     lcd->_LCDML_lcd_setCursor(0,cursor_pos);
-    lcd->_LCDML_lcd_write(0x7E);
+    lcd->_LCDML_lcd_write(_LCDMenuLib_cfg_cursor);
 
 	//check scrollbar mode
 	if(bitRead(control, _LCDMenuLib_control_scrollbar_l) == 1) 
@@ -820,7 +820,7 @@ uint8_t	LCDMenuLib::getInitScreenActive()
  * @return
  * @ - status if time is resetted 
  */
-boolean LCDMenuLib::Timer(unsigned long &p_var, unsigned long p_time)
+uint8_t LCDMenuLib::Timer(unsigned long &p_var, unsigned long p_time)
 {	
 	if(p_var > millis()) 
 	{  
@@ -828,4 +828,21 @@ boolean LCDMenuLib::Timer(unsigned long &p_var, unsigned long p_time)
 	}
 	p_var = millis() + p_time;
 	return true;
+}
+
+
+uint8_t	LCDMenuLib::getElementName(char *var, uint8_t element_id)
+{
+	
+	if(element_id != _LCDMenuLib_NO_FUNC && (sizeof(flash_table)-1) >= element_id) {
+		strcpy_P(var, (char*)pgm_read_word(&(flash_table[element_id])));
+		return true;
+	}
+	return false;
+}
+
+
+uint8_t	LCDMenuLib::getCursorPos()
+{
+	return curloc; //return the current cursor position
 }
