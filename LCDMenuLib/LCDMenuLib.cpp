@@ -71,7 +71,7 @@
  * @return
  * 
  */
-LCDMenuLib::LCDMenuLib(LCDMenu &p_r,_LCDML_lcd_type &p_d, const char **p_flash_table, const uint8_t p_rows, const uint8_t p_cols)
+LCDMenuLib::LCDMenuLib(LCDMenu &p_r,_LCDML_lcd_type &p_d, const char * const *p_flash_table, const uint8_t p_rows, const uint8_t p_cols)
 {
 	// deklaration 
     rootMenu        = &p_r;
@@ -107,7 +107,8 @@ boolean LCDMenuLib::selectElementDirect(LCDMenu &p_m, uint8_t p_search)
 			
 	do {
 		//check elements for childs
-		if(tmp=search->getChild(0)) 
+		tmp=search->getChild(0);
+		if(tmp) 
 		{
 			//press enter
 			Button_enter();
@@ -211,10 +212,7 @@ void	LCDMenuLib::jumpToElement(uint8_t p_element)
  * @return
  */
 void	LCDMenuLib::setCursor()
-{
-	//declare object
-	LCDMenu * tmp; 
-    
+{    
 	//reset last cursor position
 	if(cursor_pos > curloc-scroll) 
 	{
@@ -830,16 +828,6 @@ uint8_t LCDMenuLib::Timer(unsigned long &p_var, unsigned long p_time)
 	return true;
 }
 
-
-uint8_t	LCDMenuLib::getElementName(char *var, uint8_t element_id)
-{
-	
-	if(element_id != _LCDMenuLib_NO_FUNC && (sizeof(flash_table)-1) >= element_id) {
-		strcpy_P(var, (char*)pgm_read_word(&(flash_table[element_id])));
-		return true;
-	}
-	return false;
-}
 
 
 uint8_t	LCDMenuLib::getCursorPos()

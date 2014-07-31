@@ -1,7 +1,3 @@
-/* =============================================== */
-/* Example 1: LCD Menu with LiquidCrystal          */ 
-/* =============================================== */
-
 /* init screen */
 /* this functions is called if: */
 /* -> _LCDMenuLib_cfg_initscreen is enable and */
@@ -18,7 +14,7 @@ void FUNC_init_screen(void)
   }
   
   /* end function for callback */
-  if(LCDML.FuncEnd(0, 1, 1, 1, 1, 1)) /* (direct, up, down, left, right) */  
+  if(LCDML.FuncEnd(0, 1, 1, 1, 1, 1)) /* (direct, enter, up, down, left, right) */  
   {
     /* do something bevor this function is closed */      
   }     
@@ -46,7 +42,7 @@ void FUNC_information(void)
   /* nothing to do */
 
   /* end function for callback */
-  if(LCDML.FuncEnd(0, 1, 1, 1, 1, 1))  /* (direct, up, down, left, right) */ 
+  if(LCDML.FuncEnd(0, 1, 1, 1, 1, 1))  /* (direct, enter, up, down, left, right) */ 
   {
     /* do something bevor this function is closed */      
   }   
@@ -81,7 +77,7 @@ void FUNC_timer_info(void)
   if(g_func_timer_info <= 0) 
   {
     /* end function for callback */
-    if(LCDML.FuncEnd(1, 0, 0, 0, 0, 0)) /* (direct, up, down, left, right) */  
+    if(LCDML.FuncEnd(1, 0, 0, 0, 0, 0)) /* (direct, enter, up, down, left, right) */  
     {
       /* do something bevor this function is closed */      
     }  
@@ -134,7 +130,7 @@ void FUNC_p2(void)
   
   if(g_button_value >= 3) {    
     /* end function for callback */
-    if(LCDML.FuncEnd(1, 0, 0, 0, 0, 0)) /* (direct, up, down, left, right) */  
+    if(LCDML.FuncEnd(1, 0, 0, 0, 0, 0)) /* (direct, enter, up, down, left, right) */  
     {
       /* do something bevor this function is closed */      
     } 

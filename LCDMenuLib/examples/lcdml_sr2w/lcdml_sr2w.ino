@@ -31,30 +31,31 @@
 /* init lcdmenulib */
 LCDMenuLib_init(_LCDMenuLib_cnt);
 
-/* create lcdmenulib */
-/* Item           => layer 0 */
-/* Item_XX        => layer 1 */
-/* Item_XX_XX     => layer 2 */
-/* Item_XX_XX_XX  => layer 3 */
-/* LCDMenuLib_element(id, prev_layer_element, current_layer_element, lang_string, callback_function) */
-LCDMenuLib_element(0  , Item         , Item_1        , "Information"        , FUNC_information);
-LCDMenuLib_element(1  , Item         , Item_2        , "Zeit Info"          , FUNC_timer_info);
-LCDMenuLib_element(2  , Item         , Item_3        , "Einstellungen"      , FUNC);
-LCDMenuLib_element(3  , Item_3       , Item_3_1      , "Werte veraendern"   , FUNC);
-LCDMenuLib_element(4  , Item_3       , Item_3_2      , "Irgendwas"          , FUNC);
-LCDMenuLib_element(5  , Item         , Item_4        , "Programme"          , FUNC);
-LCDMenuLib_element(6  , Item_4       , Item_4_1      , "Programme 1"        , FUNC);
-LCDMenuLib_element(7  , Item_4_1     , Item_4_1_1    , "P1 Starten"         , FUNC);
-LCDMenuLib_element(8  , Item_4_1     , Item_4_1_2    , "Einstellungen"      , FUNC);
-LCDMenuLib_element(9  , Item_4_1_2   , Item_4_1_2_1  , "extra warm"         , FUNC);
-LCDMenuLib_element(10 , Item_4_1_2   , Item_4_1_2_2  , "extra lang"         , FUNC);
-LCDMenuLib_element(11 , Item_4_1_2   , Item_4_1_2_3  , "zurück"             , FUNC_back);
-LCDMenuLib_element(12 , Item_4       , Item_4_2      , "Programm 2"         , FUNC_p2);
-LCDMenuLib_element(13 , Item_4       , Item_4_3      , "Programm Mix"       , FUNC);
-LCDMenuLib_element(14 , Item_4       , Item_4_4      , "Programm Hemden"    , FUNC);
-LCDMenuLib_element(15 , Item_4       , Item_4_5      , "Programm Schnell"   , FUNC);
-LCDMenuLib_element(16 , Item_4       , Item_4_6      , "Einstellungen"      , FUNC);
-LCDMenuLib_element(17 , Item_4_6     , Item_4_6_1    , "Irgendwas"          , FUNC);
+/* create menu */
+/* root           => layer 0 */
+/* root_XX        => layer 1 */
+/* root_XX_XX     => layer 2 */
+/* root_XX_XX_XX  => layer 3 */
+/* root_... 	  => layer ... */
+/* LCDMenuLib_element(id, prev_layer_element, new_element_num, lang_string, callback_function) */
+LCDMenuLib_add(0  , root         , 1  , "Information"        , FUNC_information);
+LCDMenuLib_add(1  , root         , 2  , "Zeit Info"          , FUNC_timer_info);
+LCDMenuLib_add(2  , root         , 3  , "Einstellungen"      , FUNC);
+LCDMenuLib_add(3  , root_3       , 1  , "Werte veraendern"   , FUNC);
+LCDMenuLib_add(4  , root_3       , 2  , "Irgendwas"          , FUNC);
+LCDMenuLib_add(5  , root         , 4  , "Programme"          , FUNC);
+LCDMenuLib_add(6  , root_4       , 1  , "Programme 1"        , FUNC);
+LCDMenuLib_add(7  , root_4_1     , 1  , "P1 Starten"         , FUNC);
+LCDMenuLib_add(8  , root_4_1     , 2  , "Einstellungen"      , FUNC);
+LCDMenuLib_add(9  , root_4_1_2   , 1  , "extra warm"         , FUNC);
+LCDMenuLib_add(10 , root_4_1_2   , 2  , "extra lang"         , FUNC);
+LCDMenuLib_add(11 , root_4_1_2   , 3  , "zurück"             , FUNC_back);
+LCDMenuLib_add(12 , root_4       , 2  , "Programm 2"         , FUNC_p2);
+LCDMenuLib_add(13 , root_4       , 3  , "Programm Mix"       , FUNC);
+LCDMenuLib_add(14 , root_4       , 4  , "Programm Hemden"    , FUNC);
+LCDMenuLib_add(15 , root_4       , 5  , "Programm Schnell"   , FUNC);
+LCDMenuLib_add(16 , root_4       , 6  , "Einstellungen"      , FUNC);
+LCDMenuLib_add(17 , root_4_6     , 1  , "Irgendwas"          , FUNC);
 LCDMenuLib_createMenu(_LCDMenuLib_cnt);
 
 

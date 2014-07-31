@@ -58,6 +58,8 @@
 #ifndef LCDMenuLib_macros_h
 #define LCDMenuLib_macros_h
 
+#define root Item
+
 
 #define FuncEnd(direct,enter,up,down,left,right)\
 	checkFuncEnd(B##direct##enter##up##down##left##right)
@@ -101,10 +103,17 @@
 /* LCDMenuLib_element								*/
 /* ************************************************ */
 #define LCDMenuLib_element(name, item_old, item_new, content, function)\
-	PROGMEM prog_char g_LCDMenuLib_lang_ ## name ##_var[]  = content;\
-	void function(void);\	
+	const char g_LCDMenuLib_lang_ ## name ##_var[] PROGMEM = {content};\
+	void function(void);\
 	LCDMenu item_new(name); \
 	void LCDMenuLib_##name##_function() { g_LCDMenuLib_functions[name] = function; item_old.addChild(item_new); } 
+
+#define LCDMenuLib_add(name, item_old, item_new, content, function)\
+	const char g_LCDMenuLib_lang_ ## name ##_var[] PROGMEM = {content};\
+	void function(void);\
+	LCDMenu item_old ## _ ## item_new(name); \
+	void LCDMenuLib_##name##_function() { g_LCDMenuLib_functions[name] = function; item_old.addChild(item_old ## _ ## item_new); } 
+	
 
 /* ************************************************ */
 /* LCDMenuLib_lang									*/
@@ -117,12 +126,12 @@
 /* ************************************************ */
 	#define LCDMenuLib_init(N)\
 		FuncPtr g_LCDMenuLib_functions[(N+1)];\
-		void FUNC(void){}\		
+		void FUNC(void){}\
 		void FUNC_init_screen(void) __attribute__((weak));\
 		void LCDMenuLib_control_serial(void) __attribute__((weak));\
 		void LCDMenuLib_control_analog(void) __attribute__((weak));\
 		unsigned long g_LCDMenuLib_cfg_initscreen_time = millis()+_LCDMenuLib_cfg_initscreen_time;\
-		unsigned long g_LCDMenuLib_press_time = 0;\		
+		unsigned long g_LCDMenuLib_press_time = 0;\
 		LCDMenu Item (0)
 
 
@@ -130,7 +139,7 @@
 /* LCDMenuLib_setup									*/
 /* ************************************************ */
 #define LCDMenuLib_setup(N)\
-	_LCDML_lcd_begin();\	
+	_LCDML_lcd_begin();\
 	\
 	if(_LCDMenuLib_cfg_initscreen == 1) {\
 		bitWrite(LCDML.control, _LCDMenuLib_control_initscreen_enable, 1);\
@@ -141,7 +150,7 @@
 	} \
 	\
 	if(_LCDMenuLib_cfg_scrollbar == 1) {\
-		bitWrite(LCDML.control, _LCDMenuLib_control_scrollbar_l, 1);\		
+		bitWrite(LCDML.control, _LCDMenuLib_control_scrollbar_l, 1);\
 		\
 		uint8_t scroll_bar[5][8] = {\
 			{B10001,B10001,B10001,B10001,B10001,B10001,B10001,B10001},\
@@ -182,23 +191,23 @@
 		if(_LCDMenuLib_cfg_initscreen == 1) {\
 			if(LCDML.getInitScreenActive() == false) {\
 				if(bitRead(LCDML.button, _LCDMenuLib_button_init_screen)) {\
-					bitWrite(LCDML.button, _LCDMenuLib_button_init_screen, 0);\				
-					g_LCDMenuLib_cfg_initscreen_time = millis()+(_LCDMenuLib_cfg_initscreen_time);\					
+					bitWrite(LCDML.button, _LCDMenuLib_button_init_screen, 0);\
+					g_LCDMenuLib_cfg_initscreen_time = millis()+(_LCDMenuLib_cfg_initscreen_time);\
 				}\
-				if(_LCDMenuLib_cfg_initscreen_time > 0) {\				
-					if(g_LCDMenuLib_cfg_initscreen_time < millis() && LCDML.getInitScreenActive() == false) {\					
-						LCDML.Button_quit(1);\		
+				if(_LCDMenuLib_cfg_initscreen_time > 0) {\
+					if(g_LCDMenuLib_cfg_initscreen_time < millis() && LCDML.getInitScreenActive() == false) {\
+						LCDML.Button_quit(1);\
 					}\
-				}\				
-				if(LCDML.getFunction() != _LCDMenuLib_NO_FUNC && LCDML.getInitScreenActive() == false) {\				
+				}\
+				if(LCDML.getFunction() != _LCDMenuLib_NO_FUNC && LCDML.getInitScreenActive() == false) {\
 					g_LCDMenuLib_functions[LCDML.getCurFunction()]();\
 				}\
 			}\
 			else\
-			{\			
-				g_LCDMenuLib_cfg_initscreen_time = millis()+(_LCDMenuLib_cfg_initscreen_time);\							
-				FUNC_init_screen();\			
-			}\			
+			{\
+				g_LCDMenuLib_cfg_initscreen_time = millis()+(_LCDMenuLib_cfg_initscreen_time);\
+				FUNC_init_screen();\
+			}\
 		}\
 		else\
 		{\
@@ -242,9 +251,26 @@
 /* LCDMenuLib_createMenu							*/
 /* ************************************************ */
 #define LCDMenuLib_createMenu(N)\
-	PROGMEM const char *g_LCDMenuLib_lang_table[] = { LCDMenuLib_lang_repeat(N) }; LCDMenuLib_initObjects()
+	const char * const g_LCDMenuLib_lang_table[] PROGMEM = { LCDMenuLib_lang_repeat(N) }; LCDMenuLib_initObjects()
 
 
+
+
+
+
+#define LCDMenuLib_getElementName(var, element_id) \
+	if(element_id != _LCDMenuLib_NO_FUNC && (sizeof(g_LCDMenuLib_lang_table)-1) >= element_id) {\
+		strcpy_P(var, (char*)pgm_read_word(&(g_LCDMenuLib_lang_table[element_id])));\
+	}\
+
+#define LCDMenuLib_getElementNameChecked(var, element_id, check) \
+	if(element_id != _LCDMenuLib_NO_FUNC && (sizeof(g_LCDMenuLib_lang_table)-1) >= element_id) {\
+		strcpy_P(var, (char*)pgm_read_word(&(g_LCDMenuLib_lang_table[element_id])));\
+		check = true;\
+	} else {\
+	    check = false;\
+	}
+	
 
 
 

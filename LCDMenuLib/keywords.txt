@@ -12,6 +12,7 @@ LCDMenuLib	KEYWORD1
 #######################################
 # Makros #
 LCDMenuLib_element	KEYWORD2
+LCDMenuLib_add	KEYWORD2
 LCDMenuLib_init	KEYWORD2
 LCDMenuLib_initObjects	KEYWORD2
 LCDMenuLib_initFunction	KEYWORD2
@@ -38,7 +39,10 @@ LCDMenuLib_callbackLoop	KEYWORD2
 LCDMenuLib_callbackEnd	KEYWORD2
 LCDMenuLib_IS_reStartTime   KEYWORD2
 LCDMenuLib_IS_startDirect   KEYWORD2
+LCDMenuLib_getElementName	KEYWORD2
+LCDMenuLib_getElementNameChecked	KEYWORD2
 
+root	KEYWORD2
 Item	KEYWORD2
 FUNC	KEYWORD2
 backFUNC	KEYWORD2
@@ -63,7 +67,7 @@ getCurFunction	KEYWORD2
 getLayer	KEYWORD2
 getInitScreenActive	KEYWORD2
 getCursorPos	KEYWORD2
-getElementName	KEYWORD2
+
 
 setCursor	KEYWORD2
 clear   KEYWORD2

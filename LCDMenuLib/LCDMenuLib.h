@@ -84,7 +84,7 @@
 /* config */
 #	define _LCDMenuLib_cfg_cursor_deep				6		// save the last position of the cursor until layer xx
 #	define _LCDMenuLib_cfg_cursor					0x7E	// cursor char
-#	define _LCDMenuLib_cfg_max_string_length		25		// max string length witch can be display
+#	define _LCDMenuLib_cfg_max_string_length		20		// max string length witch can be display
 
 /* include config */
 #	include <LCDMenuLib___config.h>
@@ -130,7 +130,7 @@
 			LCDMenu *curMenu;
 
 			/* Saves the string position from menu elments in flash memory */
-			const char **flash_table;
+			const char * const *flash_table;
 			
 			/* display cols */
 			uint8_t cols;
@@ -171,7 +171,7 @@
 					
 		public:			
 			/* Constructor */
-			LCDMenuLib(LCDMenu &p_r,_LCDML_lcd_type &p_d, const char **p_flash_table, const uint8_t p_rows, const uint8_t p_cols);   
+			LCDMenuLib(LCDMenu &p_r,_LCDML_lcd_type &p_d, const char * const *p_flash_table, const uint8_t p_rows, const uint8_t p_cols);   
 			
 			/* Display the current menu on the lcd */
 			void		display();        			
