@@ -5,7 +5,7 @@
 /************************************************************************/
 /* Autor:			Nils Feldkämper										*/
 /* Create:			03.02.2008											*/
-/* Edit:			23.02.2014											*/
+/* Edit:			18.10.2014											*/
 /************************************************************************/
 /* License:			all Free											*/
 /************************************************************************/
@@ -80,6 +80,17 @@
 #	define _LCDMenuLib_control_initscreen_enable	2
 #	define _LCDMenuLib_control_initscreen_active	1
 #	define _LCDMenuLib_control_funcsetup			0
+
+//control2 bits pos
+#	define _LCDMenuLib_control2_free7				7
+#	define _LCDMenuLib_control2_free6				6
+#	define _LCDMenuLib_control2_free5				5
+#	define _LCDMenuLib_control2_free4				4
+#	define _LCDMenuLib_control2_free3				3
+#	define _LCDMenuLib_control2_free2				2
+#	define _LCDMenuLib_control2_endFunc				1
+#	define _LCDMenuLib_control2_endFuncOverExit		0
+
 
 /* config */
 #	define _LCDMenuLib_cfg_cursor_deep				6		// save the last position of the cursor until layer xx
@@ -192,6 +203,7 @@
 			uint8_t button; 
 			/* control bits */
 			uint8_t control;
+			uint8_t control2;
 			
 			/* check if a button was pressed and reset the globale buttonCheck bit */
 			uint8_t checkButtons();

@@ -5,7 +5,7 @@
 /************************************************************************/
 /* Autor:			Nils Feldkämper										*/
 /* Create:			03.02.2008											*/
-/* Edit:			23.02.2014											*/
+/* Edit:			18.10.2014											*/
 /************************************************************************/
 /* License:			all Free											*/
 /************************************************************************/
@@ -338,9 +338,8 @@ void	LCDMenuLib::goBack()
 			bitWrite(control, _LCDMenuLib_control_menu_back, 1);
 			goMenu(*curMenu->getParent());
 		}
-	}
-	//reset active function
-	g_function      = _LCDMenuLib_NO_FUNC;
+	}	
+	//g_function      = _LCDMenuLib_NO_FUNC;
 }
 
 /*
@@ -579,19 +578,21 @@ boolean LCDMenuLib::checkButtons()
  * - boolean status if function must end
  */
 uint8_t	LCDMenuLib::checkFuncEnd(uint8_t check)
-  { 
+{
     //check mask   
-    if(bitRead(check, 5) //direct
+    if(bitRead(control2, _LCDMenuLib_control2_endFuncOverExit)  || bitRead(check, 5) //direct
             || (((button & check) & (1<<_LCDMenuLib_button_enter)))  
             || (((button & check) & (1<<_LCDMenuLib_button_up)))
             || (((button & check) & (1<<_LCDMenuLib_button_down)))
             || (((button & check) & (1<<_LCDMenuLib_button_left)))
             || (((button & check) & (1<<_LCDMenuLib_button_right)))
     ) 
-	{       
-      //function ends
-      Button_quit();
-      return true;
+	{
+		bitWrite(control2, _LCDMenuLib_control2_endFunc, 1);		
+
+		//function ends
+		Button_quit();
+		return true;
     } 
     
     //function runs again
@@ -680,16 +681,26 @@ void	LCDMenuLib::Button_quit(uint8_t opt)
 	//initscreen is active
 	if(bitRead(control, _LCDMenuLib_control_initscreen_active) == 1) 
 	{
-		//clear lcd      
-		lcd->_LCDML_lcd_clear();
+		if(bitRead(control2, _LCDMenuLib_control2_endFunc)) 
+		{
+			bitWrite(control2, _LCDMenuLib_control2_endFuncOverExit, 0);
+			bitWrite(control2, _LCDMenuLib_control2_endFunc, 0);
 
-		bitWrite(control, _LCDMenuLib_control_initscreen_active, 0);
-		bitWrite(control, _LCDMenuLib_control_menu_look, 0);
-		bitWrite(control, _LCDMenuLib_control_funcsetup, 0);	 
+			//clear lcd      
+			lcd->_LCDML_lcd_clear();
+
+			bitWrite(control, _LCDMenuLib_control_initscreen_active, 0);
+			bitWrite(control, _LCDMenuLib_control_menu_look, 0);
+			bitWrite(control, _LCDMenuLib_control_funcsetup, 0);	 
 	 
-		display();
+			display();
 
-		goRoot();	  
+			goRoot();
+		} 
+		else 
+		{
+			bitWrite(control2, _LCDMenuLib_control2_endFuncOverExit, 1);		 
+		}
 	} 
 	//no initscreen is active
 	else 
@@ -698,7 +709,7 @@ void	LCDMenuLib::Button_quit(uint8_t opt)
 		if(opt==1 || (g_function == _LCDMenuLib_NO_FUNC && layer == 0 && opt==0) && bitRead(control, _LCDMenuLib_control_initscreen_enable) == 1) 
 		{
 			//start initscreen		  
-			bitWrite(control, _LCDMenuLib_control_funcsetup, 0);
+			//bitWrite(control, _LCDMenuLib_control_funcsetup, 0);
 			bitWrite(control, _LCDMenuLib_control_initscreen_active, 1);
 			bitWrite(control, _LCDMenuLib_control_menu_look, 1);		
 		} 
@@ -706,29 +717,39 @@ void	LCDMenuLib::Button_quit(uint8_t opt)
 		{	
 			//no function active, do nothing
 			if(g_function == _LCDMenuLib_NO_FUNC && layer == 0) 
-			{
+			{				
 
 			} 
 			//function is active and have to close
 			else 
 			{
-				//clear lcd / delete all output from the active function       
-				lcd->_LCDML_lcd_clear();
+				if(bitRead(control2, _LCDMenuLib_control2_endFunc)) 
+				{
+					bitWrite(control2, _LCDMenuLib_control2_endFuncOverExit, 0);
+					bitWrite(control2, _LCDMenuLib_control2_endFunc, 0);
+					
+					//clear lcd / delete all output from the active function       
+					lcd->_LCDML_lcd_clear();
 		
-				//display menu
-				display();
+					//display menu
+					display();
   
-				//go one layer back
-				goBack();        
-		 
-				//set function variable to no function
-				g_function = _LCDMenuLib_NO_FUNC;
+					//go one layer back
+					goBack();
+
+					//set function variable to no function
+					g_function = _LCDMenuLib_NO_FUNC;
 				
-				//delete function setup         
-				bitWrite(control, _LCDMenuLib_control_funcsetup, 0);
+					//delete function setup         
+					bitWrite(control, _LCDMenuLib_control_funcsetup, 0);
     
-				//enable menu control
-				bitWrite(control, _LCDMenuLib_control_menu_look, 0);
+					//enable menu control
+					bitWrite(control, _LCDMenuLib_control_menu_look, 0);					
+				} 
+				else 
+				{
+					bitWrite(control2, _LCDMenuLib_control2_endFuncOverExit, 1);		 
+				}
 			}		 
 		}	  
 	}  
