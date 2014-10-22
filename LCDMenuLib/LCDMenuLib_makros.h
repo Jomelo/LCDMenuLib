@@ -64,6 +64,9 @@
 #define FuncEnd(direct,enter,up,down,left,right)\
 	checkFuncEnd(B##direct##enter##up##down##left##right)
 
+#define FuncEndQuitButton()\
+	checkFuncEnd(0)
+
 
 #define LCDMenuLib_checkButtonEnter()\
 	((LCDML.button & (1<<_LCDMenuLib_button_enter)) > 0)

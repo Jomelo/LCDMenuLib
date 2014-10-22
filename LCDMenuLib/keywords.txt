@@ -37,8 +37,8 @@ LCDMenuLib_resetButtonRight	KEYWORD2
 LCDMenuLib_callbackSetup	KEYWORD2
 LCDMenuLib_callbackLoop	KEYWORD2
 LCDMenuLib_callbackEnd	KEYWORD2
-LCDMenuLib_IS_reStartTime   KEYWORD2
-LCDMenuLib_IS_startDirect   KEYWORD2
+LCDMenuLib_IS_reStartTime	KEYWORD2
+LCDMenuLib_IS_startDirect	KEYWORD2
 LCDMenuLib_getElementName	KEYWORD2
 LCDMenuLib_getElementNameChecked	KEYWORD2
 
@@ -54,6 +54,7 @@ Button_quit	KEYWORD2
 Timer	KEYWORD2
 FuncInit	KEYWORD2
 FuncEnd	KEYWORD2
+FuncEndQuitButton	KEYWORD2
 checkButtons	KEYWORD2
 checkFuncEnd	KEYWORD2
 FuncEnd	KEYWORD2

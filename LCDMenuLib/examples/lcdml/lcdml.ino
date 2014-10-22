@@ -31,7 +31,7 @@
 
 /* lib config */
 #define _LCDMenuLib_cfg_initscreen       1      /* 0=disable, 1=enable */
-#define _LCDMenuLib_cfg_initscreen_time  60000  /* 0=time disabled, >0 wait time in ms */
+#define _LCDMenuLib_cfg_initscreen_time  0  /* 0=time disabled, >0 wait time in ms */
 #define _LCDMenuLib_cfg_scrollbar	 1      /* 0=no scrollbar, 1=complex scrollbar, 2=easy scrollbar */
 #define _LCDMenuLib_cfg_lcd_standard	 0      /* 0=HD44780 standard / 1=HD44780U standard */
 #define _LCDMenuLib_cfg_press_time       200    /* button press time in ms */
@@ -73,7 +73,10 @@ LCDMenuLib_createMenu(_LCDMenuLib_cnt);
 void setup()
 {    
   LCDMenuLib_setup(_LCDMenuLib_cnt);  /* Setup for LcdMenuLib */
-  Serial.begin(9600);                 /* start serial */  
+  Serial.begin(9600);   /* start serial */ 
+ 
+ 
+  LCDMenuLib_IS_startDirect();
 }
 
 void loop()

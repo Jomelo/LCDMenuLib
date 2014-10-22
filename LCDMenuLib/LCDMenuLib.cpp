@@ -717,13 +717,14 @@ void	LCDMenuLib::Button_quit(uint8_t opt)
 		{	
 			//no function active, do nothing
 			if(g_function == _LCDMenuLib_NO_FUNC && layer == 0) 
-			{				
+			{					
 
 			} 
 			//function is active and have to close
 			else 
 			{
-				if(bitRead(control2, _LCDMenuLib_control2_endFunc)) 
+
+				if(bitRead(control2, _LCDMenuLib_control2_endFunc) || !bitRead(control, _LCDMenuLib_control_funcsetup) || opt == 2) 
 				{
 					bitWrite(control2, _LCDMenuLib_control2_endFuncOverExit, 0);
 					bitWrite(control2, _LCDMenuLib_control2_endFunc, 0);
@@ -747,7 +748,7 @@ void	LCDMenuLib::Button_quit(uint8_t opt)
 					bitWrite(control, _LCDMenuLib_control_menu_look, 0);					
 				} 
 				else 
-				{
+				{					
 					bitWrite(control2, _LCDMenuLib_control2_endFuncOverExit, 1);		 
 				}
 			}		 
