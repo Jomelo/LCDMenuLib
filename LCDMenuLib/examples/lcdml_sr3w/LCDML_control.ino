@@ -1,5 +1,5 @@
 /* =============================================== */
-/* Example 2: LCD Menu with LiquidCrystal_I2C      */ 
+/* Example 1: LCD Menu with LiquidCrystal          */ 
 /* =============================================== */
 /* file content:                                   */
 /* - LCDMenuLib_control_analog()                   */
@@ -54,8 +54,6 @@ void LCDMenuLib_control_analog()
 
 void LCDMenuLib_control_digital()
 {
-  # pin 0 and 1 are for the serial communication
-  # do not use this pins here
   #define _BUTTON_digital_enter         8    
   #define _BUTTON_digital_up            9
   #define _BUTTON_digital_down          10
