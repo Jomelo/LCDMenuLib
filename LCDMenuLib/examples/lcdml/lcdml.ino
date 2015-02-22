@@ -3,6 +3,7 @@
 /* =============================================== */
 
 /* include libs */
+#include <Wire.h>
 #include <LiquidCrystal.h>
 #include <LCDMenuLib.h>
 

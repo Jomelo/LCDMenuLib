@@ -59,6 +59,21 @@
 #	define LCDMenuLib_class_h
 
 
+
+//	====================================================================================================
+//	check errors
+//	====================================================================================================
+#	ifndef _LCDMenuLib_cfg_lcd_type
+#		error "not defined: _LCDMenuLib_cfg_lcd_type (LCDMenuLib___config.h)" 
+#	endif
+
+#	ifndef _LCDMenuLib_arduino_version
+#		error "not defined: _LCDMenuLib_arduino_version (LCDMenuLib___config.h)"
+#	endif
+
+
+
+
 #	ifdef _LCDMenuLib_cfg_lcd_type
 #		if(_LCDMenuLib_cfg_lcd_type >= 0 && _LCDMenuLib_cfg_lcd_type < 100)
 		//LCD Function
@@ -67,7 +82,14 @@
 #			define _LCDML_lcd_write(content)			write(content)
 #			define _LCDML_lcd_clear()					clear()
 #			define _LCDML_lcd_print(content)			print(content)
-#			define _LCDML_lcd_begin()					lcd.begin(_LCDMenuLib_LCD_rows,_LCDMenuLib_LCD_cols);
+#			if(_LCDMenuLib_arduino_version == 0)
+#				define _LCDML_lcd_begin()					lcd.begin(_LCDMenuLib_LCD_rows,_LCDMenuLib_LCD_cols);
+#			elif(_LCDMenuLib_arduino_version == 1)
+#				define _LCDML_lcd_begin()					lcd.begin(_LCDMenuLib_LCD_cols,_LCDMenuLib_LCD_rows);
+#			else
+#				error "wrong value for LCDMenuLib_arduino_version (LCDMenuLib___config.h)"
+#			endif
+				
 
 	// ================================================================================
 	// LiquidCrystal

@@ -104,7 +104,7 @@
 /* set pointer to function if not defined */
 #	ifndef TYPEDEF_FUNCPTR
 #		define TYPEDEF_FUNCPTR
-		typedef void (* FuncPtr) ();
+		typedef void (* LCDML_FuncPtr) ();
 #	endif
 
 /* include arduino ios */
@@ -176,7 +176,7 @@
 			/* go to a menu element */
 			void goMenu(LCDMenu &m);   
 			/* works with jump to element on globale function */
-			boolean selectElementDirect(LCDMenu &p_m, uint8_t p_search);
+			uint8_t selectElementDirect(LCDMenu &p_m, uint8_t p_search);
 
 			uint8_t anzahl();
 					

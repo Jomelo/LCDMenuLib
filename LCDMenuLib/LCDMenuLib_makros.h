@@ -128,7 +128,7 @@
 /* LCDMenuLib_init									*/
 /* ************************************************ */
 	#define LCDMenuLib_init(N)\
-		FuncPtr g_LCDMenuLib_functions[(N+1)];\
+		LCDML_FuncPtr g_LCDMenuLib_functions[(N+1)];\
 		void FUNC(void){}\
 		void FUNC_init_screen(void) __attribute__((weak));\
 		void LCDMenuLib_control_serial(void) __attribute__((weak));\

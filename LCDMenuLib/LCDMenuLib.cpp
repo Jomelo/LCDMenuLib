@@ -96,10 +96,10 @@ LCDMenuLib::LCDMenuLib(LCDMenu &p_r,_LCDML_lcd_type &p_d, const char * const *p_
  * @ - menu instance
  * @ - menu element
  * @return
- * @ - boolean search status
+ * @ - uint8_t search status
  * 
  */
-boolean LCDMenuLib::selectElementDirect(LCDMenu &p_m, uint8_t p_search)
+uint8_t LCDMenuLib::selectElementDirect(LCDMenu &p_m, uint8_t p_search)
 {	
 	LCDMenu * search = &p_m;
 	LCDMenu * tmp;	
@@ -196,9 +196,9 @@ void	LCDMenuLib::goRoot()
  * @return
  */
 void	LCDMenuLib::jumpToElement(uint8_t p_element)
-{
-	//go back to root
-	goRoot();
+{	
+	goRoot();	
+	
 	//search element
 	if(selectElementDirect(*rootMenu, p_element)) {
 		//open this element
@@ -554,9 +554,9 @@ void	LCDMenuLib::display()
  * public function check Buttons
  * @param
  * @return
- * @ - boolean if a button is pressed
+ * @ - uint8_t if a button is pressed
  */ 
-boolean LCDMenuLib::checkButtons()
+uint8_t LCDMenuLib::checkButtons()
 {
 	//check if button is pressed
     if(bitRead(button, _LCDMenuLib_button)) 
@@ -575,7 +575,7 @@ boolean LCDMenuLib::checkButtons()
  * @param 
  * - check parameter as bit mask
  * @return
- * - boolean status if function must end
+ * - uint8_t status if function must end
  */
 uint8_t	LCDMenuLib::checkFuncEnd(uint8_t check)
 {
@@ -681,21 +681,22 @@ void	LCDMenuLib::Button_quit(uint8_t opt)
 	//initscreen is active
 	if(bitRead(control, _LCDMenuLib_control_initscreen_active) == 1) 
 	{
-		if(bitRead(control2, _LCDMenuLib_control2_endFunc)) 
+		if(bitRead(control2, _LCDMenuLib_control2_endFunc) || opt == 2) 
 		{
 			bitWrite(control2, _LCDMenuLib_control2_endFuncOverExit, 0);
 			bitWrite(control2, _LCDMenuLib_control2_endFunc, 0);
 
-			//clear lcd      
-			lcd->_LCDML_lcd_clear();
-
 			bitWrite(control, _LCDMenuLib_control_initscreen_active, 0);
 			bitWrite(control, _LCDMenuLib_control_menu_look, 0);
-			bitWrite(control, _LCDMenuLib_control_funcsetup, 0);	 
-	 
-			display();
+			bitWrite(control, _LCDMenuLib_control_funcsetup, 0);
 
-			goRoot();
+			display();
+			      
+			if (opt != 2) 
+			{
+				lcd->_LCDML_lcd_clear();
+				goRoot();
+			}
 		} 
 		else 
 		{
@@ -763,7 +764,7 @@ void	LCDMenuLib::Button_quit(uint8_t opt)
  * @return
  * @ - status if this setup was run
  */
-boolean	LCDMenuLib::FuncInit(void)
+uint8_t	LCDMenuLib::FuncInit(void)
 {
     //check setup bit    
 	if(bitRead(control, _LCDMenuLib_control_funcsetup) == false) 
