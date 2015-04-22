@@ -57,10 +57,6 @@
 #ifndef LCDMenuLib___config_h
 #	define LCDMenuLib___config_h
 
-
-#	define _LCDMenuLib_arduino_version	0	// for old arduino version like 1.0.6 or 1.0.5
-//#	define _LCDMenuLib_arduino_version	1	// for new arduino version like 1.6.0 or higher
-
 //
 //	====================================================================================================
 //	0:10  LiquidCrystal (orginal) or LiquidCrystal_new Version 1.2.1			(normal)

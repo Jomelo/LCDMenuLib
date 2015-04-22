@@ -41,16 +41,10 @@
 
 #include "LCDMenuLib_menu.h"
 
-LCDMenu::LCDMenu(uint8_t n)
+LCDMenu::LCDMenu(uint8_t n, uint8_t dis)
 {	
 	name=n;
-	canEnter=NULL;
-}
-
-LCDMenu::LCDMenu(uint8_t n,boolean (*c)(LCDMenu&))
-{
-	name=n;
-	canEnter=c;
+	disp=dis;
 }
 
 void LCDMenu::setParent(LCDMenu &p)
@@ -86,11 +80,12 @@ void LCDMenu::addChild(LCDMenu &c)
 	}
 }
 
-LCDMenu * LCDMenu::getChild(uint8_t which)
+
+LCDMenu * LCDMenu::getChild(uint8_t which, uint8_t group)
 {
 	if (child)
-	{
-		return child->getSibling(which);
+	{		
+		return child->getSibling(which, group);		
 	}
 	else //This Menu item has no children
 	{
@@ -98,15 +93,31 @@ LCDMenu * LCDMenu::getChild(uint8_t which)
 	}
 }
 
-LCDMenu * LCDMenu::getSibling(uint8_t howfar)
+LCDMenu * LCDMenu::getSibling(uint8_t howfar, uint8_t group)
 {
+	LCDMenu *tmp = NULL;
+
 	if (howfar==0)
 	{
-		return this;
+		if(this->disp == 0 || bitRead(group, this->disp)) {
+			
+			return this;
+		} else {
+			while(tmp=this->getSibling(1, group)) {
+				if(tmp->disp == 0 || bitRead(group, tmp->disp)) {					
+					break;
+				}
+			}
+			if(tmp != NULL) {
+				return tmp;
+			} else {
+				return NULL;
+			}
+		}				
 	}
 	else if (sibling)
-	{
-		return sibling->getSibling(howfar-1);
+	{		
+		return sibling->getSibling(howfar-1, group);		
 	}
 	else //Asking for a nonexistent sibling
 	{
@@ -117,8 +128,8 @@ LCDMenu * LCDMenu::getSibling(uint8_t howfar)
 LCDMenu * LCDMenu::getParent()
 {
 	if (parent)
-	{
-		return parent;
+	{		
+		return parent;		
 	}
 	else //Top Menu
 	{

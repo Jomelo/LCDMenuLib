@@ -1,3 +1,10 @@
+From 2015-04-22:
+- New: Backend system
+- New: New initscreen system
+- New: Nearly all names of macros, because dobble names in bigger projects
+
+
+
 From 2013-11-22:
 - New: reset initscreen timer:  	
 	LCDMenuLib_IS_reStartTime();

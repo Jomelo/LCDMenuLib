@@ -58,18 +58,26 @@
 #ifndef LCDMenuLib_h
 #	define LCDMenuLib_h
 
+
+#if ARDUINO >= 160
+#	define _LCDMenuLib_arduino_version	1	// for new arduino version like 1.6.0 or higher
+#else
+#	define _LCDMenuLib_arduino_version	0	// for old arduino version like 1.0.6 or 1.0.5
+#endif
+
+
 /* define the no function constante */
 #	define _LCDMenuLib_NO_FUNC				255
 
 //button bit pos
-#	define _LCDMenuLib_button_init_screen			7
-#	define _LCDMenuLib_button						6
-#	define _LCDMenuLib_button_quit					5
-#	define _LCDMenuLib_button_enter					4
-#	define _LCDMenuLib_button_up					3
-#	define _LCDMenuLib_button_down					2
-#	define _LCDMenuLib_button_left					1
-#	define _LCDMenuLib_button_right					0
+//#	define _LCDMenuLib_button_init_screen			7
+#	define _LCDML_button						6
+#	define _LCDML_button_quit					5
+#	define _LCDML_button_enter					4
+#	define _LCDML_button_up						3
+#	define _LCDML_button_down					2
+#	define _LCDML_button_left					1
+#	define _LCDML_button_right					0
 
 //control bit pos
 #	define _LCDMenuLib_control_menu_back			7
@@ -77,8 +85,8 @@
 #	define _LCDMenuLib_control_scrollbar_h			5
 #	define _LCDMenuLib_control_scrollbar_l			4
 #	define _LCDMenuLib_control_lcd_standard			3
-#	define _LCDMenuLib_control_initscreen_enable	2
-#	define _LCDMenuLib_control_initscreen_active	1
+//#	define _LCDMenuLib_control_initscreen_enable	2
+//#	define _LCDMenuLib_control_initscreen_active	1
 #	define _LCDMenuLib_control_funcsetup			0
 
 //control2 bits pos
@@ -97,18 +105,34 @@
 #	define _LCDMenuLib_cfg_cursor					0x7E	// cursor char
 #	define _LCDMenuLib_cfg_max_string_length		20		// max string length witch can be display
 
+
+enum t_lcdml_disp_group {
+ _LCDML_G1,
+ _LCDML_G2,
+ _LCDML_G3,
+ _LCDML_G4,
+ _LCDML_G5,
+ _LCDML_G6,
+ _LCDML_G7,
+ _LCDML_G8
+};
+
+
+
 /* include config */
 #	include <LCDMenuLib___config.h>
 #	include <LCDMenuLib_class.h>
 
 /* set pointer to function if not defined */
-#	ifndef TYPEDEF_FUNCPTR
-#		define TYPEDEF_FUNCPTR
+#	ifndef TYPEDEF_LCDML_FUNCPTR
+#		define TYPEDEF_LCDML_FUNCPTR
 		typedef void (* LCDML_FuncPtr) ();
 #	endif
 
 /* include arduino ios */
 #	include "Arduino.h"
+
+
 
 /* configure arduino flash lib */
 #	ifndef __PROG_TYPES_COMPAT__
@@ -119,12 +143,6 @@
 
 /* include lcd menu lib, this generates the menu items */
 #	include "LCDMenuLib_menu.h"
-
-/* help macros to generate and save the menu item content */
-#	include "LCDMenuLib_lang_repeat.h"
-
-/* help macros to generate the menu item functions */ 
-#	include "LCDMenuLib_func_repeat.h"
 
 /* include macros for this lib */
 #	include "LCDMenuLib_makros.h"
@@ -155,7 +173,9 @@
 			/* current scroll position */
 			uint8_t scroll; 
 			/* save the last cursor position when a menue element is called */
-			uint8_t cursor_pos;        
+			uint8_t cursor_pos; 
+
+			uint8_t child_cnt;
 
 			/* save the last id from a menu element, when a menu elmend is called */
 			uint8_t g_function;
@@ -178,7 +198,7 @@
 			/* works with jump to element on globale function */
 			uint8_t selectElementDirect(LCDMenu &p_m, uint8_t p_search);
 
-			uint8_t anzahl();
+			uint8_t countChilds();			
 					
 		public:			
 			/* Constructor */
@@ -204,6 +224,8 @@
 			/* control bits */
 			uint8_t control;
 			uint8_t control2;
+
+			uint8_t		group;
 			
 			/* check if a button was pressed and reset the globale buttonCheck bit */
 			uint8_t checkButtons();
@@ -212,16 +234,15 @@
 			/* go out of a menu element */
 			void Button_quit(uint8_t opt=false);
 			/* navigate through the menu */
-			void Button_up_down_left_right(uint8_t but);
+			void Button_up_down_left_right(uint8_t but);			
 			
+
 			/* get active function id */
 			uint8_t		getFunction();
 			/* get last function id */
 			uint8_t		getCurFunction();
 			/* get the layer where the cursor stands in the menu */
-			uint8_t		getLayer();
-			/* get the init screen enable bit */
-			uint8_t		getInitScreenActive();	
+			uint8_t		getLayer();			
 			/* get the corrent cursor position */
 			uint8_t		getCursorPos();	
 			/* get the current name of an element */
