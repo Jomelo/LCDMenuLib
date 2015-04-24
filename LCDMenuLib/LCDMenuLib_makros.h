@@ -5,7 +5,7 @@
 /************************************************************************/
 /* Autor:			Nils Feldkämper										*/
 /* Create:			03.02.2008											*/
-/* Edit:			26.02.2014											*/
+/* Edit:			23.04.2015											*/
 /************************************************************************/
 /* License:			all Free											*/
 /************************************************************************/
@@ -17,7 +17,6 @@
 /* to control the content. This function is called automatical from the */
 /* library and runs in a loop, without blocking other programm parts.   */
 /*																		*/
-/* Support:  -- englischen Link einfügen --                             */
 /*                                                                      */
 /************************************************************************/
 
@@ -65,7 +64,9 @@
 
 
 
-
+# 	define LCDML_TRIGGER(time)\
+	LCDML_BACK_dynamic_setLoopTime(LCDML_BACKEND_trigger, time);\
+    LCDML_BACK_start(LCDML_BACKEND_trigger)
 
 
 #	define LCDML_root Item
@@ -104,12 +105,6 @@
 #	define LCDML_resetButtonRight()\
 		bitWrite(LCDML.button, _LCDML_button_right, 0)
 	
-//#define LCDMenuLib_callbackSetup				if(!LCDML.FuncInit())
-//#define LCDMenuLib_callbackLoop
-//#define LCDMenuLib_callbackEnd(a,b,c,d,e,f)		if(LCDML.FuncEnd(a,b,c,d,e,f))
-
-//#define LCDMenuLib_IS_reStartTime()		g_LCDMenuLib_cfg_initscreen_time = millis()+(_LCDMenuLib_cfg_initscreen_time);
-//#define LCDMenuLib_IS_startDirect()		g_LCDMenuLib_cfg_initscreen_time = 0;
 
 
 #define LCDMenuLib_getActiveFuncId()	((bitRead(LCDML.control,_LCDMenuLib_control_funcsetup) == 1)?LCDML.getFunction():_LCDMenuLib_NO_FUNC)
@@ -131,7 +126,7 @@
 /* ************************************************ */
 #define LCDML_DISP_add(name, disp, item_parent, item_child, content, function)\
 	const char g_LCDML_DISP_lang_ ## name ##_var[] PROGMEM = {content};\
-	void function(void);\	
+	void function(void);\
 	LCDMenu item_parent ## _ ## item_child(name, disp); \
 	void LCDML_DISP_##name##_function() { g_LCDML_DISP_functions[name] = function; item_parent.addChild(item_parent ## _ ## item_child); }
 
@@ -155,7 +150,7 @@
 /* LCDMenuLib_setup									*/
 /* ************************************************ */
 #define LCDML_DISP_setup(N)\
-	_LCDML_lcd_begin();\	
+	_LCDML_lcd_begin();\
 	\
 	if(_LCDML_DISP_cfg_lcd_standard == 1) {\
 		bitWrite(LCDML.control, _LCDMenuLib_control_lcd_standard, 1);\
@@ -188,7 +183,7 @@
 			lcd._LCDML_lcd_createChar(1, scroll_bar[1]);\
 		}\
 	}\
-	LCDMenuLib_initFunction(N); \	
+	LCDMenuLib_initFunction(N); \
 	LCDML.display();
 	
    
@@ -198,7 +193,7 @@
 /* ************************************************ */
 /* LCDMenuLib_loop									*/
 /* ************************************************ */
-#define LCDML_DISP_loop() \		
+#define LCDML_DISP_loop() \
 	if(LCDML.getFunction() != _LCDMenuLib_NO_FUNC) {\
 		g_LCDML_DISP_functions[LCDML.getCurFunction()]();\
 	}\
@@ -318,6 +313,9 @@
 		unsigned long g_LCDML_BACK_timer[(cnt+1)];	
 	// macro: loop function  
 	#define LCDML_run(mode)\
+		if(LCDML.getFunction() == _LCDMenuLib_NO_FUNC) {\
+			LCDML_BACK_stop(LCDML_BACKEND_trigger);\
+		}\
 		for(uint8_t l_LCDML_BACK_i = 0; l_LCDML_BACK_i<g_LCDML_BACK_cnt;l_LCDML_BACK_i++) {\
 			g_LCDML_BACK_priority[(l_LCDML_BACK_i)]();\
 			if (mode == true && g_LCDML_BACK_loop_status == false)\
@@ -363,30 +361,30 @@
 // thread control
 	// macro: thread start single
 	#define LCDML_BACK_start(name)\
-		bitWrite(g_LCDML_BACK_start_stop[g_LCDML_BACK_id__##name / 7], g_LCDML_BACK_id__##name%7, true);
+		bitWrite(g_LCDML_BACK_start_stop[g_LCDML_BACK_id__##name / 7], g_LCDML_BACK_id__##name%7, true)
 	// macro: thread stop
 	#define LCDML_BACK_stop(name)\
-		bitWrite(g_LCDML_BACK_start_stop[g_LCDML_BACK_id__##name / 7], g_LCDML_BACK_id__##name%7, false); 
+		bitWrite(g_LCDML_BACK_start_stop[g_LCDML_BACK_id__##name / 7], g_LCDML_BACK_id__##name%7, false) 
 	// macro: thread stop stable => calls a function at the end
 	#define LCDML_BACK_stopStable(name)\
 		LCDML_BACK_stop(name);\
-		LCDML_BACK_stable_##name();
+		LCDML_BACK_stable_##name()
 	// macro: thread reset
 	#define LCDML_BACK_reset(name)\
 		bitWrite(g_LCDML_BACK_reset[g_LCDML_BACK_id__##name / 7], g_LCDML_BACK_id__##name%7, false); \
-		g_LCDML_BACK_timer[g_LCDML_BACK_id__##name] = 0;
+		g_LCDML_BACK_timer[g_LCDML_BACK_id__##name] = 0
 	//macro: thread reStart 
 	#define LCDML_BACK_restart(name)\
 		LCDML_BACK_reset(name);\
-		LCDML_BACK_start(name);
+		LCDML_BACK_start(name)
 
 // thread control event
 	#define LCDML_BACK_event_start(name)\
-		LCDML_BACK_start(name);
+		LCDML_BACK_start(name)
 	#define LCDML_BACK_event_reset(name)\
-		LCDML_BACK_reset(name);
+		LCDML_BACK_reset(name)
 	#define LCDML_BACK_event_restart(name)\
-		LCDML_BACK_restart(name);
+		LCDML_BACK_restart(name)
 
 
 //all
@@ -408,7 +406,7 @@
 	//macro: thread reStart all 
 	#define LCDML_BACK_all_restart(name)\
 		LCDML_BACK_all_reset();\
-		LCDML_BACK_all_start();
+		LCDML_BACK_all_start()
 
 
 
@@ -419,7 +417,7 @@
 	// macro: create a new group
 	#define LCDML_BACK_group_init(name, thread_cnt)\
 		uint8_t g_LCDML_BACK_group__##name##_cnt = thread_cnt;\
-		uint8_t g_LCDML_BACK_group__##name[thread_cnt][2] = 
+		uint8_t g_LCDML_BACK_group__##name[thread_cnt][2] = 0
 	// macro: thread start group
 	#define LCDML_BACK_group_start(group_name)\
 		for(uint8_t l_LCDML_BACK_i = 0; l_LCDML_BACK_i<(g_LCDML_BACK_group__##group_name##_cnt);l_LCDML_BACK_i++) {\
@@ -438,26 +436,26 @@
 	// macro: thread start group
 	#define LCDML_BACK_group_restart(group_name)\
 		LCDML_BACK_group_reset(group_name);\
-		LCDML_BACK_group_start(group_name);
+		LCDML_BACK_group_start(group_name)
 	
 
 
 //signals
 	// macro:
 	#define LCDML_BACK_signal(id, name)\
-		PROGMEM prog_uint8_t  g_simpleSignal_id__##name  = id;		
+		PROGMEM prog_uint8_t  g_simpleSignal_id__##name  = id	
 	// macro: creates the LCDML_BACK managemand variables
 	#define LCDML_BACK_signal_init(cnt)\
-		uint8_t g_simpleSignal_status[(cnt/7)+1];
+		uint8_t g_simpleSignal_status[(cnt/7)+1]
 	// macro:
 	#define LCDML_BACK_signal_set(name)\
-		bitWrite(g_simpleSignal_status[g_simpleSignal_id__##name/7], g_simpleSignal_id__##name%7, true);
+		bitWrite(g_simpleSignal_status[g_simpleSignal_id__##name/7], g_simpleSignal_id__##name%7, true)
 	// macro:	
 	#define LCDML_BACK_signal_get(name)\
 		bitRead(g_simpleSignal_status[g_simpleSignal_id__##name/7], g_simpleSignal_id__##name%7)
 	// macro:
 	#define LCDML_BACK_signal_reset(name)\
-		bitWrite(g_simpleSignal_status[g_simpleSignal_id__##name/7], g_simpleSignal_id__##name%7, false);
+		bitWrite(g_simpleSignal_status[g_simpleSignal_id__##name/7], g_simpleSignal_id__##name%7, false)
 
 
 //is run
@@ -469,19 +467,19 @@
 // dynamic times	
 	//macro: edit thread loop time
 	#define LCDML_BACK_dynamic_setLoopTime(name, time)\
-		g_LCDML_BACK_dynTime_##name = time;
+		g_LCDML_BACK_dynTime_##name = time
 	//macro: get thread loop time
 	#define LCDML_BACK_dynamic_getLoopTime(name)\
 		g_LCDML_BACK_dynTime_##name	
 	// macro: reset a dynamic thread to default settings
 	#define LCDML_BACK_dynamic_setDefaultTime(name)\
-		g_LCDML_BACK_dynTime_##name =_LCDML_BACK_time_default__##name;
+		g_LCDML_BACK_dynTime_##name =_LCDML_BACK_time_default__##name
 	// macro: restart dynamic thread time
 	#define LCDML_BACK_dynamic_restartTimer(name)\
-		g_LCDML_BACK_timer[g_LCDML_BACK_id__##name] = (millis() + g_LCDML_BACK_dynTime_##name);
+		g_LCDML_BACK_timer[g_LCDML_BACK_id__##name] = (millis() + g_LCDML_BACK_dynTime_##name)
 	// macro: setTime 0
 	#define LCDML_BACK_dynamic_timeToZero(name)\
-		g_LCDML_BACK_timer[g_LCDML_BACK_id__##name] = 0;
+		g_LCDML_BACK_timer[g_LCDML_BACK_id__##name] = 0
 
 
 
@@ -490,16 +488,16 @@
 //direct call
 	// macro: call a thread
 	#define LCDML_BACK_call(name)\
-		LCDML_BACK_function_##name();
+		LCDML_BACK_function_##name()
 	// macro: call a thread loop function
 	#define LCDML_BACK_call_loop(name)\
-		LCDML_BACK_loop_##name();
+		LCDML_BACK_loop_##name()
 	// macro: call a thread setup function
 	#define LCDML_BACK_call_setup(name)\
-		LCDML_BACK_setup_##name();
+		LCDML_BACK_setup_##name()
 	// macro: call a thread stable function
 	#define LCDML_BACK_call_stable(name)\
-		LCDML_BACK_stable_##name();		
+		LCDML_BACK_stable_##name()	
 
 
 	
@@ -510,7 +508,7 @@
 	// macro: thread timer with return
 	#define LCDML_BACK_THREAD_TIMER(timer_var, wait_time, timebase)\
 		if(!((timebase() - timer_var) >= wait_time)) {  return; }\
-		timer_var = timebase();
+		timer_var = timebase()
 
 	//macro: thread is running with return !
 	#define LCDML_BACK_THREAD_isRun(name)\

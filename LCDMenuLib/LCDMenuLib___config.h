@@ -57,6 +57,12 @@
 #ifndef LCDMenuLib___config_h
 #	define LCDMenuLib___config_h
 
+/* config */
+#	define _LCDML_DISP_cfg_cursor_deep				6		// save the last position of the cursor until layer xx
+#	define _LCDML_DISP_cfg_cursor					0x7E	// cursor char
+#	define _LCDML_DISP_cfg_max_string_length		20		// max string length witch can be display
+
+
 //
 //	====================================================================================================
 //	0:10  LiquidCrystal (orginal) or LiquidCrystal_new Version 1.2.1			(normal)

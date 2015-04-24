@@ -103,7 +103,7 @@ LCDMenu * LCDMenu::getSibling(uint8_t howfar, uint8_t group)
 			
 			return this;
 		} else {
-			while(tmp=this->getSibling(1, group)) {
+			while((tmp=this->getSibling(1, group)) != NULL) {
 				if(tmp->disp == 0 || bitRead(group, tmp->disp)) {					
 					break;
 				}

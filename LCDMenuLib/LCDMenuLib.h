@@ -100,10 +100,7 @@
 #	define _LCDMenuLib_control2_endFuncOverExit		0
 
 
-/* config */
-#	define _LCDMenuLib_cfg_cursor_deep				6		// save the last position of the cursor until layer xx
-#	define _LCDMenuLib_cfg_cursor					0x7E	// cursor char
-#	define _LCDMenuLib_cfg_max_string_length		20		// max string length witch can be display
+
 
 
 enum t_lcdml_disp_group {
@@ -166,7 +163,7 @@ enum t_lcdml_disp_group {
 			/* display rows */
 			uint8_t rows;
 			/* save the last layer */
-			uint8_t layer_save[_LCDMenuLib_cfg_cursor_deep];      // Speichert Cursor Position bis zur 8 Ebene
+			uint8_t layer_save[_LCDML_DISP_cfg_cursor_deep];      // Speichert Cursor Position bis zur 8 Ebene
 
 			/* current corsor position */
 			uint8_t curloc;  

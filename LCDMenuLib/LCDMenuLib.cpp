@@ -157,7 +157,7 @@ uint8_t LCDMenuLib::selectElementDirect(LCDMenu &p_m, uint8_t p_search)
 				Button_up_down_left_right(_LCDML_button_down);
 			}
 		}		
-	} while ((search=search->getSibling(1, group)) && found == 0);
+	} while ((search=search->getSibling(1, group)) != NULL && found == 0);
 
 	//return result
 	return found;	
@@ -243,7 +243,7 @@ void	LCDMenuLib::setCursor()
 
 	//set cursor 
     lcd->_LCDML_lcd_setCursor(0,cursor_pos);
-    lcd->_LCDML_lcd_write(_LCDMenuLib_cfg_cursor);
+    lcd->_LCDML_lcd_write(_LCDML_DISP_cfg_cursor);
 
 
 
@@ -399,7 +399,7 @@ void	LCDMenuLib::goMenu(LCDMenu &m)
 	curMenu=&m;	
 
 	//check layer deep
-	if(layer < _LCDMenuLib_cfg_cursor_deep) 
+	if(layer < _LCDML_DISP_cfg_cursor_deep) 
 	{
 		//check back button
 		if(bitRead(control, _LCDMenuLib_control_menu_back) == 0) 
@@ -446,9 +446,9 @@ uint8_t    LCDMenuLib::countChilds()
 
 
 	//check if element has childs
-	if ((tmp = curMenu->getChild(0, group))) 
+	if ((tmp = curMenu->getChild(0, group)) != NULL) 
 	{	
-		while ((tmp = tmp->getSibling(1, group))) 
+		while ((tmp = tmp->getSibling(1, group)) != NULL) 
 		{			
 			j++;			
 		}
@@ -472,10 +472,9 @@ void	LCDMenuLib::display()
 {
 	//declaration
     LCDMenu * tmp;
-	LCDMenu * tmp_backup;
     uint8_t i = scroll;    
     uint8_t maxi=(rows+scroll);	
-	char buffer[_LCDMenuLib_cfg_max_string_length];
+	char buffer[_LCDML_DISP_cfg_max_string_length];
 
 	child_cnt = countChilds();
     
@@ -500,7 +499,7 @@ void	LCDMenuLib::display()
 				//check if string is to long for the lcd display with and without scrollbar
 				if(bitRead(control, _LCDMenuLib_control_scrollbar_h) == 0 && bitRead(control, _LCDMenuLib_control_scrollbar_l) == 0) {
 					//without scrollbar
-					if(strlen(buffer) > (cols-1)) 
+					if(strlen(buffer) > (uint8_t)(cols-1)) 
 					{
 						//error message
 						lcd->_LCDML_lcd_print(F("too_long"));					
@@ -512,7 +511,7 @@ void	LCDMenuLib::display()
 					}
 				} else {
 					//witch scrollbar
-					if(strlen(buffer) > (cols-2)) 
+					if(strlen(buffer) > (uint8_t)(cols-2)) 
 					{
 						//error message
 						lcd->_LCDML_lcd_print(F("too_long"));
@@ -527,7 +526,7 @@ void	LCDMenuLib::display()
 				i++;				
 			
 			
-        } while ((tmp=tmp->getSibling(1, group)) && i<maxi); 
+        } while ((tmp=tmp->getSibling(1, group)) != NULL && i<maxi); 
 
 		
 
