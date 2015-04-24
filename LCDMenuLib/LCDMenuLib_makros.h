@@ -65,15 +65,16 @@
 
 
 # 	define LCDML_TRIGGER(time)\
-		LCDML_BACK_dynamic_setLoopTime(LCDML_BACKEND_menu, time);\
+		LCDML_BACK_dynamic_timeToZero(LCDML_BACKEND_menu);\
+		LCDML_BACK_dynamic_setLoopTime(LCDML_BACKEND_menu, time)
 		
 
 
 #	define LCDML_UPDATE()\
+		LCDML_BACK_dynamic_timeToZero(LCDML_BACKEND_menu);\
 		if(LCDML.getFunction() != _LCDMenuLib_NO_FUNC && g_LCDML_DISP_functions_setup[LCDML.getCurFunction()] != LCDML_FUNC_setup) {\    
 			LCDML_BACK_start(LCDML_BACKEND_menu);\
 		}
-
 
 
 #	define LCDML_DISP_setup(name)\
@@ -305,7 +306,7 @@
 		uint8_t g_LCDML_BACK_start_stop[((cnt+1)/7)+1];\
 		uint8_t g_LCDML_BACK_reset[((cnt+1)/7)+1];\
 		uint8_t g_LCDML_BACK_loop_status = true;\
-		unsigned long g_LCDML_BACK_timer[(cnt+1)];	
+		unsigned long g_LCDML_BACK_timer[(cnt+1)];
 	// macro: loop function  
 #	define LCDML_run(mode)\
 		for(uint8_t l_LCDML_BACK_i = 0; l_LCDML_BACK_i<g_LCDML_BACK_cnt;l_LCDML_BACK_i++) {\
@@ -498,11 +499,6 @@
 
 
 //help macros
-	// macro: thread timer with return
-#	define LCDML_BACK_THREAD_TIMER(timer_var, wait_time, timebase)\
-		if(!((timebase() - timer_var) >= wait_time)) {  return; }\
-		timer_var = timebase()
-
 	//macro: thread is running with return !
 #	define LCDML_BACK_THREAD_isRun(name)\
 	if(!bitRead(g_LCDML_BACK_start_stop[g_LCDML_BACK_id__##name/7], g_LCDML_BACK_id__##name%7)) { return; } 
@@ -519,13 +515,15 @@
 #	define LCDML_BACK_THREAD_FUNCTION_TIME_BASED(name, time, timebase)\
 		void LCDML_BACK_function_##name(void)\
 		{\
-			LCDML_BACK_THREAD_isRun(name);\
-			LCDML_BACK_THREAD_TIMER(g_LCDML_BACK_timer[g_LCDML_BACK_id__##name], time, timebase);\
-			if(LCDML_BACK_GET_reset(name) == false) {\
-				LCDML_BACK_UNSET_reset(name);\
-				LCDML_BACK_setup_##name();\
+			LCDML_BACK_THREAD_isRun(name);\			
+			if(timebase() >= g_LCDML_BACK_timer[g_LCDML_BACK_id__##name]) {\
+				g_LCDML_BACK_timer[g_LCDML_BACK_id__##name] = (timebase() + time);\
+				if(LCDML_BACK_GET_reset(name) == false) {\
+					LCDML_BACK_UNSET_reset(name);\
+					LCDML_BACK_setup_##name();\
+				}\
+				g_LCDML_BACK_loop_status = (LCDML_BACK_loop_##name()) ? true : false;\
 			}\
-			g_LCDML_BACK_loop_status = (LCDML_BACK_loop_##name()) ? true : false;\
 		}
 
 	//macro: create the thread setup function 
@@ -543,7 +541,7 @@
 
 #	define LCDML_BACK_help_setup(id)   LCDML_BACK_setupInit_##id();
 
-#	define LCDML_setup(N)\		
+#	define LCDML_setup(N)\
 		LCDML_DISP_initSetup(_LCDML_DISP_cnt);\
 		LCDML_BACK_help_setupInit(N)
 

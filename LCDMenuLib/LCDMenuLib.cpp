@@ -608,7 +608,7 @@ uint8_t	LCDMenuLib::checkFuncEnd(uint8_t check)
 {
 	
 		//check mask   
-		if(bitRead(control2, _LCDMenuLib_control2_endFuncOverExit)  || bitRead(check, 5) //direct
+		if(bitRead(check, 5) //direct
 				|| (((button & check) & (1<<_LCDML_button_enter)))  
 				|| (((button & check) & (1<<_LCDML_button_up)))
 				|| (((button & check) & (1<<_LCDML_button_down)))
@@ -696,40 +696,31 @@ void	LCDMenuLib::Button_up_down_left_right(uint8_t but)
 void	LCDMenuLib::Button_quit(uint8_t opt)
 {
 	
-			//no function active, do nothing
-			if(function == _LCDMenuLib_NO_FUNC && layer == 0) 
-			{					
+	//no function active, do nothing
+	if(function == _LCDMenuLib_NO_FUNC && layer == 0) 
+	{					
 
-			} 
-			//function is active and have to close
-			else 
-			{
-
-				if(bitRead(control2, _LCDMenuLib_control2_endFuncOverExit) || opt == 2) 
-				{
-					bitWrite(control2, _LCDMenuLib_control2_endFuncOverExit, 0);
-					bitWrite(control2, _LCDMenuLib_control2_endFunc, 0);
+	} 
+	//function is active and have to close
+	else 
+	{				
+		bitWrite(control2, _LCDMenuLib_control2_endFunc, 0);
 					
-					//clear lcd / delete all output from the active function       
-					lcd->_LCDML_lcd_clear();
+		//clear lcd / delete all output from the active function       
+		lcd->_LCDML_lcd_clear();
 		
-					//display menu
-					display();
+		//display menu
+		display();
   
-					//go one layer back
-					goBack();
+		//go one layer back
+		goBack();
 
-					//set function variable to no function
-					function = _LCDMenuLib_NO_FUNC;					
+		//set function variable to no function
+		function = _LCDMenuLib_NO_FUNC;					
     
-					//enable menu control
-					bitWrite(control, _LCDMenuLib_control_menu_look, 0);					
-				} 
-				else 
-				{					
-					bitWrite(control2, _LCDMenuLib_control2_endFuncOverExit, 1);		 
-				}
-			}		 
+		//enable menu control
+		bitWrite(control, _LCDMenuLib_control_menu_look, 0);				
+	}		 
 
 	button = 0;
 }
