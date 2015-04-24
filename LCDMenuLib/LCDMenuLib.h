@@ -174,8 +174,7 @@ enum t_lcdml_disp_group {
 
 			uint8_t child_cnt;
 
-			/* save the last id from a menu element, when a menu elmend is called */
-			uint8_t g_function;
+			
 			/* save the last id from a menu element */
 			uint8_t curfuncname;     
 		
@@ -212,18 +211,22 @@ enum t_lcdml_disp_group {
 			uint8_t		Timer(unsigned long &p_var, unsigned long p_time);
 			
 			/* menu element function init */
-			uint8_t		FuncInit();
+			void		FuncInit();
 			/* menu element function check end */
 			uint8_t checkFuncEnd(uint8_t check);
 			
+
 			/* button variable */
 			uint8_t button; 
 			/* control bits */
 			uint8_t control;
 			uint8_t control2;
 
-			uint8_t		group;
-			
+			uint8_t	group;
+			/* save the last id from a menu element, when a menu elmend is called */
+			uint8_t function;
+
+
 			/* check if a button was pressed and reset the globale buttonCheck bit */
 			uint8_t checkButtons();
 			/* go in a menu element */

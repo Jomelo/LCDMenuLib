@@ -86,7 +86,7 @@ LCDMenuLib::LCDMenuLib(LCDMenu &p_r,_LCDML_lcd_type &p_d, const char * const *p_
 	child_cnt		= 0;
 	rows			= p_rows;
 	cols			= (p_cols-1); 	
-    g_function      = _LCDMenuLib_NO_FUNC;
+    function      = _LCDMenuLib_NO_FUNC;
     button			= 0;
 }
 
@@ -606,25 +606,29 @@ uint8_t LCDMenuLib::checkButtons()
  */
 uint8_t	LCDMenuLib::checkFuncEnd(uint8_t check)
 {
-    //check mask   
-    if(bitRead(control2, _LCDMenuLib_control2_endFuncOverExit)  || bitRead(check, 5) //direct
-            || (((button & check) & (1<<_LCDML_button_enter)))  
-            || (((button & check) & (1<<_LCDML_button_up)))
-            || (((button & check) & (1<<_LCDML_button_down)))
-            || (((button & check) & (1<<_LCDML_button_left)))
-            || (((button & check) & (1<<_LCDML_button_right)))
-    ) 
-	{
-		bitWrite(control2, _LCDMenuLib_control2_endFunc, 1);		
+	
+		//check mask   
+		if(bitRead(control2, _LCDMenuLib_control2_endFuncOverExit)  || bitRead(check, 5) //direct
+				|| (((button & check) & (1<<_LCDML_button_enter)))  
+				|| (((button & check) & (1<<_LCDML_button_up)))
+				|| (((button & check) & (1<<_LCDML_button_down)))
+				|| (((button & check) & (1<<_LCDML_button_left)))
+				|| (((button & check) & (1<<_LCDML_button_right)))
+		) 
+		{
+			bitWrite(control2, _LCDMenuLib_control2_endFunc, 1);		
 
-		//function ends
-		Button_quit();
-		return true;
-    } 
+			//function ends		
+			Button_quit();
+		
+			return true;
+		} 
     
-    //function runs again
-    return false;    
-  }
+		//function runs again
+		return false;    
+	
+
+}
   
   
 /*
@@ -635,7 +639,7 @@ uint8_t	LCDMenuLib::checkFuncEnd(uint8_t check)
 void	LCDMenuLib::Button_enter()
 {
 	
-		if(g_function != _LCDMenuLib_NO_FUNC) 
+		if(function != _LCDMenuLib_NO_FUNC) 
 		{
 			//function is active
 			bitWrite(button, _LCDML_button, 1);
@@ -644,7 +648,7 @@ void	LCDMenuLib::Button_enter()
 		
 		//menu is active
 		goEnter();
-		g_function = curfuncname;
+		function = curfuncname;
 		
 }
 
@@ -693,7 +697,7 @@ void	LCDMenuLib::Button_quit(uint8_t opt)
 {
 	
 			//no function active, do nothing
-			if(g_function == _LCDMenuLib_NO_FUNC && layer == 0) 
+			if(function == _LCDMenuLib_NO_FUNC && layer == 0) 
 			{					
 
 			} 
@@ -701,7 +705,7 @@ void	LCDMenuLib::Button_quit(uint8_t opt)
 			else 
 			{
 
-				if(bitRead(control2, _LCDMenuLib_control2_endFunc) || !bitRead(control, _LCDMenuLib_control_funcsetup) || opt == 2) 
+				if(bitRead(control2, _LCDMenuLib_control2_endFuncOverExit) || opt == 2) 
 				{
 					bitWrite(control2, _LCDMenuLib_control2_endFuncOverExit, 0);
 					bitWrite(control2, _LCDMenuLib_control2_endFunc, 0);
@@ -716,10 +720,7 @@ void	LCDMenuLib::Button_quit(uint8_t opt)
 					goBack();
 
 					//set function variable to no function
-					g_function = _LCDMenuLib_NO_FUNC;
-				
-					//delete function setup         
-					bitWrite(control, _LCDMenuLib_control_funcsetup, 0);
+					function = _LCDMenuLib_NO_FUNC;					
     
 					//enable menu control
 					bitWrite(control, _LCDMenuLib_control_menu_look, 0);					
@@ -739,26 +740,16 @@ void	LCDMenuLib::Button_quit(uint8_t opt)
  * @return
  * @ - status if this setup was run
  */
-uint8_t	LCDMenuLib::FuncInit(void)
-{
-    //check setup bit    
-	if(bitRead(control, _LCDMenuLib_control_funcsetup) == false) 
-	{
-		//enable function bit
-		bitWrite(control, _LCDMenuLib_control_funcsetup, 1);
+void	LCDMenuLib::FuncInit(void)
+{	
+	//save function name for recall		
+	function  = curfuncname;		
 		
-		//save function name for recall		
-		g_function  = curfuncname;		
+	//reset button status
+	button = 0;
 		
-		//reset button status
-		button = 0;
-		
-		//lock menu
-		bitWrite(control, _LCDMenuLib_control_menu_look, 1);    
-     
-		return false;
-	}	
-    return true;    
+	//lock menu
+	bitWrite(control, _LCDMenuLib_control_menu_look, 1);		  
 } 
  
 /*
@@ -769,7 +760,7 @@ uint8_t	LCDMenuLib::FuncInit(void)
  */ 
 uint8_t	LCDMenuLib::getFunction()
 {	
-	return g_function;	
+	return function;	
 }
 
 /*

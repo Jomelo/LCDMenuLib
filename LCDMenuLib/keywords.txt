@@ -13,7 +13,7 @@ LCDMenuLib	KEYWORD1
 # Makros: Trigger#
 
 LCDML_TRIGGER	KEYWORD2
-
+LCDML_UPDATE	KEYWORD2
 
 
 # Makros: DISP#
