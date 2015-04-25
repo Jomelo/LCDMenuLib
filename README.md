@@ -23,8 +23,6 @@ Arduino LCDMenuLib with Layers, 4Bit LCD, 8Bit LCD, I2C, ShiftReg, DogLCD
 *  no support for gaphic displays yet									
 
 
-Download: 
-https://github.com/Jomelo/LCDMenuLib/archive/master.zip
 
 Description & Support (english)
 link einfügen
