@@ -118,6 +118,7 @@ enum t_lcdml_disp_group {
 
 /* include config */
 #	include <LCDMenuLib___config.h>
+
 #	include <LCDMenuLib_class.h>
 
 /* set pointer to function if not defined */
@@ -128,7 +129,6 @@ enum t_lcdml_disp_group {
 
 /* include arduino ios */
 #	include "Arduino.h"
-
 
 
 /* configure arduino flash lib */
@@ -143,6 +143,10 @@ enum t_lcdml_disp_group {
 
 /* include macros for this lib */
 #	include "LCDMenuLib_makros.h"
+
+
+
+
 
 //# Lcd Menu Lib
 //# =======================

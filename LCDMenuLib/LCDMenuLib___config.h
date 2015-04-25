@@ -63,10 +63,13 @@
 #	define _LCDML_DISP_cfg_max_string_length		20		// max string length witch can be display
 
 
-//
-//	====================================================================================================
-//	0:10  LiquidCrystal (orginal) or LiquidCrystal_new Version 1.2.1			(normal)
-//	====================================================================================================
+
+/* **************************************************************************************************** */
+/*	0:100  LiquidCrystal (orginal)																		*/
+/* **************************************************************************************************** */
+// =========================
+// 4 bit mode and 8 bit mode
+// =========================
 #	define _LCDMenuLib_cfg_lcd_type	0	// 4Bit												(tested)
 //#	define _LCDMenuLib_cfg_lcd_type	1	// 4Bit with rw										(tested)
 //#	define _LCDMenuLib_cfg_lcd_type	2	// 4Bit with backlight								(tested)
@@ -76,38 +79,54 @@
 //#	define _LCDMenuLib_cfg_lcd_type	6	// 8Bit with backlight								(tested)
 //#	define _LCDMenuLib_cfg_lcd_type	7	// 8Bit with rw,backlight							(tested)
 
-//	====================================================================================================
-//	10:20  LiquidCrystal_I2C from LiquidCrystal_new Version 1.2.1				(I2C)
-//	====================================================================================================
-//#	define _LCDMenuLib_cfg_lcd_type	10	// I2C												(tested)
-//#	define _LCDMenuLib_cfg_lcd_type	11	// I2C with backlight								(tested)
-//#	define _LCDMenuLib_cfg_lcd_type	12	// I2C with e,rw,rs									
-//#	define _LCDMenuLib_cfg_lcd_type	13	// I2C with e,rw,rs,backlight
-//#	define _LCDMenuLib_cfg_lcd_type	14	// I2C with e,rw,rs,dat4,dat5,dat6,dat7
-//#	define _LCDMenuLib_cfg_lcd_type	15	// I2C with e,rw,rs,dat4,dat5,dat6,dat7,backlight 
 
-//	====================================================================================================
-//	20:30	LiquidCrystal_SR from LiquidCrystal_new Version 1.2.1				(ShiftRegister)
-//	====================================================================================================
-//#	define _LCDMenuLib_cfg_lcd_type	20	// SR
+/* **************************************************************************************************** */
+/*	100:200  LiquidCrystal_new Version (extern)															*/
+/* **************************************************************************************************** */
+// =========================
+// 4 bit mode and 8 bit mode
+// =========================
+//#	define _LCDMenuLib_cfg_lcd_type	100	// 4Bit												(tested)
+//#	define _LCDMenuLib_cfg_lcd_type	101	// 4Bit with rw										(tested)
+//#	define _LCDMenuLib_cfg_lcd_type	102	// 4Bit with backlight								(tested)
+//#	define _LCDMenuLib_cfg_lcd_type	103	// 4Bit with rw,backlight							(tested)
+//#	define _LCDMenuLib_cfg_lcd_type	104	// 8Bit												(tested)
+//#	define _LCDMenuLib_cfg_lcd_type	105	// 8Bit with rw										(tested)
+//#	define _LCDMenuLib_cfg_lcd_type	106	// 8Bit with backlight								(tested)
+//#	define _LCDMenuLib_cfg_lcd_type	107	// 8Bit with rw,backlight							(tested)
+// =========================
+// I2C
+// =========================
+//#	define _LCDMenuLib_cfg_lcd_type	110	// I2C												(tested)
+//#	define _LCDMenuLib_cfg_lcd_type	111	// I2C with backlight								(tested)
+//#	define _LCDMenuLib_cfg_lcd_type	112	// I2C with e,rw,rs									
+//#	define _LCDMenuLib_cfg_lcd_type	113	// I2C with e,rw,rs,backlight
+//#	define _LCDMenuLib_cfg_lcd_type	114	// I2C with e,rw,rs,dat4,dat5,dat6,dat7
+//#	define _LCDMenuLib_cfg_lcd_type	115	// I2C with e,rw,rs,dat4,dat5,dat6,dat7,backlight 
+// =========================
+// shift register
+// =========================
+//#	define _LCDMenuLib_cfg_lcd_type	120	// SR
+// =========================
+// shift register 2W
+// =========================
+//#	define _LCDMenuLib_cfg_lcd_type	130	// SR2W
+// =========================
+// shift register 3W
+// =========================
+//#	define _LCDMenuLib_cfg_lcd_type	140	// SR3W												(tested)
+//#	define _LCDMenuLib_cfg_lcd_type	141	// SR3W with backlight								(tested)
+//#	define _LCDMenuLib_cfg_lcd_type	142	// SR3W with control lines							(tested)
+//#	define _LCDMenuLib_cfg_lcd_type	143	// SR3W with control lines, backlight				(tested)
 
-//	====================================================================================================
-//	30:40	LiquidCrystal_SR from LiquidCrystal_new Version 1.2.1				(ShiftRegister 2W)
-//	====================================================================================================
-//#	define _LCDMenuLib_cfg_lcd_type	30	// SR2W
 
-//	====================================================================================================
-//	40:50	LiquidCrystal_SR from LiquidCrystal_new Version 1.2.1				(ShiftRegister 3W)
-//	====================================================================================================
-//#	define _LCDMenuLib_cfg_lcd_type	40	// SR3W												(tested)
-//#	define _LCDMenuLib_cfg_lcd_type	41	// SR3W with backlight								(tested)
-//#	define _LCDMenuLib_cfg_lcd_type	42	// SR3W with control lines							(tested)
-//#	define _LCDMenuLib_cfg_lcd_type	43	// SR3W with control lines, backlight				(tested)
-
-//	====================================================================================================
-//	100:110	DogLcd
-//	====================================================================================================
-//#define _LCDMenuLib_cfg_lcd_type 100
+/* **************************************************************************************************** */
+/*	200:300  DogLCD (extern)																			*/
+/* **************************************************************************************************** */
+// =========================
+// 4 bit mode
+// =========================
+//#define _LCDMenuLib_cfg_lcd_type 200
 
 
 #endif

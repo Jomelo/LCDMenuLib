@@ -281,6 +281,39 @@
 //non thread id
 #	define     _LCDML_BACK_default_id				255
 
+
+
+#	define LCDML_BACK_create()\
+		void LCDML_BACK_setup(LCDML_BACKEND_menu)\
+		{\
+			if(LCDML.getFunction() != _LCDMenuLib_NO_FUNC)\
+			{\
+				LCDML.FuncInit();\
+				lcd.clear();\
+				g_LCDML_DISP_functions_setup[LCDML.getCurFunction()]();\
+			}\
+		}\
+		boolean LCDML_BACK_loop(LCDML_BACKEND_menu)\
+		{\
+			if(LCDML.getFunction() != _LCDMenuLib_NO_FUNC)\
+			{\
+				g_LCDML_DISP_functions_loop[LCDML.getCurFunction()]();\
+			} else {\
+				LCDML_BACK_dynamic_setDefaultTime(LCDML_BACKEND_menu);\
+				LCDML_BACK_stop(LCDML_BACKEND_menu);\
+				LCDML_BACK_reset(LCDML_BACKEND_menu);\
+			}\
+			return true;\ 
+		}
+
+
+
+
+
+
+
+
+
 //init for threads
 	// macro: setup function
 #	define LCDML_BACK_setup(name)\
