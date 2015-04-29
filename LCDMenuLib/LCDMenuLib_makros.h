@@ -76,7 +76,7 @@
 
 #	define LCDML_UPDATE()\
 		LCDML_BACK_dynamic_timeToZero(LCDML_BACKEND_menu);\
-		if(LCDML.getFunction() != _LCDMenuLib_NO_FUNC && g_LCDML_DISP_functions_loop_setup[LCDML.getCurFunction()] != LCDML_FUNC_loop_setup) {\    
+		if(LCDML.getFunction() != _LCDMenuLib_NO_FUNC && g_LCDML_DISP_functions_loop_setup[LCDML.getCurFunction()] != LCDML_FUNC_loop_setup) {\
 			LCDML_BACK_start(LCDML_BACKEND_menu);\
 		}
 
