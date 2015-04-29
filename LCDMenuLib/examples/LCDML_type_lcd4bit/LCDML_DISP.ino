@@ -16,10 +16,7 @@ void LCDML_DISP_setup(LCDML_FUNC_information)
 void LCDML_DISP_loop(LCDML_FUNC_information)
 {
   // end function for callback */
-  if (LCDML.FuncEnd(0, 1, 1, 1, 1, 1)) // (direct, enter, up, down, left, right)
-  {
-    // do something bevor this function is closed
-  }
+  LCDML.FuncEnd(0, 1, 1, 1, 1, 1); // (direct, enter, up, down, left, right) 
 }
 
 /* ********************************************************************* */
@@ -42,22 +39,15 @@ void LCDML_DISP_loop(LCDML_FUNC_timer_info)
     lcd.print(g_func_timer_info);       // print the time counter value */
   }
 
-
   // check if the function ends normaly
   if (g_func_timer_info <= 0)
   {
     // end function for callback
-    if (LCDML.FuncEnd(1, 0, 0, 0, 0, 0)) // (direct, enter, up, down, left, right)
-    {
-      // do something bevor this function is closed
-    }
+    LCDML.FuncEnd(1, 0, 0, 0, 0, 0); // (direct, enter, up, down, left, right)    
   }
 
   // check if the function ends hard
-  if (LCDML.FuncEndQuitButton())
-  {
-    // do something bevor this function is closed
-  }
+  LCDML.FuncEndQuitButton();  
 }
 
 
@@ -99,16 +89,10 @@ void LCDML_DISP_loop(LCDML_FUNC_p2)
 
   if (g_button_value >= 3) {
     // end function for callback
-    if (LCDML.FuncEnd(1, 0, 0, 0, 0, 0)) // (direct, enter, up, down, left, right)
-    {
-      // do something bevor this function is closed normaly
-    }
+    LCDML.FuncEnd(1, 0, 0, 0, 0, 0); // (direct, enter, up, down, left, right)   
   }
 
-  if (LCDML.FuncEndQuitButton())
-  {
-    //* do something bevor this function is closed hard
-  }
+  LCDML.FuncEndQuitButton();  
 }
 
 
@@ -119,34 +103,23 @@ void LCDML_DISP_setup(LCDML_FUNC_back)
    LCDML.Button_quit(2);        // quit button
    LCDML.FuncEnd(1, 0, 0, 0, 0, 0); // direct func end  
 }
-void LCDML_DISP_loop(LCDML_FUNC_back)
-{
-}
 
 /* ********************************************************************* */
 void LCDML_DISP_setup(LCDML_FUNC_prog_disable)
 /* ********************************************************************* */
-{   
-}
-void LCDML_DISP_loop(LCDML_FUNC_prog_disable)
 {
   LCDML_DISP_groupDisable(_LCDML_G2);
   LCDML_DISP_groupEnable(_LCDML_G3);
   LCDML.goRoot();
-  LCDML.FuncEnd(1, 0, 0, 0, 0, 0); // direct func end
+  LCDML.FuncEnd(1, 0, 0, 0, 0, 0); // direct func end  
 }
 
 /* ********************************************************************* */
 void LCDML_DISP_setup(LCDML_FUNC_prog_enable)
 /* ********************************************************************* */
-{  
-}
-void LCDML_DISP_loop(LCDML_FUNC_prog_enable)
 {
   LCDML_DISP_groupEnable(_LCDML_G2);
   LCDML_DISP_groupDisable(_LCDML_G3);
   LCDML.goRoot();
-  LCDML.FuncEnd(1, 0, 0, 0, 0, 0); // direct func end
+  LCDML.FuncEnd(1, 0, 0, 0, 0, 0); // direct func end  
 }
-
-

@@ -16,9 +16,7 @@ void LCDML_control_serial()
       case _LCDML_CONTROL_serial_quit:   LCDML.Button_quit(); break;
       default: break;
     }    
-    
-    LCDML_UPDATE(); 
-    
+    LCDML_UPDATE();    
   }
 }
 
