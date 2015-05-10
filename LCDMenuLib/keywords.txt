@@ -24,13 +24,16 @@ LCDML_DISP_createMenu	KEYWORD2
 LCDML_DISP_init	KEYWORD2
 LCDML_DISP_setup	KEYWORD2
 LCDML_DISP_loop	KEYWORD2
+LCDML_DISP_loop_end	KEYWORD2
 LCDML_DISP_groupEnable	KEYWORD2
 LCDML_DISP_groupDisable	KEYWORD2
 LCDML_DISP_initObjects	KEYWORD2
 LCDML_DISP_initFunction	KEYWORD2
 LCDML_DISP_lang	KEYWORD2
 LCDML_DISP_jumpToFunc	KEYWORD2
-
+LCDML_DISP_setFuncEnd	KEYWORD2
+LCDML_DISP_disableLoop	KEYWORD2
+LCDML_DISP_disableLoopEnd	KEYWORD3
 
 LCDML_checkButtonEnter	KEYWORD2
 LCDML_checkButtonUp	KEYWORD2
@@ -71,8 +74,7 @@ Button_up_down_left_right	KEYWORD2
 Button_quit	KEYWORD2
 Timer	KEYWORD2
 FuncInit	KEYWORD2
-FuncEnd	KEYWORD2
-FuncEndQuitButton	KEYWORD2
+
 checkButtons	KEYWORD2
 checkFuncEnd	KEYWORD2
 FuncEnd	KEYWORD2
@@ -206,6 +208,14 @@ _BUTTON_back_min	LITERAL1
 _BUTTON_back_max	LITERAL1
 g_LCDML_DISP_press_time	LITERAL1
 
+_LCDML_priority	LITERAL1
+_LCDML_no_priority	LITERAL1
+_LCDML_millis	LITERAL1
+_LCDML_micros	LITERAL1
+_LCDML_stop	LITERAL1
+_LCDML_start	LITERAL1
+_LCDML_stable	LITERAL1
+
 #######################################
 # Syntax Coloring Map SD
 #######################################
@@ -275,15 +285,5 @@ LCDML_BACK_call_loop	KEYWORD2
 LCDML_BACK_call_setup	KEYWORD2
 LCDML_BACK_call_stable	KEYWORD2
 
-#######################################
-# Constants (LITERAL1)
-#######################################
-_sT_priority	LITERAL1
-_sT_no_priority	LITERAL1
 
-_sT_millis	LITERAL1
-_sT_micros	LITERAL1
 
-_sT_stop	LITERAL1
-_sT_start	LITERAL1
-_sT_stable	LITERAL1

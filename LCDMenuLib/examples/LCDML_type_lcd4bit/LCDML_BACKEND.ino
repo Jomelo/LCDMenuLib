@@ -1,8 +1,41 @@
 /* ===================================================================== */
 /* LCDMenuLib BACKEND FUNCTION - do not change here something            */
 /* ===================================================================== */
+
 /* ********************************************************************* */
-void LCDML_BACK_setup(LCDML_BACKEND_control)      /* NOTHING CHANGE HERE */
+void LCDML_BACK_setup(LCDML_BACKEND_menu)         /* NOTHING CHANGE HERE */
+/* ********************************************************************* */
+{
+  if(LCDML.getFunction() != _LCDMenuLib_NO_FUNC) {		
+    g_LCDML_BACK_lastFunc = LCDML.getFunction(); 
+    LCDML.FuncInit();
+    lcd.clear();
+    g_LCDML_DISP_funcend = 0;				
+    g_LCDML_DISP_functions_loop_setup[g_LCDML_BACK_lastFunc]();			
+  }
+}
+boolean LCDML_BACK_loop(LCDML_BACKEND_menu)
+{
+  if(LCDML.getFunction() != _LCDMenuLib_NO_FUNC) {			
+    g_LCDML_BACK_lastFunc = LCDML.getFunction();				
+    g_LCDML_DISP_functions_loop[g_LCDML_BACK_lastFunc]();			
+  }
+  else {
+    LCDML_BACK_dynamic_setDefaultTime(LCDML_BACKEND_menu);
+    LCDML_BACK_stopStable(LCDML_BACKEND_menu);
+    LCDML_BACK_reset(LCDML_BACKEND_menu);
+  }
+  return true;
+}
+void LCDML_BACK_stable(LCDML_BACKEND_menu)
+{
+  if (g_LCDML_BACK_lastFunc != _LCDMenuLib_NO_FUNC) {					
+    g_LCDML_DISP_functions_loop_end[g_LCDML_BACK_lastFunc]();
+    g_LCDML_BACK_lastFunc = _LCDMenuLib_NO_FUNC;
+  }
+}
+/* ********************************************************************* */
+void LCDML_BACK_setup(LCDML_BACKEND_control)      
 /* ********************************************************************* */
 {
   #if(_LCDML_DISP_cfg_control == 3)
@@ -12,7 +45,7 @@ void LCDML_BACK_setup(LCDML_BACKEND_control)      /* NOTHING CHANGE HERE */
   #endif  
 }
 boolean LCDML_BACK_loop(LCDML_BACKEND_control)
-{
+{  
   #if(_LCDML_DISP_cfg_control == 0)  
   LCDML_control_serial();           
   #elif(_LCDML_DISP_cfg_control == 1)  
@@ -25,8 +58,83 @@ boolean LCDML_BACK_loop(LCDML_BACKEND_control)
   #endif
   return true;  
 }
+void LCDML_BACK_stable(LCDML_BACKEND_control)
+{
+}
+
 /* ===================================================================== */
 /* OWM BACKEND FUNCTION */
 /* ===================================================================== */
+
+
+
+/* ===================================================================== */
+void LCDML_BACK_setup(LCDML_BACKEND_test10)
+/* ===================================================================== */
+{
+  Serial.println(F("10 start"));  
+}
+boolean LCDML_BACK_loop(LCDML_BACKEND_test10) {
+  Serial.println(F("10 loop"));
+}
+void LCDML_BACK_stable(LCDML_BACKEND_test10) {
+  Serial.println(F("10 stop stable"));
+}
+
+/* ===================================================================== */
+void LCDML_BACK_setup(LCDML_BACKEND_test20)
+/* ===================================================================== */
+{
+  Serial.println(F("20 start"));  
+}
+boolean LCDML_BACK_loop(LCDML_BACKEND_test20) {
+  Serial.println(F("20"));
+}
+void LCDML_BACK_stable(LCDML_BACKEND_test20){}
+
+
+/* ===================================================================== */
+void LCDML_BACK_setup(LCDML_BACKEND_test30)
+/* ===================================================================== */
+{
+  Serial.println(F("30 event start"));  
+}
+boolean LCDML_BACK_loop(LCDML_BACKEND_test30) {
+  Serial.println(F("30 event loop"));
+}
+void LCDML_BACK_stable(LCDML_BACKEND_test30){}
+
+
+uint8_t g_initscreen_firststart = 0;
+/* ********************************************************************* */
+//void LCDML_BACK_setup(LCDML_BACKEND_initscreen)      
+/* ********************************************************************* */
+/*
+{
+  Serial.println(F("initscreen started")); 
+}
+boolean LCDML_BACK_loop(LCDML_BACKEND_initscreen)
+{
+  Serial.println(F("initscreen updated"));  
+}
+void LCDML_BACK_stable(LCDML_BACKEND_initscreen)
+{  
+}
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 

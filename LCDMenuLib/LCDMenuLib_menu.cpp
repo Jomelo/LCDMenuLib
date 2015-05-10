@@ -1,138 +1,144 @@
-/************************************************************************/
+/* ******************************************************************** */
 /*																		*/
-/*								LCDMenuLib								*/
+/*						LCDMenuLib (LCDML)								*/
 /*																		*/
-/************************************************************************/
-/* Autor:			Nils Feldkämper										*/
-/* Contact:			nilsfeld@gmail.com  (kein Support)					*/
+/* ******************************************************************** */
+/* Autor:			Jomelo												*/
 /* Create:			03.02.2008											*/
-/* Edit:			03.02.2014											*/
-/************************************************************************/
-/* License:			all Free											*/
-/************************************************************************/
-/* Support:																*/
-/* Ich beantworte Frage zu der Lib nur im Forum. Stellt eure Fragen in  */
-/* diesem Thread:														*/
-/* 			http://forum.arduino.cc/index.php?topic=73816.0				*/
-/*																		*/
-/************************************************************************/
-/* Deutsche Beschreibung:												*/
-/* Mit der Lib können LCD Menüs über mehrere Ebenen mit Hilfe des   	*/
-/* Nested Set Models generiert werden. Jeder Menüpunkt kann mit einer   */
-/* Funktion hinterlegt werden die durch die Lib aufgerufen wird, sobald */
-/* der Menüpunkt aktiviert wird.										*/
-/************************************************************************/
-/************************************************************************/
-/* Driver																*/
-/*  - Orginal LiquidCrystal												*/
-/*  --- 4 Bit Mode														*/
-/*  --- 8 Bit Mode														*/
-/*	- New LiquidCrystal													*/
-/*  --- 4 Bit Mode														*/
-/*  --- 8 Bit Mode														*/
-/*  --- I2C																*/
-/*  --- SR																*/
-/*  --- SR2W (74LS164)													*/
-/*  --- SR3W (74HC595N)													*/
-/* - LiquidCrystal_I2C													*/
-/*	--- I2C																*/
-/************************************************************************/
-
+/* Edit:			10.05.2015											*/
+/* ******************************************************************** */
+/* support (german):													*/
+/* 	http://forum.arduino.cc/index.php?topic=73816.0						*/
+/* support (english / german)											*/
+/*	https://github.com/Jomelo/LCDMenuLib/issues							*/
+/* ******************************************************************** */
 
 #include "LCDMenuLib_menu.h"
 
-LCDMenu::LCDMenu(uint8_t n, uint8_t dis)
+/* ******************************************************************** */
+/* constructor 
+ *	@param
+ *		name (uint8)
+ *		group (uint8)
+ *	@return
+ */
+/* ******************************************************************** */
+LCDMenu::LCDMenu(uint8_t n, uint8_t group)
+/* ******************************************************************** */
 {	
-	name=n;
-	disp=dis;
+	name = n;		// element name 
+	disp = group;	// element group
 }
 
+
+/* ******************************************************************** */
+/* private
+ *	@param
+ *		LCDMenu (pointer)
+ *	@return
+ */
+/* ******************************************************************** */
 void LCDMenu::setParent(LCDMenu &p)
+/* ******************************************************************** */
 {
-	parent=&p;
+	parent = &p;
 }
 
+
+/* ******************************************************************** */
+/* private 
+ *	@param
+ *		sibling before this (pointer) 
+ *		parent (pointer)
+ *	@return
+ */
+/* ******************************************************************** */
 void LCDMenu::addSibling(LCDMenu &s,LCDMenu &p)
+/* ******************************************************************** */
 {
-	if (sibling)
-	{
+	if (sibling) { // add sibling if sibing exists 
 		sibling->addSibling(s,p);
-	}
-	else
-	{
-		sibling=&s;
+	} else
+	{ // add sibling and parent 
+		sibling =& s;
 		sibling->setParent(p);
 	}
 }
 
 
-
+/* ******************************************************************** */
+/* public:
+ *	@param
+ *		LCDMenu (pointer)
+ *	@return
+ */
+/* ******************************************************************** */
 void LCDMenu::addChild(LCDMenu &c)
+/* ******************************************************************** */
 {
-	if (child)
-	{
+	if (child) { // add sibling if child exists
 		child->addSibling(c,*this);
-	}
-	else
-	{
+	} else
+	{ // add child  and parent
 		child=&c;
 		child->setParent(*this);
 	}
 }
 
 
-LCDMenu * LCDMenu::getChild(uint8_t which, uint8_t group)
+/* ******************************************************************** */
+/* public
+ *	@param
+		which ...
+ *	@return
+ */
+/* ******************************************************************** */
+LCDMenu * LCDMenu::getChild(uint8_t which)
+/* ******************************************************************** */
 {
-	if (child)
-	{		
-		return child->getSibling(which, group);		
+	if (child) { // return child if exists		
+		return child->getSibling(which);		
 	}
-	else //This Menu item has no children
-	{
+	else { // this menu item has no children
 		return NULL;
 	}
 }
 
-LCDMenu * LCDMenu::getSibling(uint8_t howfar, uint8_t group)
-{
-	LCDMenu *tmp = NULL;
 
-	if (howfar==0)
-	{
-		if(this->disp == 0 || bitRead(group, this->disp)) {
-			
-			return this;
-		} else {
-			while((tmp=this->getSibling(1, group)) != NULL) {
-				if(tmp->disp == 0 || bitRead(group, tmp->disp)) {					
-					break;
-				}
-			}
-			if(tmp != NULL) {
-				return tmp;
-			} else {
-				return NULL;
-			}
-		}				
+/* ******************************************************************** */
+/* public
+ *	@param
+ *	@return
+ */
+/* ******************************************************************** */
+LCDMenu * LCDMenu::getSibling(uint8_t howfar)
+/* ******************************************************************** */
+{
+	if (howfar == 0) { // this sibling					
+		return this;				
 	}
-	else if (sibling)
-	{		
-		return sibling->getSibling(howfar-1, group);		
+	else if (sibling) {	// get next sibling	
+		return sibling->getSibling(howfar - 1);
 	}
-	else //Asking for a nonexistent sibling
-	{
+	else { // asking for a nonexistent sibling	
 		return NULL;
 	}
 }
 
+
+/* ******************************************************************** */
+/* public
+ *	@param
+ *	@return
+ */
+/* ******************************************************************** */
 LCDMenu * LCDMenu::getParent()
+/* ******************************************************************** */
 {
-	if (parent)
-	{		
+	if (parent) { // get parent if exists		
 		return parent;		
 	}
-	else //Top Menu
-	{
+	else { // root menu	
 		return this;
 	}
 }

@@ -73,12 +73,14 @@
 		LCDML_BACK_dynamic_setLoopTime(LCDML_BACKEND_control, time)
 		
 
-
-#	define LCDML_UPDATE()\
+#	define LCDML_UPDATE()\	
 		LCDML_BACK_dynamic_timeToZero(LCDML_BACKEND_menu);\
 		if(LCDML.getFunction() != _LCDMenuLib_NO_FUNC && g_LCDML_DISP_functions_loop_setup[LCDML.getCurFunction()] != LCDML_FUNC_loop_setup) {\
 			LCDML_BACK_start(LCDML_BACKEND_menu);\
 		}
+
+
+		
 
 
 #	define LCDML_DISP_setup(name)\
@@ -86,18 +88,8 @@
 	// macro: loop function
 #	define LCDML_DISP_loop(name)\
 		name ##_loop(void)
-#	define LCDML_DISP_end(name)\
+#	define LCDML_DISP_loop_end(name)\
 		name ##_loop_end(void)
-
-
-
-#	define FuncEnd(direct,enter,up,down,left,right)\
-		checkFuncEnd(B##direct##enter##up##down##left##right)
-
-#	define FuncEndQuitButton()\
-		checkFuncEnd(0)
-
-
 
 
 #	define LCDML_checkButtonEnter()\
@@ -137,7 +129,15 @@
 		void LCDML_FUNC_loop(void){}\
 		void LCDML_FUNC_loop_end(void){}\
 		unsigned long g_LCDML_DISP_press_time = 0;\
+		uint8_t g_LCDML_DISP_funcend = 0;\
 		LCDMenu Item (0, true)
+		
+
+#	define LCDML_DISP_setFuncEnd(dir,enter,up,down,left,right)\
+	g_LCDML_DISP_funcend = B##dir##enter##up##down##left##right;
+
+#	define FuncEnd(dir,enter,up,down,left,right)\
+		checkFuncEnd(B##dir##enter##up##down##left##right)
 
 
 /* ************************************************ */
@@ -145,9 +145,9 @@
 /* ************************************************ */
 #	define LCDML_DISP_add(name, disp, item_parent, item_child, content, function)\
 		const char g_LCDML_DISP_lang_ ## name ##_var[] PROGMEM = {content};\
-		void function ## _loop_setup(void);\
-		void function ## _loop(void) __attribute__((weak));\
-		void function ## _loop_end(void) __attribute__((weak));\
+		void function ## _loop_setup(void); \
+		void function ## _loop(void)__attribute__((weak));\
+		void function ## _loop_end(void)__attribute__((weak));\
 		LCDMenu item_parent ## _ ## item_child(name, disp); \
 		void LCDML_DISP_##name##_function() { g_LCDML_DISP_functions_loop_setup[name] = function##_loop_setup;  g_LCDML_DISP_functions_loop[name] = function##_loop; g_LCDML_DISP_functions_loop_end[name] = function##_loop_end; item_parent.addChild(item_parent ## _ ## item_child); }
 
@@ -159,12 +159,11 @@
 #	define LCDML_DISP_lang(name)\
 		g_LCDML_DISP_lang_ ## name ## _var
 
-
 #	define LCDML_DISP_groupEnable(g)\
-		bitSet(LCDML.group, g)
+		bitSet(LCDML.group_en, g)
 
 #	define LCDML_DISP_groupDisable(g)\
-		bitClear(LCDML.group, g)
+		bitClear(LCDML.group_en, g)
 
 
 /* ************************************************ */
@@ -180,51 +179,16 @@
 		if(_LCDML_DISP_cfg_scrollbar == 1) {\
 			bitWrite(LCDML.control, _LCDMenuLib_control_scrollbar_l, 1);\
 			\
-			uint8_t scroll_bar[5][8] = {\
-				{B10001,B10001,B10001,B10001,B10001,B10001,B10001,B10001},\
-				{B11111,B11111,B10001,B10001,B10001,B10001,B10001,B10001},\
-				{B10001,B10001,B11111,B11111,B10001,B10001,B10001,B10001},\
-				{B10001,B10001,B10001,B10001,B11111,B11111,B10001,B10001},\
-				{B10001,B10001,B10001,B10001,B10001,B10001,B11111,B11111}\
-			};\
-			lcd._LCDML_lcd_createChar(0, scroll_bar[0]);\
-			lcd._LCDML_lcd_createChar(1, scroll_bar[1]);\
-			lcd._LCDML_lcd_createChar(2, scroll_bar[2]);\
-			lcd._LCDML_lcd_createChar(3, scroll_bar[3]);\
-			lcd._LCDML_lcd_createChar(4, scroll_bar[4]);\
-		} else if(_LCDML_DISP_cfg_scrollbar == 2) {\
-			bitWrite(LCDML.control, _LCDMenuLib_control_scrollbar_h, 1);\
-			\
-			if(_LCDML_DISP_cfg_lcd_standard == 0) {\
-				uint8_t scroll_bar[2][8] = {\
-					{B00000,B00100,B01110,B10101,B00100,B00100,B00100,B00000},\
-					{B00000,B00100,B00100,B00100,B10101,B01110,B00100,B00000}\
-				};\
-				lcd._LCDML_lcd_createChar(0, scroll_bar[0]);\
-				lcd._LCDML_lcd_createChar(1, scroll_bar[1]);\
-			}\
-		}\
-		LCDMenuLib_initFunction(N); \
+			LCDML.scrollbarInit(); \
+		} \
+		LCDML_DISP_initFunction(N); \
 		LCDML.display();
-	
-   
-     
-
-
-
-		
-		
-
-		
-
-
-
 
 	
 /* ************************************************ */
 /* LCDMenuLib_initObjects							*/
 /* ************************************************ */
-#	define LCDMenuLib_initObjects()\
+#	define LCDML_DISP_initObjects()\
 		_LCDML_lcd_obj;\
 		LCDMenuLib LCDML (Item, lcd, g_LCDML_DISP_lang_table, _LCDML_DISP_rows, _LCDML_DISP_cols);
 
@@ -232,10 +196,11 @@
 /* LCDMenuLib_jumpToFunc							*/
 /* ************************************************ */
 
-#	define LCDMenuLib_jumpToFunc(name)\
+#	define LCDML_DISP_jumpToFunc(name)\
 		for(uint8_t i=0; i<=254;i++) {\
-		if(name##_setup == g_LCDML_DISP_functions_loop_seup[i]) {\
+			if (name##_loop_setup == g_LCDML_DISP_functions_loop_setup[i]) { \
 				LCDML.jumpToElement(i);\
+				LCDML_UPDATE(); \
 				break;\
 			}\
 		}\
@@ -245,14 +210,14 @@
 /* ************************************************ */
 /* LCDMenuLib_initFunction							*/
 /* ************************************************ */
-#	define LCDMenuLib_initFunction(N) \
+#	define LCDML_DISP_initFunction(N) \
 		LCDML_DISP_func_repeat(N);
 
 /* ************************************************ */
 /* LCDMenuLib_createMenu							*/
 /* ************************************************ */
 #	define LCDML_DISP_createMenu(N)\
-		const char * const g_LCDML_DISP_lang_table[] PROGMEM = { LCDML_DISP_lang_repeat(N) }; LCDMenuLib_initObjects()
+		const char * const g_LCDML_DISP_lang_table[] PROGMEM = { LCDML_DISP_lang_repeat(N) }; LCDML_DISP_initObjects()
 
 
 
@@ -276,25 +241,25 @@
 
 
 // define loop modes
-#	define _sT_no_priority		0
-#	define _sT_priority			1
+#	define _LCDML_no_priority		0
+#	define _LCDML_priority			1
 
-#	define _sT_millis          millis
-#	define _sT_micros          micros
+#	define _LCDML_millis          millis
+#	define _LCDML_micros          micros
 
-#	define _sT_stop				0
-#	define _sT_start			1
-#	define _sT_stable			2
+#	define _LCDML_stop				0
+#	define _LCDML_start			1
+#	define _LCDML_stable			2
 
 
-#	define _sT_status_overrun	0
-#	define _sT_status_free1		1
-#	define _sT_status_free2		2
-#	define _sT_status_free3		3
-#	define _sT_status_free4		4
-#	define _sT_status_free5		5
-#	define _sT_status_free6		6
-#	define _sT_status_free7		7
+#	define _LCDML_status_overrun	0
+#	define _LCDML_status_free1		1
+#	define _LCDML_status_free2		2
+#	define _LCDML_status_free3		3
+#	define _LCDML_status_free4		4
+#	define _LCDML_status_free5		5
+#	define _LCDML_status_free6		6
+#	define _LCDML_status_free7		7
 
 
 
@@ -302,40 +267,7 @@
 #	define     _LCDML_BACK_default_id				255
 
 
-
-#	define LCDML_BACK_create()\
-		void LCDML_BACK_setup(LCDML_BACKEND_menu)\
-		{\
-			if(LCDML.getFunction() != _LCDMenuLib_NO_FUNC)\
-			{\
-				LCDML.FuncInit();\
-				lcd.clear();\
-				g_LCDML_DISP_functions_loop_setup[LCDML.getCurFunction()]();\
-			}\
-		}\
-		boolean LCDML_BACK_loop(LCDML_BACKEND_menu)\
-		{\
-			if(LCDML.getFunction() != _LCDMenuLib_NO_FUNC)\
-			{\
-				g_LCDML_DISP_functions_loop[LCDML.getCurFunction()]();\
-			} else {\
-				LCDML_BACK_dynamic_setDefaultTime(LCDML_BACKEND_menu);\
-				LCDML_BACK_stop(LCDML_BACKEND_menu);\
-				LCDML_BACK_reset(LCDML_BACKEND_menu);\
-			}\
-			return true;\ 
-		}\
-		void LCDML_BACK_stable(LCDML_BACKEND_menu)\
-		{\
-			g_LCDML_DISP_functions_loop_end[LCDML.getCurFunction()]();\
-		}
-
-
-
-
-
-
-
+		
 
 
 //init for threads
@@ -364,6 +296,7 @@
 		uint8_t g_LCDML_BACK_reset[((cnt+1)/7)+1];\
 		uint8_t g_LCDML_BACK_loop_status = true;\
 		uint8_t g_LCDML_BACK_status = 0x00;\
+		uint8_t g_LCDML_BACK_lastFunc = _LCDMenuLib_NO_FUNC;\
 		unsigned long g_LCDML_BACK_timer[(cnt+1)];
 	// macro: loop function  
 #	define LCDML_run(mode)\
@@ -386,9 +319,9 @@
 	// macro: help to create a new thread: generate weak functions
 #	define LCDML_BACK_help_new_thread(id, name, status)\
 		const PROGMEM uint8_t g_LCDML_BACK_id__##name  = id;\
-		void LCDML_BACK_setup_##name(void) __attribute__((weak));\
-		boolean LCDML_BACK_loop_##name(void) __attribute__((weak));\
-		void LCDML_BACK_stable_##name(void)__attribute__((weak));\
+		void LCDML_BACK_setup_##name(void);\
+		boolean LCDML_BACK_loop_##name(void);\
+		void LCDML_BACK_stable_##name(void);\
 		void LCDML_BACK_function_##name(void);\
 		void LCDML_BACK_setupInit_##id(void){ g_LCDML_BACK_priority[id] = LCDML_BACK_function_##name; if(status == 1) {LCDML_BACK_start(name);} else if(status == 2) { LCDML_BACK_stopStable(name); }}
 	// macro: create a new thread with static times
@@ -531,7 +464,7 @@
 		g_LCDML_BACK_timer[g_LCDML_BACK_id__##name] = (millis() + g_LCDML_BACK_dynTime_##name)
 	// macro: setTime 0
 #	define LCDML_BACK_dynamic_timeToZero(name)\
-		bitClear(g_LCDML_BACK_status, _sT_status_overrun);\
+		bitClear(g_LCDML_BACK_status, _LCDML_status_overrun);\
 		g_LCDML_BACK_timer[g_LCDML_BACK_id__##name] = 0
 
 
@@ -571,16 +504,16 @@
 		void LCDML_BACK_function_##name(void)\
 		{\
 			LCDML_BACK_THREAD_isRun(name);\
-			if(!bitRead(g_LCDML_BACK_status, _sT_status_overrun) && timebase() >= g_LCDML_BACK_timer[g_LCDML_BACK_id__##name]) {\				
-				bitWrite(g_LCDML_BACK_status, _sT_status_overrun, (((timebase() + time) < timebase())?1:0) );\				 
+			if(!bitRead(g_LCDML_BACK_status, _LCDML_status_overrun) && timebase() >= g_LCDML_BACK_timer[g_LCDML_BACK_id__##name]) {\
+				bitWrite(g_LCDML_BACK_status, _LCDML_status_overrun, (((timebase() + time) < timebase())?1:0) );\
 				g_LCDML_BACK_timer[g_LCDML_BACK_id__##name] = (timebase() + time);\
 				if(LCDML_BACK_GET_reset(name) == false) {\
 					LCDML_BACK_UNSET_reset(name);\
 					LCDML_BACK_setup_##name();\
 				}\
 				g_LCDML_BACK_loop_status = (LCDML_BACK_loop_##name()) ? true : false;\
-			} else if(bitRead(g_LCDML_BACK_status, _sT_status_overrun) && g_LCDML_BACK_timer[g_LCDML_BACK_id__##name] >= 0 && g_LCDML_BACK_timer[g_LCDML_BACK_id__##name] < time) {\
-				bitClear(g_LCDML_BACK_status, _sT_status_overrun);\
+			} else if(bitRead(g_LCDML_BACK_status, _LCDML_status_overrun) && g_LCDML_BACK_timer[g_LCDML_BACK_id__##name] >= 0 && g_LCDML_BACK_timer[g_LCDML_BACK_id__##name] < time) {\
+				bitClear(g_LCDML_BACK_status, _LCDML_status_overrun);\
 				g_LCDML_BACK_loop_status = false;\
 			}\
 		}

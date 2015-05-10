@@ -1,24 +1,24 @@
-/************************************************************************/
+/* ******************************************************************** */
 /*																		*/
-/*								LCDMenuLib								*/
+/*						LCDMenuLib (LCDML)								*/
 /*																		*/
-/************************************************************************/
-/* Autor:			Nils Feldkämper										*/
+/* ******************************************************************** */
+/* Autor:			Jomelo												*/
 /* Create:			03.02.2008											*/
-/* Edit:			18.10.2014											*/
-/************************************************************************/
-/* License:			all Free											*/
-/************************************************************************/
+/* Edit:			10.05.2015											*/
+/* ******************************************************************** */
+/* support (german):													*/
+/* 	http://forum.arduino.cc/index.php?topic=73816.0						*/
+/* support (english / german)											*/
+/*	https://github.com/Jomelo/LCDMenuLib/issues							*/
+/* ******************************************************************** */
 
 /************************************************************************/
 /* Description:															*/
 /* With this library, you can create menus with layers on base on the   */
 /* Nested-Set-Model. For every menu element can be create a function    */
 /* to control the content. This function is called automatical from the */
-/* library and runs in a loop, without blocking other programm parts.   */
-/*																		*/
-/* Support:  -- englischen Link einfügen --                             */
-/*                                                                      */
+/* library and can runs in a loop, without blocking other programm parts*/
 /************************************************************************/
 
 /************************************************************************/
@@ -27,8 +27,6 @@
 /* Nested Set Models generiert werden. Jeder Menüpunkt kann mit einer   */
 /* Funktion hinterlegt werden die durch die Lib aufgerufen wird, sobald */
 /* der Menüpunkt aktiviert wird.										*/
-/*																		*/
-/* Support (german):	http://forum.arduino.cc/index.php?topic=73816.0	*/
 /************************************************************************/
 
 /************************************************************************/
@@ -67,10 +65,10 @@
 
 
 /* define the no function constante */
-#	define _LCDMenuLib_NO_FUNC				255
+#	define _LCDMenuLib_NO_FUNC					255
 
 //button bit pos
-//#	define _LCDMenuLib_button_init_screen			7
+#	define _LCDML_button_free					7
 #	define _LCDML_button						6
 #	define _LCDML_button_quit					5
 #	define _LCDML_button_enter					4
@@ -80,45 +78,27 @@
 #	define _LCDML_button_right					0
 
 //control bit pos
-#	define _LCDMenuLib_control_menu_back			7
-#	define _LCDMenuLib_control_menu_look			6
-#	define _LCDMenuLib_control_scrollbar_h			5
-#	define _LCDMenuLib_control_scrollbar_l			4
-#	define _LCDMenuLib_control_lcd_standard			3
-//#	define _LCDMenuLib_control_initscreen_enable	2
-//#	define _LCDMenuLib_control_initscreen_active	1
-#	define _LCDMenuLib_control_funcsetup			0
+#	define _LCDMenuLib_control_menu_back		7
+#	define _LCDMenuLib_control_menu_look		6
+#	define _LCDMenuLib_control_free_5			5
+#	define _LCDMenuLib_control_scrollbar_l		4
+#	define _LCDMenuLib_control_lcd_standard		3
+#	define _LCDMenuLib_control_free_2			2
+#	define _LCDMenuLib_control_free_1			1
+#	define _LCDMenuLib_control_funcsetup		0
 
-//control2 bits pos
-#	define _LCDMenuLib_control2_free7				7
-#	define _LCDMenuLib_control2_free6				6
-#	define _LCDMenuLib_control2_free5				5
-#	define _LCDMenuLib_control2_free4				4
-#	define _LCDMenuLib_control2_free3				3
-#	define _LCDMenuLib_control2_free2				2
-#	define _LCDMenuLib_control2_endFunc				1
-#	define _LCDMenuLib_control2_endFuncOverExit		0
-
-
-
-
-
-enum t_lcdml_disp_group {
- _LCDML_G1,
- _LCDML_G2,
- _LCDML_G3,
- _LCDML_G4,
- _LCDML_G5,
- _LCDML_G6,
- _LCDML_G7,
- _LCDML_G8
-};
-
-
+// groups
+#	define _LCDML_G8							7
+#	define _LCDML_G7							6
+#	define _LCDML_G6							5
+#	define _LCDML_G5							4
+#	define _LCDML_G4							3
+#	define _LCDML_G3							2
+#	define _LCDML_G2							1
+#	define _LCDML_G1							0
 
 /* include config */
 #	include <LCDMenuLib___config.h>
-
 #	include <LCDMenuLib_class.h>
 
 /* set pointer to function if not defined */
@@ -130,12 +110,10 @@ enum t_lcdml_disp_group {
 /* include arduino ios */
 #	include "Arduino.h"
 
-
-/* configure arduino flash lib */
+/* configure arduino flash lib and load it*/
 #	ifndef __PROG_TYPES_COMPAT__
 #		define __PROG_TYPES_COMPAT__
 #	endif
-/* include arduino flash lib */
 #	include <avr/pgmspace.h>
 
 /* include lcd menu lib, this generates the menu items */
@@ -143,10 +121,6 @@ enum t_lcdml_disp_group {
 
 /* include macros for this lib */
 #	include "LCDMenuLib_makros.h"
-
-
-
-
 
 //# Lcd Menu Lib
 //# =======================
@@ -156,91 +130,86 @@ enum t_lcdml_disp_group {
 			/* LCD Object */
 			_LCDML_lcd_type *lcd;
 			/* Menu Objects */
-			LCDMenu *rootMenu;
-			LCDMenu *curMenu;
+			LCDMenu		*rootMenu;
+			LCDMenu		*curMenu;
 
 			/* Saves the string position from menu elments in flash memory */
 			const char * const *flash_table;
+
+			
 			
 			/* display cols */
-			uint8_t cols;
+			uint8_t		cols;
 			/* display rows */
-			uint8_t rows;
+			uint8_t		rows;
 			/* save the last layer */
-			uint8_t layer_save[_LCDML_DISP_cfg_cursor_deep];      // Speichert Cursor Position bis zur 8 Ebene
+			uint8_t		layer_save[_LCDML_DISP_cfg_cursor_deep];      // Speichert Cursor Position bis zur 8 Ebene
 
 			/* current corsor position */
-			uint8_t curloc;  
+			uint8_t		curloc;
+			uint8_t		curloc_cor;
+			uint8_t		curloc_cor_first;
 			/* current scroll position */
-			uint8_t scroll; 
+			uint8_t		scroll; 
 			/* save the last cursor position when a menue element is called */
-			uint8_t cursor_pos; 
-
-			uint8_t child_cnt;
-
-			
+			uint8_t		cursor_pos; 
+			/* how many childs exists on next layer */
+			uint8_t		child_cnt;			
 			/* save the last id from a menu element */
-			uint8_t curfuncname;     
-		
+			uint8_t		curfuncname;		
 			/* containes the current layer */
-			uint8_t layer; 
-			
-			/* move to the parent menu */
-			void goBack();
-			/* activate the menu under the cursor */
-			void goEnter();        
-			/* set the cursor to the current position in the menu */
-			void setCursor(); 
-			/* scroll the menu */
-			void doScroll(); 
-			/* go to a menu element */
-			void goMenu(LCDMenu &m);   
-			/* works with jump to element on globale function */
-			uint8_t selectElementDirect(LCDMenu &p_m, uint8_t p_search);
+			uint8_t		layer; 			
 
-			uint8_t countChilds();			
+			/* move to the parent menu */
+			void		goBack();
+			/* activate the menu under the cursor */
+			void		goEnter();        
+			/* set the cursor to the current position in the menu */
+			void		setCursor(); 
+			/* scroll the menu */
+			void		doScroll(); 
+			/* go to a menu element */
+			void		goMenu(LCDMenu &m);   
+			/* works with jump to element on globale function */
+			uint8_t		selectElementDirect(LCDMenu &p_m, uint8_t p_search);
+			/* how many childs exists on next layer */
+			uint8_t		countChilds();			
 					
 		public:			
+			/* button variable */
+			uint8_t		button;
+			/* control bits */
+			uint8_t		control;
+			/* save group_hidden_status */
+			uint8_t		group_en;
+			/* save the last id from a menu element, when a menu elmend is called */
+			uint8_t		function;
+						
 			/* Constructor */
 			LCDMenuLib(LCDMenu &p_r,_LCDML_lcd_type &p_d, const char * const *p_flash_table, const uint8_t p_rows, const uint8_t p_cols);   
 			
 			/* Display the current menu on the lcd */
-			void		display();        			
-			
+			void		display();			
 			/* jump to root menu */
 			void		goRoot();	
 			/* jump to menu element */
 			void		jumpToElement(uint8_t element);
 			/* replace the delay function */
-			uint8_t		Timer(unsigned long &p_var, unsigned long p_time);
-			
+			uint8_t		Timer(unsigned long &p_var, unsigned long p_time);			
 			/* menu element function init */
-			void		FuncInit();
-			/* menu element function check end */
-			uint8_t checkFuncEnd(uint8_t check);
-			
-
-			/* button variable */
-			uint8_t button; 
-			/* control bits */
-			uint8_t control;
-			uint8_t control2;
-
-			uint8_t	group;
-			/* save the last id from a menu element, when a menu elmend is called */
-			uint8_t function;
-
-
+			void		FuncInit();	
 			/* check if a button was pressed and reset the globale buttonCheck bit */
-			uint8_t checkButtons();
+			uint8_t		checkButtons();
+			uint8_t		checkButtons(uint8_t check);
+			uint8_t		checkFuncEnd(uint8_t check);
 			/* go in a menu element */
-			void Button_enter();
+			void		Button_enter();
 			/* go out of a menu element */
-			void Button_quit(uint8_t opt=false);
+			void		Button_quit();
 			/* navigate through the menu */
-			void Button_up_down_left_right(uint8_t but);			
-			
-
+			void		Button_up_down_left_right(uint8_t but);
+			/* redefine custom chars for scrollbar */
+			void		scrollbarInit();
 			/* get active function id */
 			uint8_t		getFunction();
 			/* get last function id */
