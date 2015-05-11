@@ -15,7 +15,7 @@
 /* With this library, you can create menus with layers on base on the   */
 /* Nested-Set-Model. For every menu element can be create a function    */
 /* to control the content. This function is called automatical from the */
-/* library and runs in a loop, without blocking other program parts.   */
+/* library and runs in a loop, without blocking other program parts.    */
 /*																		*/
 /* Support:  -- englischen Link einfügen --                             */
 /*                                                                      */
@@ -210,17 +210,13 @@ void	LCDMenuLib::jumpToElement(uint8_t p_element)
  */
 void	LCDMenuLib::goBack()
 {
-	//check button lock
-	if(bitRead(control, _LCDMenuLib_control_menu_look) == 0) 
-	{
-		//check layer
-		if(layer > 0) 
-		{	
-			//go back
-			bitWrite(control, _LCDMenuLib_control_menu_back, 1);
-			goMenu(*curMenu->getParent());
-		}
-	}	
+	//check layer
+	if(layer > 0) 
+	{	
+		//go back
+		bitWrite(control, _LCDMenuLib_control_menu_back, 1);
+		goMenu(*curMenu->getParent());
+	}		
 }
 
 /*
@@ -231,14 +227,31 @@ void	LCDMenuLib::goBack()
 void	LCDMenuLib::goEnter()
 {	
 	//check button lock
-	if(bitRead(control, _LCDMenuLib_control_menu_look) == 0) {		
+	if (function == _LCDMenuLib_NO_FUNC) {
 		LCDMenu *tmp;	// declare opjects
+		uint8_t name = _LCDMenuLib_NO_FUNC;
 				
-		if ((tmp = curMenu->getChild(curloc + curloc_cor + curloc_cor_first)) != NULL) { // check child
-			curloc_cor_first = 0;
-			goMenu(*tmp);				
-			curfuncname = tmp->name;			
-		}		
+		if ((tmp = curMenu->getChild(curloc + curloc_cor)) != NULL) { // check child			
+			goMenu(*tmp);
+			name = tmp->name;
+			//declaration			
+			uint8_t j = 0;
+			//check if element has childs
+			if ((tmp = tmp->getChild(0)) != NULL) {
+				curloc_cor = 0;
+				while ((tmp = tmp->getSibling(1)) != NULL)
+				{
+					if (bitRead(group_en, tmp->disp)) {
+						j++;
+					}					
+				}
+			}
+			if (j == 0) {				
+				function = name;
+			}
+			
+		}
+		
 	}
 }
 
@@ -574,38 +587,6 @@ uint8_t	LCDMenuLib::checkButtons(uint8_t check)
 	return false; 
 }
 
-
-/*
-* public function check function end with button settings
-* @param
-* - check parameter as bit mask
-* @return
-* - uint8_t status if function must end
-*/
-uint8_t	LCDMenuLib::checkFuncEnd(uint8_t check)
-{
-	//check mask   
-	if (bitRead(check, 5) //direct
-		|| (((button & check) & (1 << _LCDML_button_enter)))
-		|| (((button & check) & (1 << _LCDML_button_up)))
-		|| (((button & check) & (1 << _LCDML_button_down)))
-		|| (((button & check) & (1 << _LCDML_button_left)))
-		|| (((button & check) & (1 << _LCDML_button_right)))
-		)
-	{
-		//function ends		
-		Button_quit();
-
-		return true;
-	}
-
-	//function runs again
-	return false;
-
-
-}
-
-  
   
 /*
  * public function button enter 
@@ -613,19 +594,15 @@ uint8_t	LCDMenuLib::checkFuncEnd(uint8_t check)
  * @return
  */ 
 void	LCDMenuLib::Button_enter()
-{
-	
-		if(function != _LCDMenuLib_NO_FUNC) 
-		{
-			//function is active
-			bitWrite(button, _LCDML_button, 1);
-			bitWrite(button, _LCDML_button_enter, 1);	
-		} 
-		
-		//menu is active
-		goEnter();
-		function = curfuncname;
-		
+{	
+	if (function != _LCDMenuLib_NO_FUNC)
+	{			
+		//function is active
+		bitWrite(button, _LCDML_button, 1);
+		bitWrite(button, _LCDML_button_enter, 1);	
+	}	
+	//menu is active
+	goEnter();		
 }
 
 
@@ -638,7 +615,7 @@ void	LCDMenuLib::Button_enter()
 void	LCDMenuLib::Button_up_down_left_right(uint8_t but)
 {
 	//check menu lock
-	if(bitRead(control, _LCDMenuLib_control_menu_look) == 0)
+	if (function == _LCDMenuLib_NO_FUNC)
 	{		
 		//enable up and down button for menu mode and scroll		
 		switch(but)
@@ -669,47 +646,12 @@ void	LCDMenuLib::Button_up_down_left_right(uint8_t but)
  * @return
  */
 void	LCDMenuLib::Button_quit()
-{
-	
-	//function is active and have to close
-	if(function != _LCDMenuLib_NO_FUNC || layer > 0) 
-	{		
-		//clear lcd / delete all output from the active function       
-		lcd->_LCDML_lcd_clear();
-		
-		//display menu
-		display();
-  
-		//go one layer back
-		goBack();	
-
-		//set function variable to no function
-		function = _LCDMenuLib_NO_FUNC;					
-    
-		//enable menu control
-		bitWrite(control, _LCDMenuLib_control_menu_look, 0);		
-	}		 
-
-	button = 0;
+{	
+	function = _LCDMenuLib_NO_FUNC;		
+	bitSet(control, _LCDMenuLib_control_funcend);
+	goBack();
 }
 
-/*
- * public function to init a new menu element function  (setup)
- * @param
- * @return
- * @ - status if this setup was run
- */
-void	LCDMenuLib::FuncInit(void)
-{	
-	//save function name for recall		
-	function  = curfuncname;		
-		
-	//reset button status
-	button = 0;
-		
-	//lock menu
-	bitWrite(control, _LCDMenuLib_control_menu_look, 1);		  
-} 
  
 /*
  * public function getFunction Name
@@ -720,17 +662,6 @@ void	LCDMenuLib::FuncInit(void)
 uint8_t	LCDMenuLib::getFunction()
 {	
 	return function;	
-}
-
-/*
- * public function to return the current function name
- * @param
- * @return
- * @ - current function name
- */
-uint8_t	LCDMenuLib::getCurFunction()
-{
-	return curfuncname;
 }
 
 /*

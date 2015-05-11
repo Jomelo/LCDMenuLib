@@ -75,12 +75,15 @@
 
 #	define LCDML_UPDATE()\	
 		LCDML_BACK_dynamic_timeToZero(LCDML_BACKEND_menu);\
-		if(LCDML.getFunction() != _LCDMenuLib_NO_FUNC && g_LCDML_DISP_functions_loop_setup[LCDML.getCurFunction()] != LCDML_FUNC_loop_setup) {\
+		if(LCDML.getFunction() != _LCDMenuLib_NO_FUNC && g_LCDML_DISP_functions_loop_setup[LCDML.getFunction()] != LCDML_FUNC_loop_setup) {\
 			LCDML_BACK_start(LCDML_BACKEND_menu);\
 		}
 
+#	define	checkBut(enter,up,down,left,right)\
+		checkButtons(B##enter##up##down##left##right)
 
-		
+#	define LCDML_DISP_funcend()\
+		bitSet(LCDML.control, _LCDMenuLib_control_funcend)
 
 
 #	define LCDML_DISP_setup(name)\
@@ -106,15 +109,15 @@
 
 
 #	define LCDML_resetButtonEnter()\
-		bitWrite(LCDML.button, _LCDML_button_enter, 0)
+		bitClear(LCDML.button, _LCDML_button_enter)
 #	define LCDML_resetButtonUp()\
-		bitWrite(LCDML.button, _LCDML_button_up, 0)
+		bitClear(LCDML.button, _LCDML_button_up)
 #	define LCDML_resetButtonDown()\
-		bitWrite(LCDML.button, _LCDML_button_down, 0)
+		bitClear(LCDML.button, _LCDML_button_down)
 #	define LCDML_resetButtonLeft()\
-		bitWrite(LCDML.button, _LCDML_button_left, 0)
+		bitClear(LCDML.button, _LCDML_button_left)
 #	define LCDML_resetButtonRight()\
-		bitWrite(LCDML.button, _LCDML_button_right, 0)
+		bitClear(LCDML.button, _LCDML_button_right)
 	
 
 
@@ -129,12 +132,8 @@
 		void LCDML_FUNC_loop(void){}\
 		void LCDML_FUNC_loop_end(void){}\
 		unsigned long g_LCDML_DISP_press_time = 0;\
-		uint8_t g_LCDML_DISP_funcend = 0;\
 		LCDMenu Item (0, true)
 		
-
-#	define LCDML_DISP_setFuncEnd(dir,enter,up,down,left,right)\
-	g_LCDML_DISP_funcend = B##dir##enter##up##down##left##right;
 
 #	define FuncEnd(dir,enter,up,down,left,right)\
 		checkFuncEnd(B##dir##enter##up##down##left##right)

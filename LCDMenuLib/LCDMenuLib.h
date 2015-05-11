@@ -84,7 +84,7 @@
 #	define _LCDMenuLib_control_scrollbar_l		4
 #	define _LCDMenuLib_control_lcd_standard		3
 #	define _LCDMenuLib_control_free_2			2
-#	define _LCDMenuLib_control_free_1			1
+#	define _LCDMenuLib_control_funcend			1
 #	define _LCDMenuLib_control_funcsetup		0
 
 // groups
@@ -148,15 +148,12 @@
 			/* current corsor position */
 			uint8_t		curloc;
 			uint8_t		curloc_cor;
-			uint8_t		curloc_cor_first;
 			/* current scroll position */
 			uint8_t		scroll; 
 			/* save the last cursor position when a menue element is called */
 			uint8_t		cursor_pos; 
 			/* how many childs exists on next layer */
-			uint8_t		child_cnt;			
-			/* save the last id from a menu element */
-			uint8_t		curfuncname;		
+			uint8_t		child_cnt;				
 			/* containes the current layer */
 			uint8_t		layer; 			
 
@@ -195,13 +192,10 @@
 			/* jump to menu element */
 			void		jumpToElement(uint8_t element);
 			/* replace the delay function */
-			uint8_t		Timer(unsigned long &p_var, unsigned long p_time);			
-			/* menu element function init */
-			void		FuncInit();	
+			uint8_t		Timer(unsigned long &p_var, unsigned long p_time);				
 			/* check if a button was pressed and reset the globale buttonCheck bit */
 			uint8_t		checkButtons();
-			uint8_t		checkButtons(uint8_t check);
-			uint8_t		checkFuncEnd(uint8_t check);
+			uint8_t		checkButtons(uint8_t check);			
 			/* go in a menu element */
 			void		Button_enter();
 			/* go out of a menu element */
@@ -209,11 +203,9 @@
 			/* navigate through the menu */
 			void		Button_up_down_left_right(uint8_t but);
 			/* redefine custom chars for scrollbar */
-			void		scrollbarInit();
+			void		scrollbarInit();			
 			/* get active function id */
-			uint8_t		getFunction();
-			/* get last function id */
-			uint8_t		getCurFunction();
+			uint8_t		getFunction();		
 			/* get the layer where the cursor stands in the menu */
 			uint8_t		getLayer();			
 			/* get the corrent cursor position */

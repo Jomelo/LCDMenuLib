@@ -6,34 +6,41 @@
 void LCDML_BACK_setup(LCDML_BACKEND_menu)         /* NOTHING CHANGE HERE */
 /* ********************************************************************* */
 {
-  if(LCDML.getFunction() != _LCDMenuLib_NO_FUNC) {		
-    g_LCDML_BACK_lastFunc = LCDML.getFunction(); 
-    LCDML.FuncInit();
+  g_LCDML_BACK_lastFunc = LCDML.getFunction();
+  if(g_LCDML_BACK_lastFunc != _LCDMenuLib_NO_FUNC) {  
+    LCDML.button = 0;    
     lcd.clear();
-    g_LCDML_DISP_funcend = 0;				
-    g_LCDML_DISP_functions_loop_setup[g_LCDML_BACK_lastFunc]();			
+    g_LCDML_DISP_functions_loop_setup[g_LCDML_BACK_lastFunc]();      			
   }
 }
 boolean LCDML_BACK_loop(LCDML_BACKEND_menu)
-{
-  if(LCDML.getFunction() != _LCDMenuLib_NO_FUNC) {			
-    g_LCDML_BACK_lastFunc = LCDML.getFunction();				
-    g_LCDML_DISP_functions_loop[g_LCDML_BACK_lastFunc]();			
-  }
-  else {
+{   
+  if(LCDML.getFunction() != _LCDMenuLib_NO_FUNC) {    				
+    g_LCDML_DISP_functions_loop[LCDML.getFunction()]();			
+  } else {
     LCDML_BACK_dynamic_setDefaultTime(LCDML_BACKEND_menu);
     LCDML_BACK_stopStable(LCDML_BACKEND_menu);
     LCDML_BACK_reset(LCDML_BACKEND_menu);
-  }
+  } 
   return true;
 }
+
 void LCDML_BACK_stable(LCDML_BACKEND_menu)
 {
   if (g_LCDML_BACK_lastFunc != _LCDMenuLib_NO_FUNC) {					
     g_LCDML_DISP_functions_loop_end[g_LCDML_BACK_lastFunc]();
     g_LCDML_BACK_lastFunc = _LCDMenuLib_NO_FUNC;
+    
+    lcd.clear();
+    LCDML.display();
+
+    LCDML.button = 0;    
+    bitClear(LCDML.control, _LCDMenuLib_control_funcend);    
   }
 }
+
+
+
 /* ********************************************************************* */
 void LCDML_BACK_setup(LCDML_BACKEND_control)      
 /* ********************************************************************* */
@@ -45,7 +52,13 @@ void LCDML_BACK_setup(LCDML_BACKEND_control)
   #endif  
 }
 boolean LCDML_BACK_loop(LCDML_BACKEND_control)
-{  
+{ 
+  if(bitRead(LCDML.control, _LCDMenuLib_control_funcend)) {
+    LCDML_BACK_dynamic_setDefaultTime(LCDML_BACKEND_menu);
+    LCDML_BACK_stopStable(LCDML_BACKEND_menu);
+    LCDML_BACK_reset(LCDML_BACKEND_menu);
+  }
+  
   #if(_LCDML_DISP_cfg_control == 0)  
   LCDML_control_serial();           
   #elif(_LCDML_DISP_cfg_control == 1)  

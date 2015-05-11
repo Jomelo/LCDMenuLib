@@ -31,9 +31,9 @@ LCDML_DISP_initObjects	KEYWORD2
 LCDML_DISP_initFunction	KEYWORD2
 LCDML_DISP_lang	KEYWORD2
 LCDML_DISP_jumpToFunc	KEYWORD2
-LCDML_DISP_setFuncEnd	KEYWORD2
 LCDML_DISP_disableLoop	KEYWORD2
-LCDML_DISP_disableLoopEnd	KEYWORD3
+LCDML_DISP_disableLoopEnd	KEYWORD2
+LCDML_DISP_funcend	KEYWORD2
 
 LCDML_checkButtonEnter	KEYWORD2
 LCDML_checkButtonUp	KEYWORD2
@@ -76,15 +76,12 @@ Timer	KEYWORD2
 FuncInit	KEYWORD2
 
 checkButtons	KEYWORD2
-checkFuncEnd	KEYWORD2
-FuncEnd	KEYWORD2
 resetButtons	KEYWORD2
 FUNC_init_screen	KEYWORD2
 display	KEYWORD2
 goRoot	KEYWORD2
 
 getFunction	KEYWORD2
-getCurFunction	KEYWORD2
 getLayer	KEYWORD2
 getInitScreenActive	KEYWORD2
 getCursorPos	KEYWORD2

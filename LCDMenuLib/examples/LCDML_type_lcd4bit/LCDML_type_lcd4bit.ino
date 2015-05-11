@@ -182,6 +182,6 @@ void setup()
 }
 
 void loop()
-{ 
+{  
   LCDML_run(_LCDML_priority); 
 }

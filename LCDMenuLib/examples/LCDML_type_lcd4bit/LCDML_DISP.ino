@@ -14,7 +14,9 @@ void LCDML_DISP_setup(LCDML_FUNC_information)
 }
 void LCDML_DISP_loop(LCDML_FUNC_information) 
 {
-  LCDML.FuncEnd(0,1,1,1,1,1); 
+  if(LCDML.checkBut(1,1,1,1,1)) {
+    LCDML_DISP_funcend();
+  } 
 }
 void LCDML_DISP_loop_end(LCDML_FUNC_information)
 {
@@ -47,7 +49,7 @@ void LCDML_DISP_loop(LCDML_FUNC_timer_info)
   if (g_func_timer_info <= 0)
   {
     // end function for callback
-    LCDML.FuncEnd(1,0,0,0,0,0);  
+    LCDML_DISP_funcend();  
   }   
 }
 
@@ -93,7 +95,7 @@ void LCDML_DISP_loop(LCDML_FUNC_p2)
 
   if (g_button_value >= 3) {
     // end function for callback
-    LCDML.FuncEnd(1,0,0,0,0,0);   
+    LCDML_DISP_funcend();   
   } 
 }
 void LCDML_DISP_loop_end(LCDML_FUNC_p2) {}
@@ -103,8 +105,8 @@ void LCDML_DISP_loop_end(LCDML_FUNC_p2) {}
 /* ********************************************************************* */
 void LCDML_DISP_setup(LCDML_FUNC_back)
 /* ********************************************************************* */
-{ }
-void LCDML_DISP_loop(LCDML_FUNC_back) { LCDML.FuncEnd(1,0,0,0,0,0); LCDML.Button_quit(); }
+{ LCDML_DISP_funcend(); LCDML.Button_quit(); }
+void LCDML_DISP_loop(LCDML_FUNC_back) { }
 void LCDML_DISP_loop_end(LCDML_FUNC_back) {}
 
 
@@ -112,12 +114,12 @@ void LCDML_DISP_loop_end(LCDML_FUNC_back) {}
 void LCDML_DISP_setup(LCDML_FUNC_prog_disable)
 /* ********************************************************************* */
 {
-  Serial.println("disable");
   LCDML_DISP_groupDisable(_LCDML_G2);
-  LCDML_DISP_groupEnable(_LCDML_G3);  
+  LCDML_DISP_groupEnable(_LCDML_G3);
+  LCDML_DISP_funcend();  
   LCDML.goRoot();  
 }
-void LCDML_DISP_loop(LCDML_FUNC_prog_disable) { LCDML.FuncEnd(1,0,0,0,0,0); LCDML.Button_quit(); }
+void LCDML_DISP_loop(LCDML_FUNC_prog_disable) { }
 void LCDML_DISP_loop_end(LCDML_FUNC_prog_disable) {}
 
 
@@ -125,12 +127,12 @@ void LCDML_DISP_loop_end(LCDML_FUNC_prog_disable) {}
 void LCDML_DISP_setup(LCDML_FUNC_prog_enable)
 /* ********************************************************************* */
 {
-  Serial.println("enable");
   LCDML_DISP_groupEnable(_LCDML_G2);
   LCDML_DISP_groupDisable(_LCDML_G3);
+  LCDML_DISP_funcend();
   LCDML.goRoot(); 
 }
-void LCDML_DISP_loop(LCDML_FUNC_prog_enable) { LCDML.FuncEnd(1,0,0,0,0,0); LCDML.Button_quit(); }
+void LCDML_DISP_loop(LCDML_FUNC_prog_enable) {  }
 void LCDML_DISP_loop_end(LCDML_FUNC_prog_enable) {}
 
 
@@ -138,36 +140,40 @@ void LCDML_DISP_loop_end(LCDML_FUNC_prog_enable) {}
 void LCDML_DISP_setup(LCDML_FUNC_test10_start)
 /* ********************************************************************* */
 {
-  LCDML_BACK_start(LCDML_BACKEND_test10);  
+  LCDML_BACK_start(LCDML_BACKEND_test10); 
+  LCDML_DISP_funcend(); 
 }
-void LCDML_DISP_loop(LCDML_FUNC_test10_start) { LCDML.FuncEnd(1,0,0,0,0,0); LCDML.Button_quit(); }
+void LCDML_DISP_loop(LCDML_FUNC_test10_start) { }
 void LCDML_DISP_loop_end(LCDML_FUNC_test10_start) {}
 
 /* ********************************************************************* */
 void LCDML_DISP_setup(LCDML_FUNC_test10_restart)
 /* ********************************************************************* */
 {
-  LCDML_BACK_restart(LCDML_BACKEND_test10);  
+  LCDML_BACK_restart(LCDML_BACKEND_test10);
+  LCDML_DISP_funcend();  
 }
-void LCDML_DISP_loop(LCDML_FUNC_test10_restart) { LCDML.FuncEnd(1,0,0,0,0,0); LCDML.Button_quit(); }
+void LCDML_DISP_loop(LCDML_FUNC_test10_restart) { }
 void LCDML_DISP_loop_end(LCDML_FUNC_test10_restart) {}
 
 /* ********************************************************************* */
 void LCDML_DISP_setup(LCDML_FUNC_test10_stop)
 /* ********************************************************************* */
 {
-  LCDML_BACK_stop(LCDML_BACKEND_test10);  
+  LCDML_BACK_stop(LCDML_BACKEND_test10);
+  LCDML_DISP_funcend();  
 }
-void LCDML_DISP_loop(LCDML_FUNC_test10_stop) { LCDML.FuncEnd(1,0,0,0,0,0); LCDML.Button_quit(); }
+void LCDML_DISP_loop(LCDML_FUNC_test10_stop) { }
 void LCDML_DISP_loop_end(LCDML_FUNC_test10_stop) {}
 
 /* ********************************************************************* */
 void LCDML_DISP_setup(LCDML_FUNC_test10_stop_stable)
 /* ********************************************************************* */
 {
-  LCDML_BACK_stopStable(LCDML_BACKEND_test10);  
+  LCDML_BACK_stopStable(LCDML_BACKEND_test10); 
+  LCDML_DISP_funcend(); 
 }
-void LCDML_DISP_loop(LCDML_FUNC_test10_stop_stable) { LCDML.FuncEnd(1,0,0,0,0,0); LCDML.Button_quit(); }
+void LCDML_DISP_loop(LCDML_FUNC_test10_stop_stable) { }
 void LCDML_DISP_loop_end(LCDML_FUNC_test10_stop_stable) {}
 
 
@@ -177,50 +183,56 @@ void LCDML_DISP_loop_end(LCDML_FUNC_test10_stop_stable) {}
 void LCDML_DISP_setup(LCDML_FUNC_test20_start)
 /* ********************************************************************* */
 {
-  LCDML_BACK_start(LCDML_BACKEND_test20);  
-  LCDML_DISP_setFuncEnd(1,0,0,0,0,0);// (direct,enter, up, down, left, right)
+  LCDML_BACK_start(LCDML_BACKEND_test20);
+  LCDML_DISP_funcend();
 }
-void LCDML_DISP_loop(LCDML_FUNC_test20_start) {}
+void LCDML_DISP_loop(LCDML_FUNC_test20_start) { }
 void LCDML_DISP_loop_end(LCDML_FUNC_test20_start) {}
 
 /* ********************************************************************* */
 void LCDML_DISP_setup(LCDML_FUNC_test20_stop)
 /* ********************************************************************* */
 {
-  LCDML_BACK_stop(LCDML_BACKEND_test20);  
-  LCDML_DISP_setFuncEnd(1,0,0,0,0,0);// (direct,enter, up, down, left, right)
+  LCDML_BACK_stop(LCDML_BACKEND_test20);
+  LCDML_DISP_funcend();
+  Serial.println(F("test 20 stopped"));
+
 }
-void LCDML_DISP_loop(LCDML_FUNC_test20_stop) {}
+void LCDML_DISP_loop(LCDML_FUNC_test20_stop) { }
 void LCDML_DISP_loop_end(LCDML_FUNC_test20_stop) {}
 
 /* ********************************************************************* */
 void LCDML_DISP_setup(LCDML_FUNC_test20_500ms)
 /* ********************************************************************* */
 {
-  LCDML_BACK_dynamic_setLoopTime(LCDML_BACKEND_test20, 500);  
-  LCDML_DISP_setFuncEnd(1,0,0,0,0,0);// (direct,enter, up, down, left, right)
+  LCDML_BACK_dynamic_setLoopTime(LCDML_BACKEND_test20, 500);
+  LCDML_BACK_start(LCDML_BACKEND_test20);   
+  LCDML_DISP_funcend();
 }
-void LCDML_DISP_loop(LCDML_FUNC_test20_500ms) {}
+void LCDML_DISP_loop(LCDML_FUNC_test20_500ms) { }
 void LCDML_DISP_loop_end(LCDML_FUNC_test20_500ms) {}
 
 /* ********************************************************************* */
 void LCDML_DISP_setup(LCDML_FUNC_test20_1s)
 /* ********************************************************************* */
 {
-  LCDML_BACK_dynamic_setLoopTime(LCDML_BACKEND_test20, 1000);  
-  LCDML_DISP_setFuncEnd(1,0,0,0,0,0);// (direct,enter, up, down, left, right)
+  LCDML_BACK_dynamic_setLoopTime(LCDML_BACKEND_test20, 1000);
+  LCDML_BACK_start(LCDML_BACKEND_test20); 
+  LCDML_DISP_funcend();  
+
 }
-void LCDML_DISP_loop(LCDML_FUNC_test20_1s) {}
+void LCDML_DISP_loop(LCDML_FUNC_test20_1s) { }
 void LCDML_DISP_loop_end(LCDML_FUNC_test20_1s) {}
 
 /* ********************************************************************* */
 void LCDML_DISP_setup(LCDML_FUNC_test20_10s)
 /* ********************************************************************* */
 {
-  LCDML_BACK_dynamic_setLoopTime(LCDML_BACKEND_test20, 100000);  
-  LCDML_DISP_setFuncEnd(1,0,0,0,0,0);// (direct,enter, up, down, left, right)
+  LCDML_BACK_dynamic_setLoopTime(LCDML_BACKEND_test20, 100000);
+  LCDML_BACK_start(LCDML_BACKEND_test20);  
+  LCDML_DISP_funcend();
 }
-void LCDML_DISP_loop(LCDML_FUNC_test20_10s) {}
+void LCDML_DISP_loop(LCDML_FUNC_test20_10s) { }
 void LCDML_DISP_loop_end(LCDML_FUNC_test20_10s) {}
 
 
@@ -230,9 +242,9 @@ void LCDML_DISP_setup(LCDML_FUNC_test30_start)
 /* ********************************************************************* */
 {
   LCDML_BACK_event_start(LCDML_BACKEND_test30);
-  LCDML_DISP_setFuncEnd(1,0,0,0,0,0);// (direct,enter, up, down, left, right)
+  LCDML_DISP_funcend();
 }
-void LCDML_DISP_loop(LCDML_FUNC_test30_start) {}
+void LCDML_DISP_loop(LCDML_FUNC_test30_start) { }
 void LCDML_DISP_loop_end(LCDML_FUNC_test30_start) {}
 
 
