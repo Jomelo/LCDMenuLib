@@ -14,7 +14,7 @@ void LCDML_DISP_setup(LCDML_FUNC_information)
 }
 void LCDML_DISP_loop(LCDML_FUNC_information) 
 {
-  if(LCDML.checkBut(1,1,1,1,1)) {
+  if(LCDML_BUTTON_checkAny()) {
     LCDML_DISP_funcend();
   } 
 }
@@ -34,7 +34,7 @@ void LCDML_DISP_setup(LCDML_FUNC_timer_info)
   lcd.print(F("x sec warten"));
   g_func_timer_info = 10;    
   
-  LCDML_TRIGGER(100); 
+  LCDML_DISP_triggerMenu(100); 
 }
 
 void LCDML_DISP_loop(LCDML_FUNC_timer_info)
@@ -79,11 +79,11 @@ void LCDML_DISP_loop(LCDML_FUNC_p2)
   // * Hier wird nur ein Ereignis ausgelöst, sobald ein Button gedrückt
   // * wurde. Die Funktion LCDML.checkButtons liefert true, wenn ein Button
   // * seit dem letztem durchlauf betätigt wurde, ansonsten false.
-  if (LCDML.checkButtons())
+  if (LCDML_BUTTON_checkAny())
   {
-    if (LCDML_checkButtonLeft())
+    if (LCDML_BUTTON_checkLeft())
     {
-      LCDML_resetButtonLeft();
+      LCDML_BUTTON_resetAll();
       g_button_value++;
     }
 
@@ -105,7 +105,7 @@ void LCDML_DISP_loop_end(LCDML_FUNC_p2) {}
 /* ********************************************************************* */
 void LCDML_DISP_setup(LCDML_FUNC_back)
 /* ********************************************************************* */
-{ LCDML_DISP_funcend(); LCDML.Button_quit(); }
+{ LCDML_DISP_funcend(); LCDML.goBack(); }
 void LCDML_DISP_loop(LCDML_FUNC_back) { }
 void LCDML_DISP_loop_end(LCDML_FUNC_back) {}
 
@@ -114,6 +114,7 @@ void LCDML_DISP_loop_end(LCDML_FUNC_back) {}
 void LCDML_DISP_setup(LCDML_FUNC_prog_disable)
 /* ********************************************************************* */
 {
+  Serial.println("disable");
   LCDML_DISP_groupDisable(_LCDML_G2);
   LCDML_DISP_groupEnable(_LCDML_G3);
   LCDML_DISP_funcend();  
@@ -127,6 +128,7 @@ void LCDML_DISP_loop_end(LCDML_FUNC_prog_disable) {}
 void LCDML_DISP_setup(LCDML_FUNC_prog_enable)
 /* ********************************************************************* */
 {
+  Serial.println("enable");
   LCDML_DISP_groupEnable(_LCDML_G2);
   LCDML_DISP_groupDisable(_LCDML_G3);
   LCDML_DISP_funcend();

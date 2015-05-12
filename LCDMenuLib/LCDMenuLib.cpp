@@ -85,7 +85,7 @@ LCDMenuLib::LCDMenuLib(LCDMenu &p_r, _LCDML_lcd_type &p_d, const char * const *p
 	rows			= p_rows;
 	cols			= (p_cols-1); 	
     function      = _LCDMenuLib_NO_FUNC;
-    button			= 0;
+    button			= 0;	
 }
 
 /** 
@@ -230,6 +230,12 @@ void	LCDMenuLib::goEnter()
 	if (function == _LCDMenuLib_NO_FUNC) {
 		LCDMenu *tmp;	// declare opjects
 		uint8_t name = _LCDMenuLib_NO_FUNC;
+		
+		Serial.println();
+		Serial.println(curloc_cor);
+		countChilds();
+		Serial.println(curloc_cor);
+		Serial.println();
 				
 		if ((tmp = curMenu->getChild(curloc + curloc_cor)) != NULL) { // check child			
 			goMenu(*tmp);
@@ -237,8 +243,9 @@ void	LCDMenuLib::goEnter()
 			//declaration			
 			uint8_t j = 0;
 			//check if element has childs
-			if ((tmp = tmp->getChild(0)) != NULL) {
-				curloc_cor = 0;
+			curloc_cor = 0;
+			if ((tmp = tmp->getChild(0)) != NULL) {			
+				
 				while ((tmp = tmp->getSibling(1)) != NULL)
 				{
 					if (bitRead(group_en, tmp->disp)) {
@@ -248,6 +255,7 @@ void	LCDMenuLib::goEnter()
 			}
 			if (j == 0) {				
 				function = name;
+				countChilds();
 			}
 			
 		}
@@ -322,8 +330,9 @@ uint8_t    LCDMenuLib::countChilds()
 		curloc_cor = 0;
 
 		if (!bitRead(group_en, tmp->disp)) {
-			curloc_cor++;
+			curloc_cor++;			
 		}
+		
 
 		while ((tmp = tmp->getSibling(1)) != NULL)
 		{
@@ -332,7 +341,7 @@ uint8_t    LCDMenuLib::countChilds()
 			}
 			else {
 				if (j > 0 && j < curloc) {
-					curloc_cor++;
+					curloc_cor++;					
 				}
 			}
 		}
@@ -540,52 +549,7 @@ void	LCDMenuLib::doScroll()
 
 }
 
-/*
- * public function check Buttons
- * @param
- * @return
- * @ - uint8_t if a button is pressed
- */ 
-uint8_t LCDMenuLib::checkButtons()
-{
-	//check if button is pressed
-    if(bitRead(button, _LCDML_button)) 
-	{
-		//set button variable
-		bitWrite(button, _LCDML_button, 0);		
-        return true;
-    }
-    return false;    
-}
 
-
- 
-/* 
- * public function check function end with button settings
- * @param 
- * - check parameter as bit mask
- * @return
- * - uint8_t status if function must end
- */
-uint8_t	LCDMenuLib::checkButtons(uint8_t check)
-{	
-	//check mask   
-	if(bitRead(check, 5) //direct
-			|| (((button & check) & (1<<_LCDML_button_enter)))  
-			|| (((button & check) & (1<<_LCDML_button_up)))
-			|| (((button & check) & (1<<_LCDML_button_down)))
-			|| (((button & check) & (1<<_LCDML_button_left)))
-			|| (((button & check) & (1<<_LCDML_button_right)))
-	) 
-	{
-		//set button variable
-		bitWrite(button, _LCDML_button, 0);
-		return true;
-	} 
-    
-	//function runs again
-	return false; 
-}
 
   
 /*
@@ -596,13 +560,19 @@ uint8_t	LCDMenuLib::checkButtons(uint8_t check)
 void	LCDMenuLib::Button_enter()
 {	
 	if (function != _LCDMenuLib_NO_FUNC)
-	{			
+	{	
+		
 		//function is active
-		bitWrite(button, _LCDML_button, 1);
-		bitWrite(button, _LCDML_button_enter, 1);	
-	}	
-	//menu is active
-	goEnter();		
+		
+		bitSet(button, _LCDML_button_enter);
+
+
+	}
+	else {
+		//menu is active
+		goEnter();
+	}
+			
 }
 
 
@@ -636,8 +606,8 @@ void	LCDMenuLib::Button_up_down_left_right(uint8_t but)
 		doScroll();
 	}
 	
-	bitWrite(button, but, 1);
-	bitWrite(button, _LCDML_button, 1);	
+	bitSet(button, but);
+		
 }
 
 /*
@@ -646,9 +616,12 @@ void	LCDMenuLib::Button_up_down_left_right(uint8_t but)
  * @return
  */
 void	LCDMenuLib::Button_quit()
-{	
-	function = _LCDMenuLib_NO_FUNC;		
-	bitSet(control, _LCDMenuLib_control_funcend);
+{
+	if (function != _LCDMenuLib_NO_FUNC) {
+		function = _LCDMenuLib_NO_FUNC;
+		bitSet(control, _LCDMenuLib_control_funcend);
+	}
+	
 	goBack();
 }
 

@@ -8,7 +8,7 @@ void LCDML_control_serial()
   {
     switch (Serial.read())
     {
-      case _LCDML_CONTROL_serial_enter:  LCDML.Button_enter(); LCDML_BACK_reset(LCDML_BACKEND_menu); break;
+      case _LCDML_CONTROL_serial_enter:  LCDML.Button_enter(); break;
       case _LCDML_CONTROL_serial_up:     LCDML.Button_up_down_left_right(_LCDML_button_up); break;
       case _LCDML_CONTROL_serial_down:   LCDML.Button_up_down_left_right(_LCDML_button_down); break;
       case _LCDML_CONTROL_serial_left:   LCDML.Button_up_down_left_right(_LCDML_button_left); break;
@@ -16,7 +16,7 @@ void LCDML_control_serial()
       case _LCDML_CONTROL_serial_quit:   LCDML.Button_quit(); break;
       default: break;
     }    
-    LCDML_UPDATE();    
+    LCDML_DISP_update();    
   }
 }
 
@@ -31,35 +31,34 @@ void LCDML_control_analog()
   {
     if (value >= _LCDML_CONTROL_analog_enter_min && value <= _LCDML_CONTROL_analog_enter_max)
     { // control enter
-      LCDML.Button_enter();
-      LCDML_BACK_reset(LCDML_BACKEND_menu);
-      LCDML_UPDATE();
+      LCDML.Button_enter();     
+      LCDML_DISP_update();
     }
     else if (value >= _LCDML_CONTROL_analog_up_min && value <= _LCDML_CONTROL_analog_up_max)
     { // control up
       LCDML.Button_up_down_left_right(_LCDML_button_up);
-      LCDML_UPDATE();
+      LCDML_DISP_update();
     }
     else if (value >= _LCDML_CONTROL_analog_down_min && value <= _LCDML_CONTROL_analog_down_max)
     { // control down
       LCDML.Button_up_down_left_right(_LCDML_button_down);
-      LCDML_UPDATE();
+      LCDML_DISP_update();
     }
     else if (value >= _LCDML_CONTROL_analog_left_min && value <= _LCDML_CONTROL_analog_left_max && _LCDML_CONTROL_analog_enable_lr == 1)
     { // control left
       LCDML.Button_up_down_left_right(_LCDML_button_left);
-      LCDML_UPDATE();
+      LCDML_DISP_update();
     }
     else if (value >= _LCDML_CONTROL_analog_right_min && value <= _LCDML_CONTROL_analog_right_max && _LCDML_CONTROL_analog_enable_lr == 1)
     { // control right
       LCDML.Button_up_down_left_right(_LCDML_button_right);
-      LCDML_UPDATE();
+      LCDML_DISP_update();
     }
 
     if (value >= _LCDML_CONTROL_analog_back_min && value <= _LCDML_CONTROL_analog_back_max && _LCDML_CONTROL_analog_enable_quit == 1)
     { // control quit
       LCDML.Button_quit();
-      LCDML_UPDATE();
+      LCDML_DISP_update();
     }
   }
 }
@@ -79,8 +78,7 @@ void LCDML_control_digital()
     {
       if (digitalRead(_LCDML_CONTROL_digital_enter)) 
       {
-        LCDML.Button_enter();
-        LCDML_BACK_reset(LCDML_BACKEND_menu);
+        LCDML.Button_enter();        
       }
       else if (digitalRead(_LCDML_CONTROL_digital_up)) 
       {
@@ -102,7 +100,7 @@ void LCDML_control_digital()
       {
         LCDML.Button_up_down_left_right(_LCDML_button_right);
       }
-      LCDML_UPDATE();
+      LCDML_DISP_update();
     }    
   }
 }
@@ -149,7 +147,7 @@ void LCDML_control_encoder()
           LCDML.Button_up_down_left_right(_LCDML_button_down);
         }
       }
-      LCDML_UPDATE();
+      LCDML_DISP_update();
     } 
     else 
     {
@@ -157,9 +155,8 @@ void LCDML_control_encoder()
       {
         if (!t && g_LCDML_CONTROL_encoder_t_prev == 0) 
         {          
-            LCDML.Button_enter();
-            LCDML_BACK_reset(LCDML_BACKEND_menu);
-            LCDML_UPDATE();          
+            LCDML.Button_enter();            
+            LCDML_DISP_update();          
         } 
         else 
         {

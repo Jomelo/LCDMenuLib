@@ -1,42 +1,42 @@
 /* ===================================================================== */
+/*
 /* LCDMenuLib BACKEND FUNCTION - do not change here something            */
+/*
 /* ===================================================================== */
 
 /* ********************************************************************* */
 void LCDML_BACK_setup(LCDML_BACKEND_menu)         /* NOTHING CHANGE HERE */
 /* ********************************************************************* */
-{
+{  
   g_LCDML_BACK_lastFunc = LCDML.getFunction();
-  if(g_LCDML_BACK_lastFunc != _LCDMenuLib_NO_FUNC) {  
-    LCDML.button = 0;    
+  if(g_LCDML_DISP_functions_loop_setup[g_LCDML_BACK_lastFunc] == LCDML_FUNC_loop_setup) {
+    bitSet(LCDML.control, _LCDMenuLib_control_funcend);
+  } 
+  else if(g_LCDML_BACK_lastFunc != _LCDMenuLib_NO_FUNC) {   
     lcd.clear();
+    LCDML_BUTTON_resetAll(); 
     g_LCDML_DISP_functions_loop_setup[g_LCDML_BACK_lastFunc]();      			
-  }
+  } 
 }
 boolean LCDML_BACK_loop(LCDML_BACKEND_menu)
 {   
   if(LCDML.getFunction() != _LCDMenuLib_NO_FUNC) {    				
     g_LCDML_DISP_functions_loop[LCDML.getFunction()]();			
-  } else {
-    LCDML_BACK_dynamic_setDefaultTime(LCDML_BACKEND_menu);
-    LCDML_BACK_stopStable(LCDML_BACKEND_menu);
-    LCDML_BACK_reset(LCDML_BACKEND_menu);
-  } 
+  }  
   return true;
 }
 
 void LCDML_BACK_stable(LCDML_BACKEND_menu)
-{
+{  
   if (g_LCDML_BACK_lastFunc != _LCDMenuLib_NO_FUNC) {					
     g_LCDML_DISP_functions_loop_end[g_LCDML_BACK_lastFunc]();
-    g_LCDML_BACK_lastFunc = _LCDMenuLib_NO_FUNC;
-    
+    g_LCDML_BACK_lastFunc = _LCDMenuLib_NO_FUNC;    
     lcd.clear();
     LCDML.display();
-
-    LCDML.button = 0;    
-    bitClear(LCDML.control, _LCDMenuLib_control_funcend);    
-  }
+    LCDML_BUTTON_resetAll(); 
+    LCDML.function = _LCDMenuLib_NO_FUNC;    
+    bitClear(LCDML.control, _LCDMenuLib_control_funcend);  
+  } 
 }
 
 
@@ -53,10 +53,10 @@ void LCDML_BACK_setup(LCDML_BACKEND_control)
 }
 boolean LCDML_BACK_loop(LCDML_BACKEND_control)
 { 
-  if(bitRead(LCDML.control, _LCDMenuLib_control_funcend)) {
-    LCDML_BACK_dynamic_setDefaultTime(LCDML_BACKEND_menu);
-    LCDML_BACK_stopStable(LCDML_BACKEND_menu);
+  if(bitRead(LCDML.control, _LCDMenuLib_control_funcend)) {    
     LCDML_BACK_reset(LCDML_BACKEND_menu);
+    LCDML_BACK_dynamic_setDefaultTime(LCDML_BACKEND_menu);
+    LCDML_BACK_stopStable(LCDML_BACKEND_menu);    
   }
   
   #if(_LCDML_DISP_cfg_control == 0)  
@@ -76,7 +76,9 @@ void LCDML_BACK_stable(LCDML_BACKEND_control)
 }
 
 /* ===================================================================== */
+/*
 /* OWM BACKEND FUNCTION */
+/*
 /* ===================================================================== */
 
 

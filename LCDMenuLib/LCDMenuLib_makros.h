@@ -60,64 +60,77 @@
 
 #	include <Arduino.h>
 
+
+
+#	define LCDML_BUTTON_checkAny()\
+		((LCDML.button > 0) ? true : false)
+#	define LCDML_BUTTON_checkEnter()\
+		bitRead(LCDML.button, _LCDML_button_enter)
+#	define LCDML_BUTTON_checkUp()\
+		bitRead(LCDML.button, _LCDML_button_up)
+#	define LCDML_BUTTON_checkDown()\
+		bitRead(LCDML.button, _LCDML_button_down)
+#	define LCDML_BUTTON_checkLeft()\
+		bitRead(LCDML.button, _LCDML_button_left)
+#	define LCDML_BUTTON_checkRight()\
+		bitRead(LCDML.button, _LCDML_button_right)
+
+#	define LCDML_BUTTON_resetAll()\
+		LCDML.button = 0
+#	define LCDML_BUTTON_resetEnter()\
+		bitClear(LCDML.button, _LCDML_button_enter)
+#	define LCDML_BUTTON_resetUp()\
+		bitClear(LCDML.button, _LCDML_button_up)
+#	define LCDML_BUTTON_resetDown()\
+		bitClear(LCDML.button, _LCDML_button_down)
+#	define LCDML_BUTTON_resetLeft()\
+		bitClear(LCDML.button, _LCDML_button_left)
+#	define LCDML_BUTTON_resetRight()\
+		bitClear(LCDML.button, _LCDML_button_right)
+
+
+
+
+
+
+
 #	define LCDML_root Item
 
 
 
-# 	define LCDML_TRIGGER(time)\
-		LCDML_BACK_dynamic_timeToZero(LCDML_BACKEND_menu);\
-		LCDML_BACK_dynamic_setLoopTime(LCDML_BACKEND_menu, time)
-
-# 	define LCDML_TRIGGER_CONTROL(time)\
-		LCDML_BACK_dynamic_timeToZero(LCDML_BACKEND_control);\
-		LCDML_BACK_dynamic_setLoopTime(LCDML_BACKEND_control, time)
-		
-
-#	define LCDML_UPDATE()\	
-		LCDML_BACK_dynamic_timeToZero(LCDML_BACKEND_menu);\
-		if(LCDML.getFunction() != _LCDMenuLib_NO_FUNC && g_LCDML_DISP_functions_loop_setup[LCDML.getFunction()] != LCDML_FUNC_loop_setup) {\
-			LCDML_BACK_start(LCDML_BACKEND_menu);\
-		}
-
-#	define	checkBut(enter,up,down,left,right)\
-		checkButtons(B##enter##up##down##left##right)
-
-#	define LCDML_DISP_funcend()\
-		bitSet(LCDML.control, _LCDMenuLib_control_funcend)
-
-
 #	define LCDML_DISP_setup(name)\
 		name ##_loop_setup(void)
-	// macro: loop function
 #	define LCDML_DISP_loop(name)\
 		name ##_loop(void)
 #	define LCDML_DISP_loop_end(name)\
 		name ##_loop_end(void)
 
+#	define LCDML_DISP_update()\	
+	if (LCDML.getFunction() != _LCDMenuLib_NO_FUNC){\
+		LCDML_BACK_start(LCDML_BACKEND_menu);\
+	}
 
-#	define LCDML_checkButtonEnter()\
-		(bitRead(LCDML.button, _LCDML_button_enter))
-#	define LCDML_checkButtonUp()\
-		(bitRead(LCDML.button, _LCDML_button_up))
-#	define LCDML_checkButtonDown()\
-		(bitRead(LCDML.button, _LCDML_button_down))
-#	define LCDML_checkButtonLeft()\
-		(bitRead(LCDML.button, _LCDML_button_left))
-#	define LCDML_checkButtonRight()\
-		(bitRead(LCDML.button, _LCDML_button_right))
+# 	define LCDML_DISP_triggerMenu(time)\
+		LCDML_BACK_dynamic_setLoopTime(LCDML_BACKEND_menu, time);\
+		LCDML_BACK_start(LCDML_BACKEND_menu)
+
+# 	define LCDML_DISP_triggerControl(time)\
+		LCDML_BACK_dynamic_setLoopTime(LCDML_BACKEND_control, time);\
+		LCDML_BACK_start(LCDML_BACKEND_control)			
+
+#	define LCDML_DISP_funcend()\
+		bitSet(LCDML.control, _LCDMenuLib_control_funcend)
 
 
 
-#	define LCDML_resetButtonEnter()\
-		bitClear(LCDML.button, _LCDML_button_enter)
-#	define LCDML_resetButtonUp()\
-		bitClear(LCDML.button, _LCDML_button_up)
-#	define LCDML_resetButtonDown()\
-		bitClear(LCDML.button, _LCDML_button_down)
-#	define LCDML_resetButtonLeft()\
-		bitClear(LCDML.button, _LCDML_button_left)
-#	define LCDML_resetButtonRight()\
-		bitClear(LCDML.button, _LCDML_button_right)
+
+
+
+
+
+
+
+		
 	
 
 
@@ -128,7 +141,7 @@
 		LCDML_FuncPtr g_LCDML_DISP_functions_loop_setup[(N+1)];\
 		LCDML_FuncPtr g_LCDML_DISP_functions_loop[(N+1)];\
 		LCDML_FuncPtr g_LCDML_DISP_functions_loop_end[(N+1)];\
-		void LCDML_FUNC_loop_setup(void){}\
+		void LCDML_FUNC_loop_setup(void){ }\
 		void LCDML_FUNC_loop(void){}\
 		void LCDML_FUNC_loop_end(void){}\
 		unsigned long g_LCDML_DISP_press_time = 0;\
@@ -189,7 +202,7 @@
 /* ************************************************ */
 #	define LCDML_DISP_initObjects()\
 		_LCDML_lcd_obj;\
-		LCDMenuLib LCDML (Item, lcd, g_LCDML_DISP_lang_table, _LCDML_DISP_rows, _LCDML_DISP_cols);
+		LCDMenuLib LCDML(Item, lcd, g_LCDML_DISP_lang_table, _LCDML_DISP_rows, _LCDML_DISP_cols);
 
 /* ************************************************ */
 /* LCDMenuLib_jumpToFunc							*/

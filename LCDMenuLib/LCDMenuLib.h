@@ -124,8 +124,8 @@
 
 //# Lcd Menu Lib
 //# =======================
-	class LCDMenuLib
-	{
+		class LCDMenuLib
+		{
 		private:
 			/* LCD Object */
 			_LCDML_lcd_type *lcd;
@@ -136,8 +136,8 @@
 			/* Saves the string position from menu elments in flash memory */
 			const char * const *flash_table;
 
-			
-			
+
+
 			/* display cols */
 			uint8_t		cols;
 			/* display rows */
@@ -149,30 +149,29 @@
 			uint8_t		curloc;
 			uint8_t		curloc_cor;
 			/* current scroll position */
-			uint8_t		scroll; 
+			uint8_t		scroll;
 			/* save the last cursor position when a menue element is called */
-			uint8_t		cursor_pos; 
+			uint8_t		cursor_pos;
 			/* how many childs exists on next layer */
-			uint8_t		child_cnt;				
+			uint8_t		child_cnt;
 			/* containes the current layer */
-			uint8_t		layer; 			
+			uint8_t		layer;
 
-			/* move to the parent menu */
-			void		goBack();
+			
 			/* activate the menu under the cursor */
-			void		goEnter();        
+			void		goEnter();
 			/* set the cursor to the current position in the menu */
-			void		setCursor(); 
+			void		setCursor();
 			/* scroll the menu */
-			void		doScroll(); 
+			void		doScroll();
 			/* go to a menu element */
-			void		goMenu(LCDMenu &m);   
+			void		goMenu(LCDMenu &m);
 			/* works with jump to element on globale function */
 			uint8_t		selectElementDirect(LCDMenu &p_m, uint8_t p_search);
 			/* how many childs exists on next layer */
-			uint8_t		countChilds();			
-					
-		public:			
+			uint8_t		countChilds();
+
+		public:
 			/* button variable */
 			uint8_t		button;
 			/* control bits */
@@ -181,21 +180,21 @@
 			uint8_t		group_en;
 			/* save the last id from a menu element, when a menu elmend is called */
 			uint8_t		function;
-						
+
 			/* Constructor */
-			LCDMenuLib(LCDMenu &p_r,_LCDML_lcd_type &p_d, const char * const *p_flash_table, const uint8_t p_rows, const uint8_t p_cols);   
-			
+			LCDMenuLib(LCDMenu &p_r, _LCDML_lcd_type &p_d, const char * const *p_flash_table, const uint8_t p_rows, const uint8_t p_cols);
+
 			/* Display the current menu on the lcd */
-			void		display();			
+			void		display();
 			/* jump to root menu */
-			void		goRoot();	
+			void		goRoot();
+			/* move to the parent menu */
+			void		goBack();
+
 			/* jump to menu element */
 			void		jumpToElement(uint8_t element);
 			/* replace the delay function */
-			uint8_t		Timer(unsigned long &p_var, unsigned long p_time);				
-			/* check if a button was pressed and reset the globale buttonCheck bit */
-			uint8_t		checkButtons();
-			uint8_t		checkButtons(uint8_t check);			
+			uint8_t		Timer(unsigned long &p_var, unsigned long p_time);
 			/* go in a menu element */
 			void		Button_enter();
 			/* go out of a menu element */
@@ -203,16 +202,19 @@
 			/* navigate through the menu */
 			void		Button_up_down_left_right(uint8_t but);
 			/* redefine custom chars for scrollbar */
-			void		scrollbarInit();			
+			void		scrollbarInit();
 			/* get active function id */
-			uint8_t		getFunction();		
+			uint8_t		getFunction();
 			/* get the layer where the cursor stands in the menu */
-			uint8_t		getLayer();			
+			uint8_t		getLayer();
 			/* get the corrent cursor position */
-			uint8_t		getCursorPos();	
+			uint8_t		getCursorPos();
 			/* get the current name of an element */
 			uint8_t		getElementName(char *, uint8_t element_id);
-	};
+
+
+		};
+
 #endif
 
 
