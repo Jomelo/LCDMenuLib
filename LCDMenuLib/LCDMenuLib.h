@@ -3,54 +3,62 @@
 /*						LCDMenuLib (LCDML)								*/
 /*																		*/
 /* ******************************************************************** */
-/* Autor:			Jomelo												*/
+/* Autor:			Nils Feldkämper										*/
 /* Create:			03.02.2008											*/
-/* Edit:			10.05.2015											*/
-/* ******************************************************************** */
-/* support (german):													*/
-/* 	http://forum.arduino.cc/index.php?topic=73816.0						*/
-/* support (english / german)											*/
-/*	https://github.com/Jomelo/LCDMenuLib/issues							*/
+/* Edit:			14.05.2015											*/
 /* ******************************************************************** */
 
-/************************************************************************/
+/* ******************************************************************** */
+/* ============															*/
 /* Description:															*/
+/* ============															*/
 /* With this library, you can create menus with layers on base on the   */
 /* Nested-Set-Model. For every menu element can be create a function    */
 /* to control the content. This function is called automatical from the */
 /* library and can runs in a loop, without blocking other programm parts*/
-/************************************************************************/
+/* ******************************************************************** */
 
-/************************************************************************/
-/* Description (german):												*/
+/* ******************************************************************** */
+/* ======================												*/
+/* Beschreibung (german):												*/
+/* ======================												*/
 /* Mit der Lib können LCD Menüs über mehrere Ebenen mit Hilfe des   	*/
 /* Nested Set Models generiert werden. Jeder Menüpunkt kann mit einer   */
 /* Funktion hinterlegt werden die durch die Lib aufgerufen wird, sobald */
 /* der Menüpunkt aktiviert wird.										*/
-/************************************************************************/
+/* ******************************************************************** */
+
+/* ******************************************************************** */
+/* error reporting (english / german)									*/
+/*	https://github.com/Jomelo/LCDMenuLib/issues							*/
+/* support (german):													*/
+/* 	http://forum.arduino.cc/index.php?topic=73816.0						*/
+/* ******************************************************************** */
 
 /************************************************************************/
 /* Features:															*/
 /* - max 254 menu elements												*/
 /* - max 254 menu elements per layer								    */
-/* - max 6 layers from root, configurable in LCDMenuLib.h				*/
+/* - max 6 layers from root, configurable in LCDMenuLib___config.h		*/
 /* - max support for 6 buttons up, down, left, right, back/quit, enter  */
 /* - min 3 buttons needed up, down, enter                               */
+/* - control over, analog buttons, digital buttons, encoder, ir, ...    */
 /* - separation of structural and functional level                      */
-/* - support for initscreen which is shown after x secounds or at begin */
-/* - scrollbar when more menu elments in a layer then rows              */
+/* - scrollbar when more menu elments in a layer then rows, configurable*/
 /* - last cursor pos is saved											*/
 /* - possibility to jump from one menu elment directly to another       */
 /* - support for many different lcd librarys in LCDMenuLib___config.h   */
-/* - 4bit lcd support													*/
-/* - 8bit lcd support													*/
-/* - i2c lcd support													*/
-/* - shift register lcd support											*/
-/* - DogLcd support														*/
+/*		4bit lcd support												*/
+/* 		8bit lcd support												*/
+/* 		i2c lcd support													*/
+/* 		shift register lcd support										*/
+/*		DogLcd support													*/
+/* - max 254 simple threads can be used									*/
+/*   this threads are working in the background to check temp or other  */
+/*   sensors or other things											*/
 /*																		*/
-/* - many small function for other things								*/
 /*																		*/
-/* - no support for gaphic displays yet									*/
+/* - no support for gaphic displays 									*/
 /************************************************************************/
 
 #ifndef LCDMenuLib_h
@@ -83,9 +91,9 @@
 #	define _LCDMenuLib_control_free_5			5
 #	define _LCDMenuLib_control_scrollbar_l		4
 #	define _LCDMenuLib_control_lcd_standard		3
-#	define _LCDMenuLib_control_free_2			2
+#	define _LCDMenuLib_control_search_display	2
 #	define _LCDMenuLib_control_funcend			1
-#	define _LCDMenuLib_control_funcsetup		0
+#	define _LCDMenuLib_control_disable_hidden	0
 
 // groups
 #	define _LCDML_G8							7
@@ -124,96 +132,89 @@
 
 //# Lcd Menu Lib
 //# =======================
-		class LCDMenuLib
-		{
-		private:
-			/* LCD Object */
-			_LCDML_lcd_type *lcd;
-			/* Menu Objects */
-			LCDMenu		*rootMenu;
-			LCDMenu		*curMenu;
+	class LCDMenuLib
+	{
+	private:
+		/* LCD Object */
+		_LCDML_lcd_type *lcd;
+		/* Menu Objects */
+		LCDMenu		*rootMenu;
+		LCDMenu		*curMenu;
 
-			/* Saves the string position from menu elments in flash memory */
-			const char * const *flash_table;
+		/* Saves the string position from menu elments in flash memory */
+		const char * const *flash_table;
+		/* display cols */
+		uint8_t		cols;
+		/* display rows */
+		uint8_t		rows;
+		/* save the last layer */
+		uint8_t		layer_save[_LCDML_DISP_cfg_cursor_deep];      // Speichert Cursor Position bis zur 8 Ebene
+		/* current corsor position */
+		uint8_t		curloc;			
+		/* current scroll position */
+		uint8_t		scroll;
+		/* save the last cursor position when a menue element is called */
+		uint8_t		cursor_pos;
+		/* how many childs exists on next layer */
+		uint8_t		child_cnt;
+		/* containes the current layer */
+		uint8_t		layer;
+		/* correction of the cursor position with hidden button */
+		uint8_t		curloc_correction();
+		/* activate the menu under the cursor */
+		void		goEnter();
+		/* set the cursor to the current position in the menu */
+		void		setCursor();
+		/* scroll the menu */
+		void		doScroll();
+		/* go to a menu element */
+		void		goMenu(LCDMenu &m);
+		/* works with jump to element on globale function */
+		uint8_t		selectElementDirect(LCDMenu &p_m, uint8_t p_search);
+		/* how many childs exists on next layer */
+		uint8_t		countChilds();
 
+	public:
+		/* button variable */
+		uint8_t		button;
+		/* control bits */
+		uint8_t		control;
+		/* save group_hidden_status */
+		uint8_t		group_en;
+		/* save the last id from a menu element, when a menu elmend is called */
+		uint8_t		function;
 
+		/* Constructor */
+		LCDMenuLib(LCDMenu &p_r, _LCDML_lcd_type &p_d, const char * const *p_flash_table, const uint8_t p_rows, const uint8_t p_cols);
 
-			/* display cols */
-			uint8_t		cols;
-			/* display rows */
-			uint8_t		rows;
-			/* save the last layer */
-			uint8_t		layer_save[_LCDML_DISP_cfg_cursor_deep];      // Speichert Cursor Position bis zur 8 Ebene
+		/* Display the current menu on the lcd */
+		void		display();
+		/* jump to root menu */
+		void		goRoot();
+		/* move to the parent menu */
+		void		goBack();
 
-			/* current corsor position */
-			uint8_t		curloc;
-			uint8_t		curloc_cor;
-			/* current scroll position */
-			uint8_t		scroll;
-			/* save the last cursor position when a menue element is called */
-			uint8_t		cursor_pos;
-			/* how many childs exists on next layer */
-			uint8_t		child_cnt;
-			/* containes the current layer */
-			uint8_t		layer;
-
-			
-			/* activate the menu under the cursor */
-			void		goEnter();
-			/* set the cursor to the current position in the menu */
-			void		setCursor();
-			/* scroll the menu */
-			void		doScroll();
-			/* go to a menu element */
-			void		goMenu(LCDMenu &m);
-			/* works with jump to element on globale function */
-			uint8_t		selectElementDirect(LCDMenu &p_m, uint8_t p_search);
-			/* how many childs exists on next layer */
-			uint8_t		countChilds();
-
-		public:
-			/* button variable */
-			uint8_t		button;
-			/* control bits */
-			uint8_t		control;
-			/* save group_hidden_status */
-			uint8_t		group_en;
-			/* save the last id from a menu element, when a menu elmend is called */
-			uint8_t		function;
-
-			/* Constructor */
-			LCDMenuLib(LCDMenu &p_r, _LCDML_lcd_type &p_d, const char * const *p_flash_table, const uint8_t p_rows, const uint8_t p_cols);
-
-			/* Display the current menu on the lcd */
-			void		display();
-			/* jump to root menu */
-			void		goRoot();
-			/* move to the parent menu */
-			void		goBack();
-
-			/* jump to menu element */
-			void		jumpToElement(uint8_t element);
-			/* replace the delay function */
-			uint8_t		Timer(unsigned long &p_var, unsigned long p_time);
-			/* go in a menu element */
-			void		Button_enter();
-			/* go out of a menu element */
-			void		Button_quit();
-			/* navigate through the menu */
-			void		Button_up_down_left_right(uint8_t but);
-			/* redefine custom chars for scrollbar */
-			void		scrollbarInit();
-			/* get active function id */
-			uint8_t		getFunction();
-			/* get the layer where the cursor stands in the menu */
-			uint8_t		getLayer();
-			/* get the corrent cursor position */
-			uint8_t		getCursorPos();
-			/* get the current name of an element */
-			uint8_t		getElementName(char *, uint8_t element_id);
-
-
-		};
+		/* jump to menu element */
+		void		jumpToElement(uint8_t element);
+		/* replace the delay function */
+		uint8_t		Timer(unsigned long &p_var, unsigned long p_time);
+		/* go in a menu element */
+		void		Button_enter();
+		/* go out of a menu element */
+		void		Button_quit();
+		/* navigate through the menu */
+		void		Button_up_down_left_right(uint8_t but);
+		/* redefine custom chars for scrollbar */
+		void		scrollbarInit();
+		/* get active function id */
+		uint8_t		getFunction();
+		/* get the layer where the cursor stands in the menu */
+		uint8_t		getLayer();
+		/* get the corrent cursor position */
+		uint8_t		getCursorPos();
+		/* get the current name of an element */
+		uint8_t		getElementName(char *, uint8_t element_id);
+	};
 
 #endif
 

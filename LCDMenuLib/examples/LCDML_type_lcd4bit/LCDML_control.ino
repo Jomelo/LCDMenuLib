@@ -5,17 +5,22 @@ void LCDML_control_serial()
 /* ********************************************************************* */
 {
   if (Serial.available())
-  {
+  {   
     switch (Serial.read())
     {
-      case _LCDML_CONTROL_serial_enter:  LCDML.Button_enter(); break;
-      case _LCDML_CONTROL_serial_up:     LCDML.Button_up_down_left_right(_LCDML_button_up); break;
-      case _LCDML_CONTROL_serial_down:   LCDML.Button_up_down_left_right(_LCDML_button_down); break;
-      case _LCDML_CONTROL_serial_left:   LCDML.Button_up_down_left_right(_LCDML_button_left); break;
+      case _LCDML_CONTROL_serial_enter:  LCDML.Button_enter();break;
+      case _LCDML_CONTROL_serial_up:     LCDML.Button_up_down_left_right(_LCDML_button_up);break;
+      case _LCDML_CONTROL_serial_down:   LCDML.Button_up_down_left_right(_LCDML_button_down);;break;
+      case _LCDML_CONTROL_serial_left:   LCDML.Button_up_down_left_right(_LCDML_button_left);break;
       case _LCDML_CONTROL_serial_right:  LCDML.Button_up_down_left_right(_LCDML_button_right); break;
       case _LCDML_CONTROL_serial_quit:   LCDML.Button_quit(); break;
       default: break;
-    }    
+    }
+
+    // example for initscreen
+    g_lcdml_initscreen = millis();  
+    
+    // update menu 
     LCDML_DISP_update();    
   }
 }

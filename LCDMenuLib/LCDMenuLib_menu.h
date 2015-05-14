@@ -3,15 +3,15 @@
 /*						LCDMenuLib (LCDML)								*/
 /*																		*/
 /* ******************************************************************** */
-/* Autor:			Jomelo												*/
+/* Autor:			Nils Feldkämper										*/
 /* Create:			03.02.2008											*/
-/* Edit:			10.05.2015											*/
+/* Edit:			14.05.2015											*/
 /* ******************************************************************** */
 
 /* ******************************************************************** */
 /* ============															*/
 /* Description:															*/
-/* ============															*/	
+/* ============															*/
 /* With this library, you can create menus with layers on base on the   */
 /* Nested-Set-Model. For every menu element can be create a function    */
 /* to control the content. This function is called automatical from the */
@@ -44,7 +44,7 @@
 /* - min 3 buttons needed up, down, enter                               */
 /* - control over, analog buttons, digital buttons, encoder, ir, ...    */
 /* - separation of structural and functional level                      */
-/* - scrollbar when more menu elments in a layer then rows              */
+/* - scrollbar when more menu elments in a layer then rows, configurable*/
 /* - last cursor pos is saved											*/
 /* - possibility to jump from one menu elment directly to another       */
 /* - support for many different lcd librarys in LCDMenuLib___config.h   */
@@ -53,11 +53,13 @@
 /* 		i2c lcd support													*/
 /* 		shift register lcd support										*/
 /*		DogLcd support													*/
+/* - max 254 simple threads can be used									*/
+/*   this threads are working in the background to check temp or other  */
+/*   sensors or other things											*/																	
 /*																		*/
 /*																		*/
 /* - no support for gaphic displays 									*/
 /************************************************************************/
-
 
 #ifndef LCDMenu_h
 #	define LCDMenu_h

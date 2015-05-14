@@ -1,57 +1,64 @@
-/************************************************************************/
+/* ******************************************************************** */
 /*																		*/
-/*								LCDMenuLib								*/
+/*						LCDMenuLib (LCDML)								*/
 /*																		*/
-/************************************************************************/
+/* ******************************************************************** */
 /* Autor:			Nils Feldkämper										*/
 /* Create:			03.02.2008											*/
-/* Edit:			23.04.2015											*/
-/************************************************************************/
-/* License:			all Free											*/
-/************************************************************************/
+/* Edit:			14.05.2015											*/
+/* ******************************************************************** */
 
-/************************************************************************/
+/* ******************************************************************** */
+/* ============															*/
 /* Description:															*/
+/* ============															*/
 /* With this library, you can create menus with layers on base on the   */
 /* Nested-Set-Model. For every menu element can be create a function    */
 /* to control the content. This function is called automatical from the */
-/* library and runs in a loop, without blocking other programm parts.   */
-/*																		*/
-/*                                                                      */
-/************************************************************************/
+/* library and can runs in a loop, without blocking other programm parts*/
+/* ******************************************************************** */
 
-/************************************************************************/
-/* Description (german):												*/
+/* ******************************************************************** */
+/* ======================												*/
+/* Beschreibung (german):												*/
+/* ======================												*/
 /* Mit der Lib können LCD Menüs über mehrere Ebenen mit Hilfe des   	*/
 /* Nested Set Models generiert werden. Jeder Menüpunkt kann mit einer   */
 /* Funktion hinterlegt werden die durch die Lib aufgerufen wird, sobald */
 /* der Menüpunkt aktiviert wird.										*/
-/*																		*/
-/* Support (german):	http://forum.arduino.cc/index.php?topic=73816.0	*/
-/************************************************************************/
+/* ******************************************************************** */
+
+/* ******************************************************************** */
+/* error reporting (english / german)									*/
+/*	https://github.com/Jomelo/LCDMenuLib/issues							*/
+/* support (german):													*/
+/* 	http://forum.arduino.cc/index.php?topic=73816.0						*/
+/* ******************************************************************** */
 
 /************************************************************************/
 /* Features:															*/
 /* - max 254 menu elements												*/
 /* - max 254 menu elements per layer								    */
-/* - max 6 layers from root, configurable in LCDMenuLib.h				*/
+/* - max 6 layers from root, configurable in LCDMenuLib___config.h		*/
 /* - max support for 6 buttons up, down, left, right, back/quit, enter  */
 /* - min 3 buttons needed up, down, enter                               */
+/* - control over, analog buttons, digital buttons, encoder, ir, ...    */
 /* - separation of structural and functional level                      */
-/* - support for initscreen which is shown after x secounds or at begin */
-/* - scrollbar when more menu elments in a layer then rows              */
+/* - scrollbar when more menu elments in a layer then rows, configurable*/
 /* - last cursor pos is saved											*/
 /* - possibility to jump from one menu elment directly to another       */
 /* - support for many different lcd librarys in LCDMenuLib___config.h   */
-/* - 4bit lcd support													*/
-/* - 8bit lcd support													*/
-/* - i2c lcd support													*/
-/* - shift register lcd support											*/
-/* - DogLcd support														*/
+/*		4bit lcd support												*/
+/* 		8bit lcd support												*/
+/* 		i2c lcd support													*/
+/* 		shift register lcd support										*/
+/*		DogLcd support													*/
+/* - max 254 simple threads can be used									*/
+/*   this threads are working in the background to check temp or other  */
+/*   sensors or other things											*/
 /*																		*/
-/* - many small function for other things								*/
 /*																		*/
-/* - no support for gaphic displays yet									*/
+/* - no support for gaphic displays 									*/
 /************************************************************************/
 
 #ifndef _LCDML_DISP_macros_h
@@ -90,11 +97,46 @@
 
 
 
+#	define LCDML_BACK_create()\
+		void LCDML_BACK_setup(LCDML_BACKEND_menu)\
+		{\
+			g_LCDML_BACK_lastFunc = LCDML.getFunction();\
+			if (g_LCDML_DISP_functions_loop_setup[g_LCDML_BACK_lastFunc] == LCDML_FUNC_loop_setup) \
+			{\
+				bitSet(LCDML.control, _LCDMenuLib_control_funcend);\
+			}\
+			else if (g_LCDML_BACK_lastFunc != _LCDMenuLib_NO_FUNC) {\
+				lcd.clear();\
+				lcd.setCursor(0, 0);\
+				LCDML_BUTTON_resetAll();\
+				g_LCDML_DISP_functions_loop_setup[g_LCDML_BACK_lastFunc]();\
+			}\
+		}\
+		boolean LCDML_BACK_loop(LCDML_BACKEND_menu)\
+		{\
+			if (LCDML.getFunction() != _LCDMenuLib_NO_FUNC) \
+			{\
+				g_LCDML_DISP_functions_loop[LCDML.getFunction()]();\
+			}\
+			return true;\
+		}\
+		void LCDML_BACK_stable(LCDML_BACKEND_menu)\
+		{\
+			if (g_LCDML_BACK_lastFunc != _LCDMenuLib_NO_FUNC) \
+			{\
+				g_LCDML_DISP_functions_loop_end[g_LCDML_BACK_lastFunc]();\
+				g_LCDML_BACK_lastFunc = _LCDMenuLib_NO_FUNC;\
+				lcd.clear();\
+				LCDML.display();\
+				LCDML_BUTTON_resetAll();\
+				LCDML.function = _LCDMenuLib_NO_FUNC;\
+				bitClear(LCDML.control, _LCDMenuLib_control_funcend);\
+			}\
+		}
 
 
 
-
-#	define LCDML_root Item
+#	define LCDML_root LCDML_Item
 
 
 
@@ -145,7 +187,7 @@
 		void LCDML_FUNC_loop(void){}\
 		void LCDML_FUNC_loop_end(void){}\
 		unsigned long g_LCDML_DISP_press_time = 0;\
-		LCDMenu Item (0, true)
+		LCDMenu LCDML_Item (0, true)
 		
 
 #	define FuncEnd(dir,enter,up,down,left,right)\
@@ -202,7 +244,7 @@
 /* ************************************************ */
 #	define LCDML_DISP_initObjects()\
 		_LCDML_lcd_obj;\
-		LCDMenuLib LCDML(Item, lcd, g_LCDML_DISP_lang_table, _LCDML_DISP_rows, _LCDML_DISP_cols);
+		LCDMenuLib LCDML(LCDML_Item, lcd, g_LCDML_DISP_lang_table, _LCDML_DISP_rows, _LCDML_DISP_cols);
 
 /* ************************************************ */
 /* LCDMenuLib_jumpToFunc							*/
@@ -212,11 +254,12 @@
 		for(uint8_t i=0; i<=254;i++) {\
 			if (name##_loop_setup == g_LCDML_DISP_functions_loop_setup[i]) { \
 				LCDML.jumpToElement(i);\
-				LCDML_UPDATE(); \
+				LCDML_DISP_update(); \
 				break;\
 			}\
 		}\
-		return;
+		LCDML_BUTTON_resetAll()
+		
 
 
 /* ************************************************ */

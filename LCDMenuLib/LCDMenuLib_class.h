@@ -1,64 +1,68 @@
-/************************************************************************/
+/* ******************************************************************** */
 /*																		*/
-/*								LCDMenuLib								*/
+/*						LCDMenuLib (LCDML)								*/
 /*																		*/
-/************************************************************************/
+/* ******************************************************************** */
 /* Autor:			Nils Feldkämper										*/
 /* Create:			03.02.2008											*/
-/* Edit:			23.02.2014											*/
-/************************************************************************/
-/* License:			all Free											*/
-/************************************************************************/
+/* Edit:			14.05.2015											*/
+/* ******************************************************************** */
 
-/************************************************************************/
+/* ******************************************************************** */
+/* ============															*/
 /* Description:															*/
+/* ============															*/
 /* With this library, you can create menus with layers on base on the   */
 /* Nested-Set-Model. For every menu element can be create a function    */
 /* to control the content. This function is called automatical from the */
-/* library and runs in a loop, without blocking other programm parts.   */
-/*																		*/
-/* Support:  -- englischen Link einfügen --                             */
-/*                                                                      */
-/************************************************************************/
+/* library and can runs in a loop, without blocking other programm parts*/
+/* ******************************************************************** */
 
-/************************************************************************/
-/* Description (german):												*/
+/* ******************************************************************** */
+/* ======================												*/
+/* Beschreibung (german):												*/
+/* ======================												*/
 /* Mit der Lib können LCD Menüs über mehrere Ebenen mit Hilfe des   	*/
 /* Nested Set Models generiert werden. Jeder Menüpunkt kann mit einer   */
 /* Funktion hinterlegt werden die durch die Lib aufgerufen wird, sobald */
 /* der Menüpunkt aktiviert wird.										*/
-/*																		*/
-/* Support (german):	http://forum.arduino.cc/index.php?topic=73816.0	*/
-/************************************************************************/
+/* ******************************************************************** */
+
+/* ******************************************************************** */
+/* error reporting (english / german)									*/
+/*	https://github.com/Jomelo/LCDMenuLib/issues							*/
+/* support (german):													*/
+/* 	http://forum.arduino.cc/index.php?topic=73816.0						*/
+/* ******************************************************************** */
 
 /************************************************************************/
 /* Features:															*/
 /* - max 254 menu elements												*/
 /* - max 254 menu elements per layer								    */
-/* - max 6 layers from root, configurable in LCDMenuLib.h				*/
+/* - max 6 layers from root, configurable in LCDMenuLib___config.h		*/
 /* - max support for 6 buttons up, down, left, right, back/quit, enter  */
 /* - min 3 buttons needed up, down, enter                               */
+/* - control over, analog buttons, digital buttons, encoder, ir, ...    */
 /* - separation of structural and functional level                      */
-/* - support for initscreen which is shown after x secounds or at begin */
-/* - scrollbar when more menu elments in a layer then rows              */
+/* - scrollbar when more menu elments in a layer then rows, configurable*/
 /* - last cursor pos is saved											*/
 /* - possibility to jump from one menu elment directly to another       */
 /* - support for many different lcd librarys in LCDMenuLib___config.h   */
-/* - 4bit lcd support													*/
-/* - 8bit lcd support													*/
-/* - i2c lcd support													*/
-/* - shift register lcd support											*/
-/* - DogLcd support														*/
+/*		4bit lcd support												*/
+/* 		8bit lcd support												*/
+/* 		i2c lcd support													*/
+/* 		shift register lcd support										*/
+/*		DogLcd support													*/
+/* - max 254 simple threads can be used									*/
+/*   this threads are working in the background to check temp or other  */
+/*   sensors or other things											*/
 /*																		*/
-/* - many small function for other things								*/
 /*																		*/
-/* - no support for gaphic displays yet									*/
+/* - no support for gaphic displays 									*/
 /************************************************************************/
 
 #ifndef LCDMenuLib_class_h
 #	define LCDMenuLib_class_h
-
-
 
 //	====================================================================================================
 //	check errors
@@ -71,10 +75,8 @@
 #		error "not defined: _LCDMenuLib_arduino_version (LCDMenuLib___config.h)"
 #	endif
 
-
-
-
 #	ifdef _LCDMenuLib_cfg_lcd_type
+
 
 /* ******************************************************************************** */
 /* LiquidCrystal (Orginal Lib)														*/

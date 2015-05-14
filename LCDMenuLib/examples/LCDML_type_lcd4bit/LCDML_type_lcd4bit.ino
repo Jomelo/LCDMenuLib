@@ -1,6 +1,9 @@
-/* =============================================== */
-/* Example: LCD Menu with LiquidCrystal          */
-/* =============================================== */
+/* ============================================================ */
+/*                                                              */
+/* Example: LCD Menu with LiquidCrystal                         */
+/*                                                              */
+/* for Arduino 1.0.x and 1.6.x with orginal Liquid Crystal Lib  */
+/* ============================================================ */
 
 /* include libs */
 #include <LiquidCrystal.h>
@@ -11,6 +14,8 @@
 #define _LCDML_DISP_rows             4
 
 /* pin settings */
+/* when you are using an i2c display please load the i2c example */
+/* (on beta v2 it is coming soon, on stable v2 it is included */
 #define _LCDML_DISP_rs               2
 #define _LCDML_DISP_e                3
 #define _LCDML_DISP_dat0             4
@@ -19,8 +24,8 @@
 #define _LCDML_DISP_dat3             7
 
 /* optional */
-//#define _LCDML_DISP_rw			0
-//#define _LCDML_DISP_backlight         7
+//#define _LCDML_DISP_rw	     0
+//#define _LCDML_DISP_backlight      7
 //#define _LCDML_DISP_backlight_pol     POSITIVE // NEGATIVE
 /* 8 bit mode */
 //#define _LCDML_DISP_dat4          0
@@ -98,19 +103,21 @@
 #  define _LCDML_CONTROL_encoder_time            20
 #endif
 
-#define _LCDML_DISP_cnt    37
-
 /* create menu */
+/* menu element count - last element id */
+#define _LCDML_DISP_cnt    38
+
+
 /* root           => layer 0 */
 /* root_XX        => layer 1 */
 /* root_XX_XX     => layer 2 */
 /* root_XX_XX_XX  => layer 3 */
 /* root_... 	  => layer ... */
-/* menu element count - last element id */
+
 
 /* init lcdmenulib */
 LCDML_DISP_init(_LCDML_DISP_cnt);
-/* LCDMenuLib_element(id, group, prev_layer_element, new_element_num, lang_string, callback_function) */
+/* LCDMenuLib_element(id, group, prev_layer_element, new_element_num, lang_char_array, callback_function) */
 LCDML_DISP_add(0  , _LCDML_G1  , LCDML_root        , 1  , "Information"        , LCDML_FUNC_information);
 LCDML_DISP_add(1  , _LCDML_G1  , LCDML_root        , 2  , "Time info"          , LCDML_FUNC_timer_info);
 LCDML_DISP_add(2  , _LCDML_G1  , LCDML_root        , 3  , "Settings"           , LCDML_FUNC);
@@ -149,21 +156,22 @@ LCDML_DISP_add(34 , _LCDML_G1  , LCDML_root_6_2_3  , 4  , "Back"               ,
 LCDML_DISP_add(35 , _LCDML_G1  , LCDML_root_6_2    , 4  , "Back"               , LCDML_FUNC_back);
 LCDML_DISP_add(36 , _LCDML_G1  , LCDML_root_6      , 3  , "Test 30"            , LCDML_FUNC_test30_start);
 LCDML_DISP_add(37 , _LCDML_G1  , LCDML_root_6      , 4  , "Back"               , LCDML_FUNC_back);
+LCDML_DISP_add(38 , _LCDML_G7  , LCDML_root        , 7  , "InitScreen"         , LCDML_FUNC_initscreen); 
 LCDML_DISP_createMenu(_LCDML_DISP_cnt);
 
 
-
-#define _LCDML_BACK_cnt    4
+/* define backend function */
+/* to do:  add documentation and comments */
+#define _LCDML_BACK_cnt    4  // last backend function id
 
 LCDML_BACK_init(_LCDML_BACK_cnt);
 LCDML_BACK_new_timebased_static  (0  , _LCDML_millis, (20)                , _LCDML_start  , LCDML_BACKEND_control);
 LCDML_BACK_new_timebased_dynamic (1  , _LCDML_millis, (1000*60)           , _LCDML_stop   , LCDML_BACKEND_menu);
 /* own backend function */
-//LCDML_BACK_new_timebased_dynamic (2  , _LCDML_millis, (1000*60)           , _LCDML_stop   , LCDML_BACKEND_initscreen);
 LCDML_BACK_new_timebased_static  (2  , _LCDML_millis, (1000*10)           , _LCDML_start  , LCDML_BACKEND_test10);
 LCDML_BACK_new_timebased_dynamic (3  , _LCDML_millis, (1000*20)           , _LCDML_stop   , LCDML_BACKEND_test20);
 LCDML_BACK_new_eventbased        (4                                                       , LCDML_BACKEND_test30);
-
+LCDML_BACK_create();
 
 
 
@@ -176,9 +184,7 @@ void setup()
   LCDML_DISP_groupEnable(_LCDML_G1);
   LCDML_DISP_groupEnable(_LCDML_G2);  
   
-  LCDML_setup(_LCDML_BACK_cnt); 
-
-  //LCDML_DISP_jumpToFunc(LCDML_FUNC_prog_disable);  
+  LCDML_setup(_LCDML_BACK_cnt);    
 }
 
 void loop()

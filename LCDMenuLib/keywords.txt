@@ -7,13 +7,25 @@
 #######################################
 LcdMenu	KEYWORD1
 LCDMenuLib	KEYWORD1
+
+LCDML_BUTTON_checkAll	KEYWORD2
+LCDML_BUTTON_checkAny	KEYWORD2
+LCDML_BUTTON_checkLeft	KEYWORD2
+LCDML_BUTTON_checkRight	KEYWORD2
+LCDML_BUTTON_checkUp	KEYWORD2
+LCDML_BUTTON_checkDown	KEYWORD2
+LCDML_BUTTON_checkEnter	KEYWORD2
+
+LCDML_BACK_create	KEYWORD2
+
 #######################################
 # Methods and Functions (KEYWORD2)
 #######################################
 # Makros: Trigger#
 
-LCDML_TRIGGER	KEYWORD2
-LCDML_TRIGGER_CONTROL	KEYWORD2
+LCDML_DISP_triggerMenu	KEYWORD2
+LCDML_DISP_triggerControl	KEYWORD2
+LCDML_DISP_update	KEYWORD2
 
 # Makros: DISP#
 LCDML_DISP_add	KEYWORD2
@@ -174,7 +186,9 @@ _LCDML_DogLCD_CSB	LITERAL1
 _LCDML_DogLCD_RESET	LITERAL1
 _LCDML_DogLCD_LIGHT	LITERAL1
 
-_LCDML_DISP_cfg_control	LITERAL1 
+
+_LCDML_DISP_cfg_control	LITERAL1
+_LCDML_DISP_cfg_scrollbar_custom_redefine	LITERAL1 
 _LCDML_DISP_cfg_button_press_time	LITERAL1
 _LCDML_DISP_cfg_scrollbar	LITERAL1
 _LCDML_DISP_cfg_lcd_standard	LITERAL1
