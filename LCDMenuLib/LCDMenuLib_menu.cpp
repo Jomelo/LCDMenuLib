@@ -74,6 +74,9 @@
 LCDMenu::LCDMenu(uint8_t n, uint8_t group)
 /* ******************************************************************** */
 {	
+	parent = NULL;
+	sibling = NULL;
+	child = NULL;
 	name = n;		// element name 
 	disp = group;	// element group
 }

@@ -268,7 +268,6 @@ void	LCDMenuLib::goEnter()
 {
 	LCDMenu *tmp;	// declare opjects
 	uint8_t name		= function;
-	uint8_t	curloc_cor  = 0;
 	uint8_t j			= 0;
 	
 	if (function == _LCDMenuLib_NO_FUNC) { //check button lock		
@@ -677,7 +676,7 @@ uint8_t LCDMenuLib::Timer(unsigned long &p_var, unsigned long p_time)
 uint8_t	LCDMenuLib::getCursorPos()
 /* ******************************************************************** */
 {
-	return curloc + curloc_correction(); //return the current cursor position
+	return (curloc + curloc_correction()); //return the current cursor position
 }
 
 
@@ -686,15 +685,15 @@ uint8_t	LCDMenuLib::getCursorPos()
  * @param
  * @return
  * ******************************************************************** */
-void	LCDMenuLib::scrollbarInit()
+void LCDMenuLib::scrollbarInit()
 /* ******************************************************************** */
 {
-	uint8_t scroll_bar[5][8] { // todo: save in flash
-		{B10001, B10001, B10001, B10001, B10001, B10001, B10001, B10001}, 
-		{B11111, B11111, B10001, B10001, B10001, B10001, B10001, B10001}, 
-		{B10001, B10001, B11111, B11111, B10001, B10001, B10001, B10001},
-		{B10001, B10001, B10001, B10001, B11111, B11111, B10001, B10001}, 
-		{B10001, B10001, B10001, B10001, B10001, B10001, B11111, B11111}
+	uint8_t scroll_bar[5][8] = {
+	{B10001, B10001, B10001, B10001, B10001, B10001, B10001, B10001},
+	{B11111, B11111, B10001, B10001, B10001, B10001, B10001, B10001}, 
+	{B10001, B10001, B11111, B11111, B10001, B10001, B10001, B10001},
+	{B10001, B10001, B10001, B10001, B11111, B11111, B10001, B10001}, 
+	{B10001, B10001, B10001, B10001, B10001, B10001, B11111, B11111}
 	}; 
 	lcd->_LCDML_lcd_createChar(0, scroll_bar[0]);
 	lcd->_LCDML_lcd_createChar(1, scroll_bar[1]);

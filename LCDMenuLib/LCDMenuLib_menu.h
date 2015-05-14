@@ -70,9 +70,9 @@
 	class LCDMenu
 	{
 		private:
-			LCDMenu * parent = NULL;					// Parent menu, NULL if this is the top
-			LCDMenu * child = NULL;						// First child menu, NULL if no children
-			LCDMenu * sibling = NULL;					// Next sibling menu, NULL if this is the last sibling
+			LCDMenu * parent;					// Parent menu, NULL if this is the top
+			LCDMenu * child;						// First child menu, NULL if no children
+			LCDMenu * sibling;					// Next sibling menu, NULL if this is the last sibling
 
 			void setParent(LCDMenu &p);					// Sets the menu's parent to p
 			void addSibling(LCDMenu &s,LCDMenu &p);		// Adds a sibling s with parent p.  If the menu already has a sibling, ask that sibling to add it

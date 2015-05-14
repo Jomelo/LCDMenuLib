@@ -147,7 +147,7 @@
 #	define LCDML_DISP_loop_end(name)\
 		name ##_loop_end(void)
 
-#	define LCDML_DISP_update()\	
+#	define LCDML_DISP_update()\
 	if (LCDML.getFunction() != _LCDMenuLib_NO_FUNC){\
 		LCDML_BACK_start(LCDML_BACKEND_menu);\
 	}
