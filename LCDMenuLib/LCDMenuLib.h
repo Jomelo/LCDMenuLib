@@ -5,7 +5,7 @@
 /* ******************************************************************** */
 /* Autor:			Nils Feldkämper										*/
 /* Create:			03.02.2008											*/
-/* Edit:			14.05.2015											*/
+/* Edit:			17.05.2015											*/
 /* ******************************************************************** */
 
 /* ******************************************************************** */
@@ -73,7 +73,7 @@
 
 
 /* define the no function constante */
-#	define _LCDMenuLib_NO_FUNC					255
+#	define _LCDML_NO_FUNC					255
 
 //button bit pos
 #	define _LCDML_button_free					7
@@ -86,14 +86,14 @@
 #	define _LCDML_button_right					0
 
 //control bit pos
-#	define _LCDMenuLib_control_menu_back		7
-#	define _LCDMenuLib_control_menu_look		6
-#	define _LCDMenuLib_control_free_5			5
-#	define _LCDMenuLib_control_scrollbar_l		4
-#	define _LCDMenuLib_control_lcd_standard		3
-#	define _LCDMenuLib_control_search_display	2
-#	define _LCDMenuLib_control_funcend			1
-#	define _LCDMenuLib_control_disable_hidden	0
+#	define _LCDML_control_menu_back				7
+#	define _LCDML_control_free_6				6
+#	define _LCDML_control_free_5				5
+#	define _LCDML_control_scrollbar_l			4
+#	define _LCDML_control_lcd_standard			3
+#	define _LCDML_control_search_display		2
+#	define _LCDML_control_funcend				1
+#	define _LCDML_control_disable_hidden		0
 
 // groups
 #	define _LCDML_G8							7
@@ -195,15 +195,13 @@
 		void		goBack();
 
 		/* jump to menu element */
-		void		jumpToElement(uint8_t element);
-		/* replace the delay function */
-		uint8_t		Timer(unsigned long &p_var, unsigned long p_time);
+		void		jumpToElement(uint8_t element);		
 		/* go in a menu element */
 		void		Button_enter();
 		/* go out of a menu element */
 		void		Button_quit();
 		/* navigate through the menu */
-		void		Button_up_down_left_right(uint8_t but);
+		void		Button_udlr(uint8_t but);
 		/* redefine custom chars for scrollbar */
 		void		scrollbarInit();
 		/* get active function id */
@@ -211,9 +209,7 @@
 		/* get the layer where the cursor stands in the menu */
 		uint8_t		getLayer();
 		/* get the corrent cursor position */
-		uint8_t		getCursorPos();
-		/* get the current name of an element */
-		uint8_t		getElementName(char *, uint8_t element_id);
+		uint8_t		getCursorPos();		
 	};
 
 #endif

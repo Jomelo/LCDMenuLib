@@ -54,3 +54,81 @@ void LCDML_BACK_stable(LCDML_BACKEND_control)
 /*
 /* ===================================================================== */
 
+
+
+/* ===================================================================== */
+void LCDML_BACK_setup(LCDML_BACKEND_test10)
+/* ===================================================================== */
+{
+  // setup of backend function "test10"
+  Serial.println(F("T:10 start"));  
+}
+boolean LCDML_BACK_loop(LCDML_BACKEND_test10) 
+{
+  // loop fo backend function "test10"
+  Serial.println(F("T:10 loop"));
+}
+void LCDML_BACK_stable(LCDML_BACKEND_test10) 
+{
+  // stop stable of backend function "test10"
+  Serial.println(F("T:10 stop stable"));
+}
+
+/* ===================================================================== */
+void LCDML_BACK_setup(LCDML_BACKEND_test20)
+/* ===================================================================== */
+{
+  // setup of backend function "test20"
+  Serial.println(F("T:20 start"));  
+}
+boolean LCDML_BACK_loop(LCDML_BACKEND_test20) 
+{
+  // loop of backend function "test20"
+  // the loop time of this function can be changed on runtime
+  Serial.println(F("T:20"));
+}
+void LCDML_BACK_stable(LCDML_BACKEND_test20)
+{
+  // stopStable
+}
+
+
+/* ===================================================================== */
+void LCDML_BACK_setup(LCDML_BACKEND_test30)
+/* ===================================================================== */
+{
+  // setup of function "test30"
+  Serial.println(F("T:30 event start"));  
+}
+boolean LCDML_BACK_loop(LCDML_BACKEND_test30) 
+{
+  // loop of function "test30"
+  // this backend function is defined as event an the loop 
+  // of an event is called once, then it stops
+  Serial.println(F("T:30 event loop"));
+}
+void LCDML_BACK_stable(LCDML_BACKEND_test30)
+{
+  // stable stop of this function
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

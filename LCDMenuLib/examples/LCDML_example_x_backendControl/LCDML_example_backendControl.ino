@@ -42,6 +42,13 @@
 #define _LCDML_DISP_cfg_initscreen                 1
 #define _LCDML_DISP_cfg_initscreen_time            30000
 
+       
+/* other configs are in LCDMenuLib___config.h
+ * - max char limit per row (default is 20)
+ * - cursor simbol
+ * - max layer deep (default is 6)
+ * - lcd type
+ */
 
 /* ********************************************************************* */
 /* LCDML CONTROL
@@ -101,7 +108,7 @@
 
 /* create menu */
 /* menu element count - last element id */
-#define _LCDML_DISP_cnt    16
+#define _LCDML_DISP_cnt    38
 
 
 /* root           => layer 0 */
@@ -109,6 +116,9 @@
 /* root_XX_XX     => layer 2 */
 /* root_XX_XX_XX  => layer 3 */
 /* root_... 	  => layer ... */
+
+
+
 
 /* init lcdmenulib */
 LCDML_DISP_init(_LCDML_DISP_cnt);
@@ -119,31 +129,56 @@ LCDML_DISP_add(2  , _LCDML_G1  , LCDML_root        , 3  , "Settings"           ,
 LCDML_DISP_add(3  , _LCDML_G1  , LCDML_root_3      , 1  , "Change value"       , LCDML_FUNC);
 LCDML_DISP_add(4  , _LCDML_G1  , LCDML_root_3      , 2  , "Something"          , LCDML_FUNC);
 LCDML_DISP_add(5  , _LCDML_G1  , LCDML_root_3      , 3  , "Back"               , LCDML_FUNC_back);
-LCDML_DISP_add(6  , _LCDML_G1  , LCDML_root        , 4  , "Program"            , LCDML_FUNC);
-LCDML_DISP_add(7  , _LCDML_G1  , LCDML_root_4      , 1  , "Program 1"          , LCDML_FUNC);
-LCDML_DISP_add(8  , _LCDML_G1  , LCDML_root_4_1    , 1  , "P1 start"           , LCDML_FUNC);
-LCDML_DISP_add(9  , _LCDML_G1  , LCDML_root_4_1    , 2  , "Settings"           , LCDML_FUNC);
-LCDML_DISP_add(10 , _LCDML_G1  , LCDML_root_4_1_2  , 1  , "Warm"               , LCDML_FUNC);
-LCDML_DISP_add(11 , _LCDML_G1  , LCDML_root_4_1_2  , 2  , "Long"               , LCDML_FUNC);
-LCDML_DISP_add(12 , _LCDML_G1  , LCDML_root_4_1_2  , 3  , "Back"               , LCDML_FUNC_back);
-LCDML_DISP_add(13 , _LCDML_G1  , LCDML_root_4_1    , 3  , "Back"               , LCDML_FUNC_back);
-LCDML_DISP_add(14 , _LCDML_G1  , LCDML_root_4      , 2  , "Program 2"          , LCDML_FUNC_p2);
-LCDML_DISP_add(15 , _LCDML_G1  , LCDML_root_4      , 3  , "Back"               , LCDML_FUNC_back);
-LCDML_DISP_add(16 , _LCDML_G1  , LCDML_root        , 5  , "InitScreen"         , LCDML_FUNC_initscreen); 
+LCDML_DISP_add(6  , _LCDML_G2  , LCDML_root        , 4  , "Program"            , LCDML_FUNC);
+LCDML_DISP_add(7  , _LCDML_G2  , LCDML_root_4      , 1  , "Program 1"          , LCDML_FUNC);
+LCDML_DISP_add(8  , _LCDML_G2  , LCDML_root_4_1    , 1  , "P1 start"           , LCDML_FUNC);
+LCDML_DISP_add(9  , _LCDML_G2  , LCDML_root_4_1    , 2  , "Settings"           , LCDML_FUNC);
+LCDML_DISP_add(10 , _LCDML_G2  , LCDML_root_4_1_2  , 1  , "Warm"               , LCDML_FUNC);
+LCDML_DISP_add(11 , _LCDML_G2  , LCDML_root_4_1_2  , 2  , "Long"               , LCDML_FUNC);
+LCDML_DISP_add(12 , _LCDML_G2  , LCDML_root_4_1_2  , 3  , "Back"               , LCDML_FUNC_back);
+LCDML_DISP_add(13 , _LCDML_G2  , LCDML_root_4_1    , 3  , "Back"               , LCDML_FUNC_back);
+LCDML_DISP_add(14 , _LCDML_G2  , LCDML_root_4      , 2  , "Program 2"          , LCDML_FUNC_p2);
+LCDML_DISP_add(15 , _LCDML_G2  , LCDML_root_4      , 3  , "back"               , LCDML_FUNC_back);
+LCDML_DISP_add(16 , _LCDML_G1  , LCDML_root        , 5  , "Menu-Mode"          , LCDML_FUNC);
+LCDML_DISP_add(17 , _LCDML_G2  , LCDML_root_5      , 1  , "disable program"    , LCDML_FUNC_prog_disable);
+LCDML_DISP_add(18 , _LCDML_G3  , LCDML_root_5      , 2  , "enable program"     , LCDML_FUNC_prog_enable);
+LCDML_DISP_add(19 , _LCDML_G1  , LCDML_root_5      , 3  , "back"               , LCDML_FUNC_back);
+LCDML_DISP_add(20 , _LCDML_G1  , LCDML_root        , 6  , "Backend-Control"    , LCDML_FUNC);
+LCDML_DISP_add(21 , _LCDML_G1  , LCDML_root_6      , 1  , "Test 10"            , LCDML_FUNC);
+LCDML_DISP_add(22 , _LCDML_G1  , LCDML_root_6_1    , 1  , "Start"              , LCDML_FUNC_test10_start);
+LCDML_DISP_add(23 , _LCDML_G1  , LCDML_root_6_1    , 2  , "Restart"            , LCDML_FUNC_test10_restart);
+LCDML_DISP_add(24 , _LCDML_G1  , LCDML_root_6_1    , 3  , "Stop"               , LCDML_FUNC_test10_stop);
+LCDML_DISP_add(25 , _LCDML_G1  , LCDML_root_6_1    , 4  , "Stop stable"        , LCDML_FUNC_test10_stop_stable);
+LCDML_DISP_add(26 , _LCDML_G1  , LCDML_root_6_1    , 5  , "Back"               , LCDML_FUNC_back);
+LCDML_DISP_add(27 , _LCDML_G1  , LCDML_root_6      , 2  , "Test 20"            , LCDML_FUNC);
+LCDML_DISP_add(28 , _LCDML_G1  , LCDML_root_6_2    , 1  , "Start"              , LCDML_FUNC_test20_start);
+LCDML_DISP_add(29 , _LCDML_G1  , LCDML_root_6_2    , 2  , "Stop"               , LCDML_FUNC_test20_stop);
+LCDML_DISP_add(30 , _LCDML_G1  , LCDML_root_6_2    , 3  , "Change runtime"     , LCDML_FUNC);
+LCDML_DISP_add(31 , _LCDML_G1  , LCDML_root_6_2_3  , 1  , "500 ms"             , LCDML_FUNC_test20_500ms);
+LCDML_DISP_add(32 , _LCDML_G1  , LCDML_root_6_2_3  , 2  , "1 s"                , LCDML_FUNC_test20_1s);
+LCDML_DISP_add(33 , _LCDML_G1  , LCDML_root_6_2_3  , 3  , "10 s"               , LCDML_FUNC_test20_10s);
+LCDML_DISP_add(34 , _LCDML_G1  , LCDML_root_6_2_3  , 4  , "Back"               , LCDML_FUNC_back);
+LCDML_DISP_add(35 , _LCDML_G1  , LCDML_root_6_2    , 4  , "Back"               , LCDML_FUNC_back);
+LCDML_DISP_add(36 , _LCDML_G1  , LCDML_root_6      , 3  , "Test 30"            , LCDML_FUNC_test30_start);
+LCDML_DISP_add(37 , _LCDML_G1  , LCDML_root_6      , 4  , "Back"               , LCDML_FUNC_back);
+LCDML_DISP_add(38 , _LCDML_G7  , LCDML_root        , 7  , "InitScreen"         , LCDML_FUNC_initscreen); 
 LCDML_DISP_createMenu(_LCDML_DISP_cnt);
 
 
 
 /* define backend function */
 /* to do:  add documentation and comments */
-#define _LCDML_BACK_cnt    1  // last backend function id
+#define _LCDML_BACK_cnt    4  // last backend function id
+
 LCDML_BACK_init(_LCDML_BACK_cnt);
 LCDML_BACK_new_timebased_static  (0  , (20)       , _LCDML_start  , LCDML_BACKEND_control);
 LCDML_BACK_new_timebased_dynamic (1  , (1000*60)  , _LCDML_stop   , LCDML_BACKEND_menu);
 /* own backend function */
-
-
+LCDML_BACK_new_timebased_static  (2  , (1000*10)  , _LCDML_start  , LCDML_BACKEND_test10);
+LCDML_BACK_new_timebased_dynamic (3  , (1000*20)  , _LCDML_stop   , LCDML_BACKEND_test20);
+LCDML_BACK_new_eventbased        (4                               , LCDML_BACKEND_test30);
 LCDML_BACK_create();
+
 
 
 void setup()
@@ -151,7 +186,9 @@ void setup()
   /* serial init; only be needed */
   Serial.begin(9600);   /* start serial */
   
-  LCDML_DISP_groupEnable(_LCDML_G1); // display all buttons in group 1  
+  LCDML_DISP_groupEnable(_LCDML_G1);
+  LCDML_DISP_groupEnable(_LCDML_G2);  
+  
   LCDML_setup(_LCDML_BACK_cnt);    
 }
 
