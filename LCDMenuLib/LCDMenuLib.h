@@ -109,12 +109,6 @@
 #	include <LCDMenuLib___config.h>
 #	include <LCDMenuLib_class.h>
 
-/* set pointer to function if not defined */
-#	ifndef TYPEDEF_LCDML_FUNCPTR
-#		define TYPEDEF_LCDML_FUNCPTR
-		typedef void (* LCDML_FuncPtr) ();
-#	endif
-
 /* include arduino ios */
 #	include "Arduino.h"
 

@@ -146,6 +146,7 @@
 				//LCD type
 #				define _LCDML_lcd_type		LiquidCrystal
 				//LCD include
+#				include <Wire.h>
 #				include <LiquidCrystal.h>
 				//LCD objects
 #				if(_LCDMenuLib_cfg_lcd_type == 100)		//4Bit				

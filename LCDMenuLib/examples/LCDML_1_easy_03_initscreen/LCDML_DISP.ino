@@ -1,12 +1,13 @@
-/* every "disp menu function" constist of three functions *
- * - void LCDML_DISP_setup(func_name)    is called only if it is started
- * - void LCDML_DISP_loop(func_name)     is called continues if function quit on every button even or trigger event
- * - void LCDML_DISP_loop_end(func_name) is called when quit button or LCDML_DISP_funcend is called
- */
 
-/* ********************************************************************* */
+// every "disp menu function" constist of three functions 
+// - void LCDML_DISP_setup(func_name)    is called only if it is started
+// - void LCDML_DISP_loop(func_name)     is called continues if function quit on every button even or trigger event
+// - void LCDML_DISP_loop_end(func_name) is called when quit button or LCDML_DISP_funcend is called
+
+
+// *********************************************************************
 void LCDML_DISP_setup(LCDML_FUNC_information)
-/* ********************************************************************* */
+// *********************************************************************
 {
   // setup function 
   lcd.setCursor(0, 0);
@@ -18,6 +19,7 @@ void LCDML_DISP_setup(LCDML_FUNC_information)
   lcd.setCursor(0, 3);
   lcd.print(F("Back Taste verwenden"));
 }
+
 void LCDML_DISP_loop(LCDML_FUNC_information) 
 {
   // loop function, can be run in a loop when LCDML_DISP_triggerMenu(xx) is set
@@ -28,6 +30,7 @@ void LCDML_DISP_loop(LCDML_FUNC_information)
     LCDML_DISP_funcend();
   } 
 }
+
 void LCDML_DISP_loop_end(LCDML_FUNC_information)
 {
   // this functions is ever called when a DISP function is quit
@@ -35,17 +38,16 @@ void LCDML_DISP_loop_end(LCDML_FUNC_information)
 }  
 
 
-
-/* ********************************************************************* */
+// *********************************************************************
 uint8_t g_func_timer_info = 0;  // time counter (global variable)
 unsigned long g_timer_1 = 0;    // timer variable (globale variable)
 void LCDML_DISP_setup(LCDML_FUNC_timer_info)
-/* ********************************************************************* */
+// *********************************************************************
 {
   // setup function      
   lcd.print(F("x sec warten")); // print some content on first row  
-  g_func_timer_info = 10; // reset and set timer    
-  LCDML_DISP_triggerMenu(100); // starts a trigger event for the loop function every 100 millisecounds
+  g_func_timer_info = 10;       // reset and set timer    
+  LCDML_DISP_triggerMenu(100);  // starts a trigger event for the loop function every 100 millisecounds
 }
 
 void LCDML_DISP_loop(LCDML_FUNC_timer_info)
@@ -58,10 +60,13 @@ void LCDML_DISP_loop(LCDML_FUNC_timer_info)
   // this timer checks every 1000 millisecounds if it is called
   if((millis() - g_timer_1) >= 1000) {
     g_timer_1 = millis();   
-    g_func_timer_info--;                // increment the value every secound */
-    lcd.setCursor(0, 0);                // set cursor pos */
-    lcd.print(g_func_timer_info);       // print the time counter value */
+    g_func_timer_info--;                // increment the value every secound
+    lcd.setCursor(0, 0);                // set cursor pos
+    lcd.print(g_func_timer_info);       // print the time counter value
   }
+  
+  // reset the initscreen timer
+  LCDML_DISP_resetIsTimer();
   
   // this function can only be ended when quit button is pressed or the time is over
   // check if the function ends normaly
@@ -78,12 +83,10 @@ void LCDML_DISP_loop_end(LCDML_FUNC_timer_info)
   // you can here reset some global vars or do nothing
 }
 
-
-
-/* ********************************************************************* */
+// *********************************************************************
 uint8_t g_button_value = 0; // button value counter (global variable)
 void LCDML_DISP_setup(LCDML_FUNC_p2)
-/* ********************************************************************* */
+// *********************************************************************
 { 
   // setup function
   // print lcd content 
@@ -120,6 +123,7 @@ void LCDML_DISP_loop(LCDML_FUNC_p2)
     LCDML_DISP_funcend();   
   } 
 }
+
 void LCDML_DISP_loop_end(LCDML_FUNC_p2) 
 {
   // this functions is ever called when a DISP function is quit
@@ -128,19 +132,21 @@ void LCDML_DISP_loop_end(LCDML_FUNC_p2)
 
 
 
-/* ********************************************************************* */
+// *********************************************************************
 void LCDML_DISP_setup(LCDML_FUNC_back)
-/* ********************************************************************* */
+// *********************************************************************
 { 
   // setup function 
   LCDML_DISP_funcend();  
 }
+
 void LCDML_DISP_loop(LCDML_FUNC_back) 
 {
   // loop function, can be run in a loop when LCDML_DISP_triggerMenu(xx) is set
   // the quit button works in every DISP function without any checks; it starts the loop_end function  
 
 }
+
 void LCDML_DISP_loop_end(LCDML_FUNC_back) 
 {
   // this functions is ever called when a DISP function is quit
@@ -149,17 +155,17 @@ void LCDML_DISP_loop_end(LCDML_FUNC_back)
 }
 
 
-
-/* ********************************************************************* */
+// *********************************************************************
 unsigned long g_initscreen_example_counter = 0;
 void LCDML_DISP_setup(LCDML_FUNC_initscreen)
-/* ********************************************************************* */
+// *********************************************************************
 {
   // setup function
   LCDML_DISP_triggerMenu(1000); // set trigger for this function to 1000 millisecounds
-  lcd.print("InitScreen");  // print first line to lcd display
+  lcd.print(F("InitScreen"));  // print first line to lcd display
   g_initscreen_example_counter = 0; // reset or set example counter
 }
+
 void LCDML_DISP_loop(LCDML_FUNC_initscreen) 
 {
   // loop function, can be run in a loop when LCDML_DISP_triggerMenu(xx) is set
@@ -176,13 +182,10 @@ void LCDML_DISP_loop(LCDML_FUNC_initscreen)
     LCDML_DISP_funcend(); // function end    
   }   
 }
+
 void LCDML_DISP_loop_end(LCDML_FUNC_initscreen) 
 {  
   // this functions is ever called when a DISP function is quit
   // you can here reset some global vars or do nothing
   LCDML.goRoot(); // go to root element (first element of this menu with id=0)
 }
-
-
-
-
