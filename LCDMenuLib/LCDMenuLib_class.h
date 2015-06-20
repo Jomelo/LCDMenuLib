@@ -106,23 +106,23 @@
 #				include <LiquidCrystal.h>
 				//LCD objects
 #				if(_LCDMenuLib_cfg_lcd_type == 0)		//4Bit				
-#					define _LCDML_lcd_obj	LiquidCrystal lcd(_LCDML_DISP_rs, _LCDML_DISP_e, _LCDML_DISP_dat0, _LCDML_DISP_dat1, _LCDML_DISP_dat2, _LCDML_DISP_dat3);
+#					define _LCDML_lcd_obj	LiquidCrystal lcd(_LCDML_DISP_rs, _LCDML_DISP_e, _LCDML_DISP_dat4, _LCDML_DISP_dat5, _LCDML_DISP_dat6, _LCDML_DISP_dat7);
 #				elif(_LCDMenuLib_cfg_lcd_type == 1)		//4Bit	rw				
-#					define _LCDML_lcd_obj	LiquidCrystal lcd(_LCDML_DISP_rs, _LCDML_DISP_rw, _LCDML_DISP_e, _LCDML_DISP_dat0, _LCDML_DISP_dat1, _LCDML_DISP_dat2, _LCDML_DISP_dat3);
+#					define _LCDML_lcd_obj	LiquidCrystal lcd(_LCDML_DISP_rs, _LCDML_DISP_rw, _LCDML_DISP_e, _LCDML_DISP_dat4, _LCDML_DISP_dat5, _LCDML_DISP_dat6, _LCDML_DISP_dat7);
 #				elif(_LCDMenuLib_cfg_lcd_type == 2)		//4Bit	backlight				
-#					define _LCDML_lcd_obj	LiquidCrystal lcd(_LCDML_DISP_rs, _LCDML_DISP_e, _LCDML_DISP_dat0, _LCDML_DISP_dat1, _LCDML_DISP_dat2, _LCDML_DISP_dat3, _LCDML_DISP_backlight, _LCDML_DISP_backlight_pol);			
+#					define _LCDML_lcd_obj	LiquidCrystal lcd(_LCDML_DISP_rs, _LCDML_DISP_e, _LCDML_DISP_dat4, _LCDML_DISP_dat5, _LCDML_DISP_dat6, _LCDML_DISP_dat7, _LCDML_DISP_backlight, _LCDML_DISP_backlight_pol);			
 #				elif(_LCDMenuLib_cfg_lcd_type == 3)		//4Bit	rw	backlight				
-#					define _LCDML_lcd_obj	LiquidCrystal lcd(_LCDML_DISP_rs, _LCDML_DISP_rw, _LCDML_DISP_e, _LCDML_DISP_dat0, _LCDML_DISP_dat1, _LCDML_DISP_dat2, _LCDML_DISP_dat3, _LCDML_DISP_backlight, _LCDML_DISP_backlight_pol);			
+#					define _LCDML_lcd_obj	LiquidCrystal lcd(_LCDML_DISP_rs, _LCDML_DISP_rw, _LCDML_DISP_e, _LCDML_DISP_dat4, _LCDML_DISP_dat5, _LCDML_DISP_dat6, _LCDML_DISP_dat7, _LCDML_DISP_backlight, _LCDML_DISP_backlight_pol);			
 #				elif(_LCDMenuLib_cfg_lcd_type == 4)		//8Bit				
-#					define _LCDML_lcd_obj	LiquidCrystal lcd(_LCDML_DISP_rs, _LCDML_DISP_e, _LCDML_DISP_dat0, _LCDML_DISP_dat1, _LCDML_DISP_dat2, _LCDML_DISP_dat3, _LCDML_DISP_dat4, _LCDML_DISP_dat5, _LCDML_DISP_dat6, _LCDML_DISP_dat7);
+#					define _LCDML_lcd_obj	LiquidCrystal lcd(_LCDML_DISP_rs, _LCDML_DISP_e, _LCDML_DISP_dat4, _LCDML_DISP_dat5, _LCDML_DISP_dat6, _LCDML_DISP_dat7, _LCDML_DISP_dat0, _LCDML_DISP_dat1, _LCDML_DISP_dat2, _LCDML_DISP_dat3);
 #				elif(_LCDMenuLib_cfg_lcd_type == 5)		//8Bit	rw				
-#					define _LCDML_lcd_obj	LiquidCrystal lcd(_LCDML_DISP_rs, _LCDML_DISP_rw, _LCDML_DISP_e, _LCDML_DISP_dat0, _LCDML_DISP_dat1, _LCDML_DISP_dat2, _LCDML_DISP_dat3, _LCDML_DISP_dat4, _LCDML_DISP_dat5, _LCDML_DISP_dat6, _LCDML_DISP_dat7);
+#					define _LCDML_lcd_obj	LiquidCrystal lcd(_LCDML_DISP_rs, _LCDML_DISP_rw, _LCDML_DISP_e, _LCDML_DISP_dat4, _LCDML_DISP_dat5, _LCDML_DISP_dat6, _LCDML_DISP_dat7, _LCDML_DISP_dat0, _LCDML_DISP_dat1, _LCDML_DISP_dat2, _LCDML_DISP_dat3);
 #				elif(_LCDMenuLib_cfg_lcd_type == 6)		//8Bit	backlight				
-#					define _LCDML_lcd_obj	LiquidCrystal lcd(_LCDML_DISP_rs, _LCDML_DISP_e, _LCDML_DISP_dat0, _LCDML_DISP_dat1, _LCDML_DISP_dat2, _LCDML_DISP_dat3, _LCDML_DISP_dat4, _LCDML_DISP_dat5, _LCDML_DISP_dat6, _LCDML_DISP_dat7, _LCDML_DISP_backlight, _LCDML_DISP_backlight_pol);			
+#					define _LCDML_lcd_obj	LiquidCrystal lcd(_LCDML_DISP_rs, _LCDML_DISP_e, _LCDML_DISP_dat4, _LCDML_DISP_dat5, _LCDML_DISP_dat6, _LCDML_DISP_dat7, _LCDML_DISP_dat0, _LCDML_DISP_dat1, _LCDML_DISP_dat2, _LCDML_DISP_dat3, _LCDML_DISP_backlight, _LCDML_DISP_backlight_pol);			
 #				elif(_LCDMenuLib_cfg_lcd_type == 7)		//8Bit	rw	backlight				
-#					define _LCDML_lcd_obj	LiquidCrystal lcd(_LCDML_DISP_rs, _LCDML_DISP_rw, _LCDML_DISP_e, _LCDML_DISP_dat0, _LCDML_DISP_dat1, _LCDML_DISP_dat2, _LCDML_DISP_dat3, _LCDML_DISP_dat4, _LCDML_DISP_dat5, _LCDML_DISP_dat6, _LCDML_DISP_dat7, _LCDML_DISP_backlight, _LCDML_DISP_backlight_pol);			
+#					define _LCDML_lcd_obj	LiquidCrystal lcd(_LCDML_DISP_rs, _LCDML_DISP_rw, _LCDML_DISP_e, _LCDML_DISP_dat4, _LCDML_DISP_dat5, _LCDML_DISP_dat6, _LCDML_DISP_dat7, _LCDML_DISP_dat0, _LCDML_DISP_dat1, _LCDML_DISP_dat2, _LCDML_DISP_dat3, _LCDML_DISP_backlight, _LCDML_DISP_backlight_pol);			
 #				else									//4Bit				
-#					define _LCDML_lcd_obj	LiquidCrystal lcd(_LCDML_DISP_rs, _LCDML_DISP_e, _LCDML_DISP_dat0, _LCDML_DISP_dat1, _LCDML_DISP_dat2, _LCDML_DISP_dat3);	
+#					define _LCDML_lcd_obj	LiquidCrystal lcd(_LCDML_DISP_rs, _LCDML_DISP_e, _LCDML_DISP_dat4, _LCDML_DISP_dat5, _LCDML_DISP_dat6, _LCDML_DISP_dat7);	
 #				endif
 #			endif
 
@@ -150,23 +150,23 @@
 #				include <LiquidCrystal.h>
 				//LCD objects
 #				if(_LCDMenuLib_cfg_lcd_type == 100)		//4Bit				
-#					define _LCDML_lcd_obj	LiquidCrystal lcd(_LCDML_DISP_rs, _LCDML_DISP_e, _LCDML_DISP_dat0, _LCDML_DISP_dat1, _LCDML_DISP_dat2, _LCDML_DISP_dat3);
+#					define _LCDML_lcd_obj	LiquidCrystal lcd(_LCDML_DISP_rs, _LCDML_DISP_e, _LCDML_DISP_dat4, _LCDML_DISP_dat5, _LCDML_DISP_dat6, _LCDML_DISP_dat7);
 #				elif(_LCDMenuLib_cfg_lcd_type == 101)		//4Bit	rw				
-#					define _LCDML_lcd_obj	LiquidCrystal lcd(_LCDML_DISP_rs, _LCDML_DISP_rw, _LCDML_DISP_e, _LCDML_DISP_dat0, _LCDML_DISP_dat1, _LCDML_DISP_dat2, _LCDML_DISP_dat3);
+#					define _LCDML_lcd_obj	LiquidCrystal lcd(_LCDML_DISP_rs, _LCDML_DISP_rw, _LCDML_DISP_e, _LCDML_DISP_dat4, _LCDML_DISP_dat5, _LCDML_DISP_dat6, _LCDML_DISP_dat7);
 #				elif(_LCDMenuLib_cfg_lcd_type == 102)		//4Bit	backlight				
-#					define _LCDML_lcd_obj	LiquidCrystal lcd(_LCDML_DISP_rs, _LCDML_DISP_e, _LCDML_DISP_dat0, _LCDML_DISP_dat1, _LCDML_DISP_dat2, _LCDML_DISP_dat3, _LCDML_DISP_backlight, _LCDML_DISP_backlight_pol);			
+#					define _LCDML_lcd_obj	LiquidCrystal lcd(_LCDML_DISP_rs, _LCDML_DISP_e, _LCDML_DISP_dat4, _LCDML_DISP_dat5, _LCDML_DISP_dat6, _LCDML_DISP_dat7, _LCDML_DISP_backlight, _LCDML_DISP_backlight_pol);			
 #				elif(_LCDMenuLib_cfg_lcd_type == 103)		//4Bit	rw	backlight				
-#					define _LCDML_lcd_obj	LiquidCrystal lcd(_LCDML_DISP_rs, _LCDML_DISP_rw, _LCDML_DISP_e, _LCDML_DISP_dat0, _LCDML_DISP_dat1, _LCDML_DISP_dat2, _LCDML_DISP_dat3, _LCDML_DISP_backlight, _LCDML_DISP_backlight_pol);			
+#					define _LCDML_lcd_obj	LiquidCrystal lcd(_LCDML_DISP_rs, _LCDML_DISP_rw, _LCDML_DISP_e, _LCDML_DISP_dat4, _LCDML_DISP_dat5, _LCDML_DISP_dat6, _LCDML_DISP_dat7, _LCDML_DISP_backlight, _LCDML_DISP_backlight_pol);			
 #				elif(_LCDMenuLib_cfg_lcd_type == 104)		//8Bit				
-#					define _LCDML_lcd_obj	LiquidCrystal lcd(_LCDML_DISP_rs, _LCDML_DISP_e, _LCDML_DISP_dat0, _LCDML_DISP_dat1, _LCDML_DISP_dat2, _LCDML_DISP_dat3, _LCDML_DISP_dat4, _LCDML_DISP_dat5, _LCDML_DISP_dat6, _LCDML_DISP_dat7);
+#					define _LCDML_lcd_obj	LiquidCrystal lcd(_LCDML_DISP_rs, _LCDML_DISP_e, _LCDML_DISP_dat4, _LCDML_DISP_dat5, _LCDML_DISP_dat6, _LCDML_DISP_dat7, _LCDML_DISP_dat0, _LCDML_DISP_dat1, _LCDML_DISP_dat2, _LCDML_DISP_dat3);
 #				elif(_LCDMenuLib_cfg_lcd_type == 105)		//8Bit	rw				
-#					define _LCDML_lcd_obj	LiquidCrystal lcd(_LCDML_DISP_rs, _LCDML_DISP_rw, _LCDML_DISP_e, _LCDML_DISP_dat0, _LCDML_DISP_dat1, _LCDML_DISP_dat2, _LCDML_DISP_dat3, _LCDML_DISP_dat4, _LCDML_DISP_dat5, _LCDML_DISP_dat6, _LCDML_DISP_dat7);
+#					define _LCDML_lcd_obj	LiquidCrystal lcd(_LCDML_DISP_rs, _LCDML_DISP_rw, _LCDML_DISP_e, _LCDML_DISP_dat4, _LCDML_DISP_dat5, _LCDML_DISP_dat6, _LCDML_DISP_dat7, _LCDML_DISP_dat0, _LCDML_DISP_dat1, _LCDML_DISP_dat2, _LCDML_DISP_dat3);
 #				elif(_LCDMenuLib_cfg_lcd_type == 106)		//8Bit	backlight				
-#					define _LCDML_lcd_obj	LiquidCrystal lcd(_LCDML_DISP_rs, _LCDML_DISP_e, _LCDML_DISP_dat0, _LCDML_DISP_dat1, _LCDML_DISP_dat2, _LCDML_DISP_dat3, _LCDML_DISP_dat4, _LCDML_DISP_dat5, _LCDML_DISP_dat6, _LCDML_DISP_dat7, _LCDML_DISP_backlight, _LCDML_DISP_backlight_pol);			
+#					define _LCDML_lcd_obj	LiquidCrystal lcd(_LCDML_DISP_rs, _LCDML_DISP_e, _LCDML_DISP_dat4, _LCDML_DISP_dat5, _LCDML_DISP_dat6, _LCDML_DISP_dat7, _LCDML_DISP_dat0, _LCDML_DISP_dat1, _LCDML_DISP_dat2, _LCDML_DISP_dat3, _LCDML_DISP_backlight, _LCDML_DISP_backlight_pol);			
 #				elif(_LCDMenuLib_cfg_lcd_type == 107)		//8Bit	rw	backlight				
-#					define _LCDML_lcd_obj	LiquidCrystal lcd(_LCDML_DISP_rs, _LCDML_DISP_rw, _LCDML_DISP_e, _LCDML_DISP_dat0, _LCDML_DISP_dat1, _LCDML_DISP_dat2, _LCDML_DISP_dat3, _LCDML_DISP_dat4, _LCDML_DISP_dat5, _LCDML_DISP_dat6, _LCDML_DISP_dat7, _LCDML_DISP_backlight, _LCDML_DISP_backlight_pol);			
+#					define _LCDML_lcd_obj	LiquidCrystal lcd(_LCDML_DISP_rs, _LCDML_DISP_rw, _LCDML_DISP_e, _LCDML_DISP_dat4, _LCDML_DISP_dat5, _LCDML_DISP_dat6, _LCDML_DISP_dat7, _LCDML_DISP_dat0, _LCDML_DISP_dat1, _LCDML_DISP_dat2, _LCDML_DISP_dat3, _LCDML_DISP_backlight, _LCDML_DISP_backlight_pol);			
 #				else									//4Bit				
-#					define _LCDML_lcd_obj	LiquidCrystal lcd(_LCDML_DISP_rs, _LCDML_DISP_e, _LCDML_DISP_dat0, _LCDML_DISP_dat1, _LCDML_DISP_dat2, _LCDML_DISP_dat3);	
+#					define _LCDML_lcd_obj	LiquidCrystal lcd(_LCDML_DISP_rs, _LCDML_DISP_e, _LCDML_DISP_dat4, _LCDML_DISP_dat5, _LCDML_DISP_dat6, _LCDML_DISP_dat7);	
 #				endif
 #			endif
 

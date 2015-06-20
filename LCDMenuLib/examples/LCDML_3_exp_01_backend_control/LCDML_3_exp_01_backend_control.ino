@@ -1,8 +1,9 @@
 // ============================================================ 
 //                                                              
-// Example: LCD Menu with LiquidCrystal                         
+// Example: (expert) LCDML with backend control                         
 //                                                              
-// for Arduino 1.0.x and 1.6.x with orginal Liquid Crystal Lib  
+// In this example, the backend system is used for different jobs
+//
 // ============================================================ 
 
 // lib config
@@ -26,32 +27,94 @@
 
 
 /* settings for lcd */
-#define _LCDML_DISP_cols             20
+#define _LCDML_DISP_cols             20 // when you use a display with 40 chars,  you can configure it in LCDMenuLib___config.h
 #define _LCDML_DISP_rows             4
 
+
+// you have to select the class settings in LCDMenuLib___config.h in the lib folder
+
+// there are options for 
+// - 4bit 
+// - 8bit
+// - i2c
+// - shift register
+// - dog lcd
+
 // pin settings
-// when you are using an i2c display please load the i2c example
-// (on beta v2 it is coming soon, on stable v2 it is included
+// =====================================
+// 4bit / 8bit connection
+// =====================================
 #define _LCDML_DISP_rs               2
 #define _LCDML_DISP_e                3
-#define _LCDML_DISP_dat0             4
-#define _LCDML_DISP_dat1             5
-#define _LCDML_DISP_dat2             6
-#define _LCDML_DISP_dat3             7
+#define _LCDML_DISP_dat4             4
+#define _LCDML_DISP_dat5             5
+#define _LCDML_DISP_dat6             6
+#define _LCDML_DISP_dat7             7
+// optional; change this pins to hardware configuration 
+// 
+//#define _LCDML_DISP_rw			 0
+//#define _LCDML_DISP_dat0			 0
+//#define _LCDML_DISP_dat1			 0
+//#define _LCDML_DISP_dat2			 0
+//#define _LCDML_DISP_dat3			 0
+//#define _LCDML_DISP_backlight		 0	
+//#define _LCDML_DISP_backlight_pol	 0
 
-// optional 
-//#define _LCDML_DISP_rw	     0
-//#define _LCDML_DISP_backlight      7
-//#define _LCDML_DISP_backlight_pol     POSITIVE // NEGATIVE
-// 8 bit mode
-//#define _LCDML_DISP_dat4          0
-//#define _LCDML_DISP_dat5          0
-//#define _LCDML_DISP_dat6          0
-//#define _LCDML_DISP_dat7          0
+// =====================================
+// i2c
+// =====================================
+// if i2c is used, please change in LCDMenuLib___config.h the extern class settings
+// comment the line for 4bit connection and uncomment the new line from extern class
+// for arduino 1.6.x you must use the beta of liquid crystal new lib because, version 1.2.1 did not work correctly
+// need wire lib
+//#define _LCDML_DISP_addr			0x20
+// optional
+//#define _LCDML_DISP_rs            0
+//#define _LCDML_DISP_rw			0
+//#define _LCDML_DISP_e             0
+//#define _LCDML_DISP_dat4			0
+//#define _LCDML_DISP_dat5			0
+//#define _LCDML_DISP_dat6			0
+//#define _LCDML_DISP_dat7			0
+//#define _LCDML_DISP_backlight		0	
+//#define _LCDML_DISP_backlight_pol	0
 
+// =====================================
+// shift register  sr, sr2, sr3
+// =====================================
+// comment the line for 4bit connection and uncomment the new line from extern class
+// for arduino 1.6.x you must use the beta of liquid crystal new lib because, version 1.2.1 did not work correctly
+// need wire lib
+//#define _LCDML_DISP_srdata		0
+//#define _LCDML_DISP_srclk			0
+//#define _LCDML_DISP_enable		0
+//#define _LCDML_DISP_strobe        0
+//#define _LCDML_DISP_rs            0
+//#define _LCDML_DISP_rw			0
+//#define _LCDML_DISP_e             0
+//#define _LCDML_DISP_dat4			0
+//#define _LCDML_DISP_dat5			0
+//#define _LCDML_DISP_dat6			0
+//#define _LCDML_DISP_dat7			0
+//#define _LCDML_DISP_backlight		0	
+//#define _LCDML_DISP_backlight_pol	0
 
+// =====================================
+// dog lcd
+// =====================================
+// comment the line for 4bit connection and uncomment the new line from extern class
+//#define _LCDMenuLib_DogLCD_SI     0
+//#define _LCDMenuLib_DogLCD_CLK    0
+//#define _LCDMenuLib_DogLCD_RS     0
+//#define _LCDMenuLib_DogLCD_CSB    0
+//#define _LCDMenuLib_DogLCD_RESET  0
+//#define _LCDMenuLib_DogLCD_LIGHT  0
 
-
+// =====================================
+// other / new libs
+// =====================================
+// when you have a new or an other display lib, send me a pm i include it to
+// here is no support for grafic displays
      
 
 // *********************************************************************
@@ -200,7 +263,7 @@ LCDML_DISP_add      (15 , _LCDML_G2  , LCDML_root_4      , 3  , "Back"          
 LCDML_DISP_add      (16 , _LCDML_G1  , LCDML_root        , 5  , "Menu-Mode"          , LCDML_FUNC);
 LCDML_DISP_add      (17 , _LCDML_G2  , LCDML_root_5      , 1  , "disable program"    , LCDML_FUNC_prog_disable);
 LCDML_DISP_add      (18 , _LCDML_G3  , LCDML_root_5      , 2  , "enable program"     , LCDML_FUNC_prog_enable);
-LCDML_DISP_add      (19 , _LCDML_G1  , LCDML_root_5      , 3  , "back"               , LCDML_FUNC_back);
+LCDML_DISP_add      (19 , _LCDML_G1  , LCDML_root_5      , 3  , "Back"               , LCDML_FUNC_back);
 LCDML_DISP_add      (20 , _LCDML_G1  , LCDML_root        , 6  , "Set Clock"          , LCDML_FUNC_set_date);
 LCDML_DISP_add      (21 , _LCDML_G7  , LCDML_root        , 7  , "InitScreen"         , LCDML_FUNC_initscreen); 
 LCDML_DISP_add      (22 , _LCDML_G1  , LCDML_root        , 8  , "Backend-Control"    , LCDML_FUNC);

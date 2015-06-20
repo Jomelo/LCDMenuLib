@@ -1,11 +1,16 @@
 // ============================================================ 
 //                                                              
-// Example: (easy) LCDML Diffrent control options 
-//			(serial, analog, digital, keypad, encoder)                         
+// Example: (norm) LCDML with different display connections                         
 //                                                              
+// This example explain, how to use different display types
+// When you are using an extern lib like dog or "new liquidcrystal" you have to change the settings in 
+// LCDMenuLib___config.h
+//
 // ============================================================ 
 
 // include libs
+//#include <Wire.h>   // uncomment this line when you are using the new liquid crystal lib for i2c or shift reg
+//#include <DogLCD.h> // uncomment this line when you are using a dog lcd
 #include <LiquidCrystal.h>
 #include <LCDMenuLib.h>
 
@@ -14,27 +19,104 @@
 #define _LCDML_DISP_cfg_scrollbar	           	   1      // 0 = no scrollbar, 1 = scrollbar with custom chars
 #define _LCDML_DISP_cfg_scrollbar_custom_redefine  0      // 0 = nothing, 1 = redefine custom chars on scrolling
 #define _LCDML_DISP_cfg_lcd_standard	           0      // 0 = HD44780 standard / 1 = HD44780U standard
-#define _LCDML_DISP_cfg_initscreen                 0      // this screen is not implemented in this example
-#define _LCDML_DISP_cfg_initscreen_time            30000  // has in this example no effekt
+#define _LCDML_DISP_cfg_initscreen                 1
+#define _LCDML_DISP_cfg_initscreen_time            30000
 
 // ********************************************************************* 
 // LCDML TYPE SELECT
 // ********************************************************************* 
 
 /* settings for lcd */
-#define _LCDML_DISP_cols             20
+#define _LCDML_DISP_cols             20 // when you use a display with 40 chars,  you can configure it in LCDMenuLib___config.h
 #define _LCDML_DISP_rows             4
 
+
+// you have to select the class settings in LCDMenuLib___config.h in the lib folder
+
+// there are options for 
+// - 4bit 
+// - 8bit
+// - i2c
+// - shift register
+// - dog lcd
+
 // pin settings
-// when you are using an i2c display please load the i2c example
-// (on beta v2 it is coming soon, on stable v2 it is included
+// =====================================
+// 4bit / 8bit connection
+// =====================================
 #define _LCDML_DISP_rs               2
 #define _LCDML_DISP_e                3
 #define _LCDML_DISP_dat4             4
 #define _LCDML_DISP_dat5             5
 #define _LCDML_DISP_dat6             6
 #define _LCDML_DISP_dat7             7
+// optional; change this pins to hardware configuration 
+// 
+//#define _LCDML_DISP_rw			 0
+//#define _LCDML_DISP_dat0			 0
+//#define _LCDML_DISP_dat1			 0
+//#define _LCDML_DISP_dat2			 0
+//#define _LCDML_DISP_dat3			 0
+//#define _LCDML_DISP_backlight		 0	
+//#define _LCDML_DISP_backlight_pol	 0
 
+// =====================================
+// i2c
+// =====================================
+// if i2c is used, please change in LCDMenuLib___config.h the extern class settings
+// comment the line for 4bit connection and uncomment the new line from extern class
+// for arduino 1.6.x you must use the beta of liquid crystal new lib because, version 1.2.1 did not work correctly
+// need wire lib
+//#define _LCDML_DISP_addr			0x20
+// optional
+//#define _LCDML_DISP_rs            0
+//#define _LCDML_DISP_rw			0
+//#define _LCDML_DISP_e             0
+//#define _LCDML_DISP_dat4			0
+//#define _LCDML_DISP_dat5			0
+//#define _LCDML_DISP_dat6			0
+//#define _LCDML_DISP_dat7			0
+//#define _LCDML_DISP_backlight		0	
+//#define _LCDML_DISP_backlight_pol	0
+
+// =====================================
+// shift register  sr, sr2, sr3
+// =====================================
+// comment the line for 4bit connection and uncomment the new line from extern class
+// for arduino 1.6.x you must use the beta of liquid crystal new lib because, version 1.2.1 did not work correctly
+// need wire lib
+//#define _LCDML_DISP_srdata		0
+//#define _LCDML_DISP_srclk			0
+//#define _LCDML_DISP_enable		0
+//#define _LCDML_DISP_strobe        0
+//#define _LCDML_DISP_rs            0
+//#define _LCDML_DISP_rw			0
+//#define _LCDML_DISP_e             0
+//#define _LCDML_DISP_dat4			0
+//#define _LCDML_DISP_dat5			0
+//#define _LCDML_DISP_dat6			0
+//#define _LCDML_DISP_dat7			0
+//#define _LCDML_DISP_backlight		0	
+//#define _LCDML_DISP_backlight_pol	0
+
+// =====================================
+// dog lcd
+// =====================================
+// comment the line for 4bit connection and uncomment the new line from extern class
+//#define _LCDMenuLib_DogLCD_SI     0
+//#define _LCDMenuLib_DogLCD_CLK    0
+//#define _LCDMenuLib_DogLCD_RS     0
+//#define _LCDMenuLib_DogLCD_CSB    0
+//#define _LCDMenuLib_DogLCD_RESET  0
+//#define _LCDMenuLib_DogLCD_LIGHT  0
+
+// =====================================
+// other / new libs
+// =====================================
+// when you have a new or an other display lib, send me a pm i include it to
+// here is no support for grafic displays
+
+	 
 // *********************************************************************
 // LCDML CONTROL
 // *********************************************************************  
@@ -146,7 +228,7 @@ Keypad kpd = Keypad( makeKeymap(keys), rowPins, colPins, _LCDML_CONTROL_keypad_r
 // create menu
 // menu element count - last element id
 // this value must be the same as the last menu element
-#define _LCDML_DISP_cnt    15
+#define _LCDML_DISP_cnt    16
 
 
 // LCDML_root        => layer 0 
@@ -175,7 +257,8 @@ LCDML_DISP_add      (12 , _LCDML_G1  , LCDML_root_4_1_2  , 3  , "Back"          
 LCDML_DISP_add      (13 , _LCDML_G1  , LCDML_root_4_1    , 3  , "Back"               , LCDML_FUNC_back);
 LCDML_DISP_add      (14 , _LCDML_G1  , LCDML_root_4      , 2  , "Program 2"          , LCDML_FUNC_p2);
 LCDML_DISP_add      (15 , _LCDML_G1  , LCDML_root_4      , 3  , "Back"               , LCDML_FUNC_back);
-
+LCDML_DISP_add      (16 , _LCDML_G7  , LCDML_root        , 5  , "initscreen"         , LCDML_FUNC_initscreen); // this element is hidden
+                                                                                                               // the group is not enabled in setup
 LCDML_DISP_createMenu(_LCDML_DISP_cnt);
 
 
@@ -194,12 +277,13 @@ LCDML_BACK_create();
 // *********************************************************************
 // SETUP
 // *********************************************************************
+
 void setup()
 {  
   // serial init; only be needed 
   Serial.begin(9600);   // start serial
   
-  LCDML_DISP_groupEnable(_LCDML_G1); // enable group 1
+  LCDML_DISP_groupEnable(_LCDML_G1);  
   
   LCDML_setup(_LCDML_BACK_cnt);    
 }
@@ -207,8 +291,17 @@ void setup()
 // *********************************************************************
 // LOOP
 // *********************************************************************
+
 void loop()
 { 
+  // example for init screen
+  #if (_LCDML_DISP_cfg_initscreen == 1)
+  if((millis() - g_lcdml_initscreen) >= _LCDML_DISP_cfg_initscreen_time) {
+    g_lcdml_initscreen = millis(); // reset init screen time
+    LCDML_DISP_jumpToFunc(LCDML_FUNC_initscreen); // jump to initscreen     
+  }  
+  #endif 
+
   // this function must called here, do not delete it
   LCDML_run(_LCDML_priority); 
 }

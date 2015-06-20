@@ -31,10 +31,10 @@
 // (on beta v2 it is coming soon, on stable v2 it is included
 #define _LCDML_DISP_rs               2
 #define _LCDML_DISP_e                3
-#define _LCDML_DISP_dat0             4
-#define _LCDML_DISP_dat1             5
-#define _LCDML_DISP_dat2             6
-#define _LCDML_DISP_dat3             7
+#define _LCDML_DISP_dat4             4
+#define _LCDML_DISP_dat5             5
+#define _LCDML_DISP_dat6             6
+#define _LCDML_DISP_dat7             7
      
 
 // *********************************************************************
