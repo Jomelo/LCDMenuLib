@@ -263,13 +263,13 @@
 			// ====================
 			// 4 Bit Mode
 			// ====================
-#			if(_LCDMenuLib_cfg_lcd_type >= 100 && _LCDMenuLib_cfg_lcd_type < 110)
+#			if(_LCDMenuLib_cfg_lcd_type >= 200 && _LCDMenuLib_cfg_lcd_type < 210)
 				//LCD type
 #				define _LCDML_lcd_type		DogLcd
 				//LCD include
 #				include <DogLcd.h>
 				//LCD objects
-#				if(_LCDMenuLib_cfg_lcd_type == 100)		//4Bit	
+#				if(_LCDMenuLib_cfg_lcd_type == 200)		//4Bit	
 #					define _LCDML_lcd_obj	DogLcd lcd(_LCDMenuLib_DogLCD_SI, _LCDMenuLib_DogLCD_CLK, _LCDMenuLib_DogLCD_RS, _LCDMenuLib_DogLCD_CSB, _LCDMenuLib_DogLCD_RESET, _LCDMenuLib_DogLCD_LIGHT);
 #				endif
 #			endif
