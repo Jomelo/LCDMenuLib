@@ -263,17 +263,90 @@
 			// ====================
 			// 4 Bit Mode
 			// ====================
-#			if(_LCDMenuLib_cfg_lcd_type >= 100 && _LCDMenuLib_cfg_lcd_type < 110)
+#			if(_LCDMenuLib_cfg_lcd_type >= 200 && _LCDMenuLib_cfg_lcd_type < 210)
 				//LCD type
 #				define _LCDML_lcd_type		DogLcd
 				//LCD include
 #				include <DogLcd.h>
 				//LCD objects
-#				if(_LCDMenuLib_cfg_lcd_type == 100)		//4Bit	
+#				if(_LCDMenuLib_cfg_lcd_type == 200)		//4Bit	
 #					define _LCDML_lcd_obj	DogLcd lcd(_LCDMenuLib_DogLCD_SI, _LCDMenuLib_DogLCD_CLK, _LCDMenuLib_DogLCD_RS, _LCDMenuLib_DogLCD_CSB, _LCDMenuLib_DogLCD_RESET, _LCDMenuLib_DogLCD_LIGHT);
+#				endif
+#			endif
+
+
+/* ******************************************************************************** */
+/* Adafruit Liquid Crystal (external Lib)															*/
+/* ******************************************************************************** */
+#		elif(_LCDMenuLib_cfg_lcd_type >= 300 && _LCDMenuLib_cfg_lcd_type < 400)
+			//LCD Function
+#			define _LCDML_lcd_createChar(pos,char)		createChar(pos,char)
+#			define _LCDML_lcd_setCursor(col,row)		setCursor(col,row)
+#			define _LCDML_lcd_write(content)			write(content)
+#			define _LCDML_lcd_clear()					clear()
+#			define _LCDML_lcd_print(content)			print(content)
+#			define _LCDML_lcd_begin()					lcd.begin(_LCDML_DISP_cols,_LCDML_DISP_rows);
+
+			// ====================
+			// 4Bit/8Bit Mode
+			// ====================	
+#			if(_LCDMenuLib_cfg_lcd_type >= 300 && _LCDMenuLib_cfg_lcd_type < 310)
+				//LCD type
+#				define _LCDML_lcd_type		LiquidCrystal
+				//LCD include
+#				include <Wire.h>
+#				include <LiquidCrystal.h>
+				//LCD objects
+#				if(_LCDMenuLib_cfg_lcd_type == 300)		//4Bit				
+#					define _LCDML_lcd_obj	LiquidCrystal lcd(_LCDML_DISP_rs, _LCDML_DISP_e, _LCDML_DISP_dat4, _LCDML_DISP_dat5, _LCDML_DISP_dat6, _LCDML_DISP_dat7);
+#				elif(_LCDMenuLib_cfg_lcd_type == 301)	//4Bit	rw				
+#					define _LCDML_lcd_obj	LiquidCrystal lcd(_LCDML_DISP_rs, _LCDML_DISP_rw, _LCDML_DISP_e, _LCDML_DISP_dat4, _LCDML_DISP_dat5, _LCDML_DISP_dat6, _LCDML_DISP_dat7);
+#				elif(_LCDMenuLib_cfg_lcd_type == 302)	//4Bit	backlight				
+#					define _LCDML_lcd_obj	LiquidCrystal lcd(_LCDML_DISP_rs, _LCDML_DISP_e, _LCDML_DISP_dat4, _LCDML_DISP_dat5, _LCDML_DISP_dat6, _LCDML_DISP_dat7, _LCDML_DISP_backlight, _LCDML_DISP_backlight_pol);			
+#				elif(_LCDMenuLib_cfg_lcd_type == 303)	//4Bit	rw	backlight				
+#					define _LCDML_lcd_obj	LiquidCrystal lcd(_LCDML_DISP_rs, _LCDML_DISP_rw, _LCDML_DISP_e, _LCDML_DISP_dat4, _LCDML_DISP_dat5, _LCDML_DISP_dat6, _LCDML_DISP_dat7, _LCDML_DISP_backlight, _LCDML_DISP_backlight_pol);			
+#				elif(_LCDMenuLib_cfg_lcd_type == 304)	//8Bit				
+#					define _LCDML_lcd_obj	LiquidCrystal lcd(_LCDML_DISP_rs, _LCDML_DISP_e, _LCDML_DISP_dat4, _LCDML_DISP_dat5, _LCDML_DISP_dat6, _LCDML_DISP_dat7, _LCDML_DISP_dat0, _LCDML_DISP_dat1, _LCDML_DISP_dat2, _LCDML_DISP_dat3);
+#				elif(_LCDMenuLib_cfg_lcd_type == 305)	//8Bit	rw				
+#					define _LCDML_lcd_obj	LiquidCrystal lcd(_LCDML_DISP_rs, _LCDML_DISP_rw, _LCDML_DISP_e, _LCDML_DISP_dat4, _LCDML_DISP_dat5, _LCDML_DISP_dat6, _LCDML_DISP_dat7, _LCDML_DISP_dat0, _LCDML_DISP_dat1, _LCDML_DISP_dat2, _LCDML_DISP_dat3);
+#				elif(_LCDMenuLib_cfg_lcd_type == 306)	//8Bit	backlight				
+#					define _LCDML_lcd_obj	LiquidCrystal lcd(_LCDML_DISP_rs, _LCDML_DISP_e, _LCDML_DISP_dat4, _LCDML_DISP_dat5, _LCDML_DISP_dat6, _LCDML_DISP_dat7, _LCDML_DISP_dat0, _LCDML_DISP_dat1, _LCDML_DISP_dat2, _LCDML_DISP_dat3, _LCDML_DISP_backlight, _LCDML_DISP_backlight_pol);			
+#				elif(_LCDMenuLib_cfg_lcd_type == 307)	//8Bit	rw	backlight				
+#					define _LCDML_lcd_obj	LiquidCrystal lcd(_LCDML_DISP_rs, _LCDML_DISP_rw, _LCDML_DISP_e, _LCDML_DISP_dat4, _LCDML_DISP_dat5, _LCDML_DISP_dat6, _LCDML_DISP_dat7, _LCDML_DISP_dat0, _LCDML_DISP_dat1, _LCDML_DISP_dat2, _LCDML_DISP_dat3, _LCDML_DISP_backlight, _LCDML_DISP_backlight_pol);			
+#				else									//4Bit				
+#					define _LCDML_lcd_obj	LiquidCrystal lcd(_LCDML_DISP_rs, _LCDML_DISP_e, _LCDML_DISP_dat4, _LCDML_DISP_dat5, _LCDML_DISP_dat6, _LCDML_DISP_dat7);	
+#				endif
+#			endif
+			
+			// ====================
+			// I2C
+			// ====================	
+#			if(_LCDMenuLib_cfg_lcd_type >= 310 && _LCDMenuLib_cfg_lcd_type < 320)
+				//LCD type
+#				define _LCDML_lcd_type		LiquidCrystal
+				//LCD includes
+#				include <Wire.h>
+#				include <LiquidCrystal.h>
+				//LCD objects
+#				if(_LCDMenuLib_cfg_lcd_type == 310)		//I2C				
+#					define _LCDML_lcd_obj	LiquidCrystal lcd(_LCDML_DISP_addr);
+#				endif
+#			endif
+
+			// ====================
+			// SPI
+			// ====================	
+#			if(_LCDMenuLib_cfg_lcd_type >= 320 && _LCDMenuLib_cfg_lcd_type < 330)
+				//LCD type
+#				define _LCDML_lcd_type		LiquidCrystal
+				//LCD includes
+#				include <Wire.h>
+#				include <LiquidCrystal.h>
+				//LCD objects
+#				if(_LCDMenuLib_cfg_lcd_type == 320)		//SPI				
+#					define _LCDML_lcd_obj	LiquidCrystal lcd(_LCDML_DISP_spi_data, _LCDML_DISP_spi_clk, _LCDML_DISP_spi_latch);
 #				endif
 #			endif
 #		endif
 #	endif
-
 #endif
