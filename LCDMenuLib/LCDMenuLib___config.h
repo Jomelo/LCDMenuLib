@@ -135,4 +135,27 @@
 //#define _LCDMenuLib_cfg_lcd_type 200
 
 
+/* **************************************************************************************************** */
+/*	300:400  Adafruit Liquid Crystal (external Lib)																		*/
+/* **************************************************************************************************** */
+// =========================
+// 4 bit mode and 8 bit mode
+// =========================
+//#	define _LCDMenuLib_cfg_lcd_type	300	// 4Bit												(tested)
+//#	define _LCDMenuLib_cfg_lcd_type	301	// 4Bit with rw										(tested)
+//#	define _LCDMenuLib_cfg_lcd_type	302	// 4Bit with backlight								(tested)
+//#	define _LCDMenuLib_cfg_lcd_type	303	// 4Bit with rw,backlight							(tested)
+//#	define _LCDMenuLib_cfg_lcd_type	304	// 8Bit												(tested)
+//#	define _LCDMenuLib_cfg_lcd_type	305	// 8Bit with rw										(tested)
+//#	define _LCDMenuLib_cfg_lcd_type	306	// 8Bit with backlight								(tested)
+//#	define _LCDMenuLib_cfg_lcd_type	307	// 8Bit with rw,backlight							(tested)
+// =========================
+// I2C
+// =========================
+// # define _LCDMenuLib_cfg_lcd_type	310	// I2C											(tested)
+// =========================
+// SPI
+// =========================
+//#	define _LCDMenuLib_cfg_lcd_type	320	// SPI												
+
 #endif
