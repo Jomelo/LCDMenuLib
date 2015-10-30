@@ -16,12 +16,13 @@ Arduino LCDMenuLib with layers, 4Bit, 8Bit, I2C, ShiftReg, DogLCD
 *  i2c lcd support													
 *  shift register lcd support											
 *  DogLcd support
+*  Adafruit I2C / SPI character LCD Backpack support
 *  the menu function are only updated when a button is hit or a trigger is set														
 *  different triggers for display function
 *  backend system to manage programs behind the shown menu elements 																		 
 *  many small function for other things								
 *																		
-*  no support for gaphic displays yet									
+*  no support for graphic displays yet									
 
 Examples in english
 
