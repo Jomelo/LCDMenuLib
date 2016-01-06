@@ -1,5 +1,4 @@
-Arduino LCDMenuLib with layers for any LCD Type 
-(4Bit, 8Bit, I2C, ShiftReg, DogLCD, Graphic LCDs, ...)
+Arduino LCDMenuLib with layers for any LCD Type (Row Displays, Graphic Displays)
 =================================================================
 Display System:
 *  max 254 menu elements												
