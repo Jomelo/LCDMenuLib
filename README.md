@@ -1,33 +1,30 @@
-Arduino LCDMenuLib with layers, 4Bit, 8Bit, I2C, ShiftReg, DogLCD
+Arduino LCDMenuLib with layers for any LCD Type 
+(4Bit, 8Bit, I2C, ShiftReg, DogLCD, Graphic LCDs, ...)
 =================================================================
+Display System:
 *  max 254 menu elements												
 *  max 254 menu elements per layer								    
-*  max 6 layers from root, configurable in LCDMenuLib___config.h				
+*  max 6 layers from root (configurable in LCDMenuLib.h)				
 *  max support for 6 buttons up, down, left, right, back/quit, enter  
 *  min 3 buttons needed up, down, enter                               
 *  separation of structural and functional level                     
 *  support for initscreen which is shown after x secounds or at begin (configurable) 
 *  scrollbar when more menu elments in a layer then rows              
-*  last cursor pos is saved											
 *  possibility to jump from one menu elment directly to another       
-*  support for many different lcd librarys in LCDMenuLib___config.h   
-*  4bit lcd support													
-*  8bit lcd support													
-*  i2c lcd support													
-*  shift register lcd support											
-*  DogLcd support
-*  Adafruit I2C / SPI character LCD Backpack support
+*  support for many different lcd librarys 
 *  the menu function are only updated when a button is hit or a trigger is set														
 *  different triggers for display function
-*  backend system to manage programs behind the shown menu elements 																		 
 *  many small function for other things								
-*																		
-*  no support for graphic displays yet									
+
+Backend System
+* max 255 backend function 
+* backend function work with different ms times, not with interrupts
+* backend function can be stopped and started
+* backend function use three functions setup,loop,stable
+* backend function can be grouped, groups can start / stop together
+* backend signals use one bit to transfer a status bit between backend functions
 
 Examples in english
 
 Description & Support (german):
 http://forum.arduino.cc/index.php?topic=73816.0
-
-
-
