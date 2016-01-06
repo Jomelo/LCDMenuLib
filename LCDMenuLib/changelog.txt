@@ -1,9 +1,0 @@
-From 2013-11-22:
-- New: reset initscreen timer:  	
-	LCDMenuLib_IS_reStartTime();
-- New: start initscreen direct: 	
-	LCDMenuLib_IS_startDirect();
-- New: get active Function ID:  	
-	LCDMenuLib_getActiveFuncId();
-- New: a new menu element "back"
-- Bugfix: remove some wrong code from the examples 
