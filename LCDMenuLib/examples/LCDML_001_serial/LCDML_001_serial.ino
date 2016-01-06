@@ -5,7 +5,6 @@
 // ============================================================ 
 
   // include libs
-  #include <LiquidCrystal.h>
   #include <LCDMenuLib.h>
   
   // lib config
@@ -22,16 +21,6 @@
   #define _LCDML_DISP_cols             20
   #define _LCDML_DISP_rows             4  
 
-  // lcd object
-  LiquidCrystal lcd(4,5,6,7,8,9);
-  
-  const uint8_t scroll_bar[5][8] = {
-    {B10001, B10001, B10001, B10001, B10001, B10001, B10001, B10001}, // scrollbar top
-    {B11111, B11111, B10001, B10001, B10001, B10001, B10001, B10001}, // scroll state 1 
-    {B10001, B10001, B11111, B11111, B10001, B10001, B10001, B10001}, // scroll state 2
-    {B10001, B10001, B10001, B10001, B11111, B11111, B10001, B10001}, // scroll state 3
-    {B10001, B10001, B10001, B10001, B10001, B10001, B11111, B11111}  // scrollbar bottom
-  }; 
 
 // *********************************************************************
 // LCDML MENU/DISP
@@ -73,7 +62,7 @@
   
   LCDML_BACK_init(_LCDML_BACK_cnt);
   LCDML_BACK_new_timebased_static  (0  , ( 20UL )         , _LCDML_start  , LCDML_BACKEND_control);
-  LCDML_BACK_new_timebased_dynamic (1  , ( 1000000000UL ) , _LCDML_stop   , LCDML_BACKEND_menu);
+  LCDML_BACK_new_timebased_dynamic (1  , ( 10000000UL )   , _LCDML_stop   , LCDML_BACKEND_menu);
   LCDML_BACK_create();
 
 
@@ -85,16 +74,7 @@
     // serial init; only be needed if seriel control is used 
     while(!Serial);
     Serial.begin(9600);   // start serial
-    
-    // LCD Begin
-    lcd.begin(_LCDML_DISP_cols,_LCDML_DISP_rows);  
-    // set special chars for scrollbar
-    lcd.createChar(0, (uint8_t*)scroll_bar[0]);
-    lcd.createChar(1, (uint8_t*)scroll_bar[1]);
-    lcd.createChar(2, (uint8_t*)scroll_bar[2]);
-    lcd.createChar(3, (uint8_t*)scroll_bar[3]);
-    lcd.createChar(4, (uint8_t*)scroll_bar[4]);
-  
+      
     // Enable all items with _LCDML_G1
     LCDML_DISP_groupEnable(_LCDML_G1); // enable group 1
   
