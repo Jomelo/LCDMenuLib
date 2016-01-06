@@ -5,7 +5,7 @@
 # ******************************************************************** 
 # Autor:			Nils Feldkämper										
 # Create:			03.02.2008											
-# Edit:				17.05.2015											
+# Edit:				05.01.2016											
 # ******************************************************************** 
 #
 # ******************************************************************** 
@@ -139,6 +139,8 @@ goRoot	KEYWORD2
 getFunction	KEYWORD2
 getLayer	KEYWORD2
 getCursorPos	KEYWORD2
+getChilds	KEYWORD2
+getCursorPosAbs	KEYWORD2
 
 # LCD class Methods
 setCursor	KEYWORD2
@@ -172,8 +174,12 @@ LCDML_DISP_disableLoop	KEYWORD2
 LCDML_DISP_disableLoopEnd	KEYWORD2
 LCDML_DISP_funcend	KEYWORD2
 LCDML_DISP_resetIsTimer	KEYWORD2
-LCDML_DISP_getParameter
-
+LCDML_DISP_getParameter	KEYWORD2
+LCDML_DISP_update_end	KEYWORD2
+LCDML_DISP_update_content	KEYWORD2
+LCDML_DISP_update_cursor	KEYWORD2
+LCDML_lcd_menu_display	KEYWORD2
+LCDML_lcd_menu_clear	KEYWORD2
 
 g_lcdml_initscreen	LITERAL1
 
@@ -206,9 +212,6 @@ _LCDML_DISP_srdata	LITERAL1
 _LCDML_DISP_srclk	LITERAL1
 _LCDML_DISP_strobe	LITERAL1
 _LCDML_DISP_enable	LITERAL1
-_LCDML_DISP_spi_data 	LITERAL1
-_LCDML_DISP_spi_latch	LITERAL1
-_LCDML_DISP_spi_clk	LITERAL1
 _LCDML_DogLCD_type	LITERAL1
 _LCDML_DogLCD_SI	LITERAL1
 _LCDML_DogLCD_CLK	LITERAL1
@@ -218,13 +221,13 @@ _LCDML_DogLCD_RESET	LITERAL1
 _LCDML_DogLCD_LIGHT	LITERAL1
 
 _LCDML_DISP_cfg_control	LITERAL1
-_LCDML_DISP_cfg_scrollbar_custom_redefine	LITERAL1 
 _LCDML_DISP_cfg_button_press_time	LITERAL1
 _LCDML_DISP_cfg_scrollbar	LITERAL1
-_LCDML_DISP_cfg_lcd_standard	LITERAL1
+_LCDML_DISP_cfg_cursor	LITERAL1
 _LCDML_DISP_cfg_press_time	LITERAL1
 _LCDML_DISP_cfg_initscreen	LITERAL1
 _LCDML_DISP_cfg_initscreen_time	LITERAL1
+_LCDML_DISP_cfg_max_rows	LITERAL1
 _LCDML_DISP_cnt	LITERAL1
 
 
