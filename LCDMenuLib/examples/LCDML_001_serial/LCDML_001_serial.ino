@@ -1,7 +1,12 @@
 // ============================================================ 
 //                                                              
-// Example: easy_02_lcd_test                         
+// Example: LCDML_001_serial menu                         
 //                                                            
+// ============================================================ 
+// This example shows how the menu works without any LCD.
+// The output is print in serial console. This example can be 
+// extended with network functions to print this menu with telnet 
+// or other protocols.
 // ============================================================ 
 
   // include libs
@@ -9,9 +14,6 @@
   
   // lib config
   #define _LCDML_DISP_cfg_button_press_time          200    // button press time in ms
-  #define _LCDML_DISP_cfg_initscreen                 0      // this screen is not implemented in this example
-  #define _LCDML_DISP_cfg_initscreen_time            30000  // has in this example no effekt
-  #define _LCDML_DISP_cfg_scrollbar                  1      // enable a scrollbar
   #define _LCDML_DISP_cfg_cursor                     0x7E   // cursor Symbol 
 
 // ********************************************************************* 
@@ -61,7 +63,7 @@
   #define _LCDML_BACK_cnt    1  // last backend function id
   
   LCDML_BACK_init(_LCDML_BACK_cnt);
-  LCDML_BACK_new_timebased_static  (0  , ( 20UL )         , _LCDML_start  , LCDML_BACKEND_control);
+  LCDML_BACK_new_timebased_dynamic (0  , ( 20UL )         , _LCDML_start  , LCDML_BACKEND_control);
   LCDML_BACK_new_timebased_dynamic (1  , ( 10000000UL )   , _LCDML_stop   , LCDML_BACKEND_menu);
   LCDML_BACK_create();
 
@@ -71,9 +73,10 @@
 // *********************************************************************
   void setup()
   {  
-    // serial init; only be needed if seriel control is used 
-    while(!Serial);
-    Serial.begin(9600);   // start serial
+    // serial init; only be needed if serial control is used 
+    while(!Serial);                    // wait until serial ready
+    Serial.begin(9600);                // start serial    
+    Serial.println(F(_LCDML_VERSION)); // only for examples
       
     // Enable all items with _LCDML_G1
     LCDML_DISP_groupEnable(_LCDML_G1); // enable group 1

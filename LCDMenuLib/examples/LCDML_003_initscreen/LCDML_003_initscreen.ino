@@ -1,15 +1,15 @@
 // ============================================================ 
 //                                                              
-// Example: LCDML_002_lcd_test                         
+// Example: lcdml_003_initscreen                         
 //                                                            
-// ============================================================ 
-// This example shows you, how to use this lib with LiquidCrystal
-// lib. The LCD object have to create in this tab. In "LCDML_DISO"
-// you can edit the layout of the menu. (content, cursor, scrollbar)
-//
-// When you rewrite this function, you can use every other LCD 
-// or graphic LCD Lib with this menu.
-// ============================================================ 
+// ============================================================
+// This example shows you how the initscreen or standbyscreen 
+// works. The initscreen is a hidden menu element (example 004)
+// witch it is not displayed in menu. The initscreen is called 
+// when no action or trigger is set after ...cfg_initscreen_time
+// milliseconds. When a other menu function is active, this function
+// is stoped stable before initscreen function is started. 
+// ============================================================  
 
   // include libs
   #include <LiquidCrystal.h>
@@ -17,6 +17,7 @@
   
   // lib config
   #define _LCDML_DISP_cfg_button_press_time          200    // button press time in ms
+  #define _LCDML_DISP_cfg_initscreen_time            10000  // enable initscreen time
   #define _LCDML_DISP_cfg_scrollbar                  1      // enable a scrollbar
   #define _LCDML_DISP_cfg_cursor                     0x7E   // cursor Symbol 
 
@@ -45,7 +46,7 @@
   // create menu
   // menu element count - last element id
   // this value must be the same as the last menu element
-  #define _LCDML_DISP_cnt    11
+  #define _LCDML_DISP_cnt    12
   
   // LCDML_root        => layer 0 
   // LCDML_root_X      => layer 1 
@@ -67,6 +68,7 @@
   LCDML_DISP_add      (9  , _LCDML_G1  , LCDML_root_4_1_2  , 1  , "Warm"               , LCDML_FUNC);
   LCDML_DISP_add      (10 , _LCDML_G1  , LCDML_root_4_1_2  , 2  , "Long"               , LCDML_FUNC);
   LCDML_DISP_add      (11 , _LCDML_G1  , LCDML_root_4      , 2  , "Program 2"          , LCDML_FUNC_p2);
+  LCDML_DISP_add      (12 , _LCDML_G7  , LCDML_root        , 5  , "Program 2"          , LCDML_FUNC_initscreen); // in g7 => hidden
   LCDML_DISP_createMenu(_LCDML_DISP_cnt);
 
 
@@ -114,6 +116,12 @@
 // *********************************************************************
   void loop()
   { 
+    // example for init screen   
+    if((millis() - g_lcdml_initscreen) >= _LCDML_DISP_cfg_initscreen_time) {
+      g_lcdml_initscreen = millis(); // reset init screen time
+      LCDML_DISP_jumpToFunc(LCDML_FUNC_initscreen); // jump to initscreen     
+    }  
+    
     // this function must called here, do not delete it
     LCDML_run(_LCDML_priority); 
   }

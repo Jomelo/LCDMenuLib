@@ -38,8 +38,7 @@
       // you can here reset some global vars or do nothing  
     } 
  * ===================================================================== *
- * 
-  */
+ */
 
 // *********************************************************************
 void LCDML_DISP_setup(LCDML_FUNC_information)

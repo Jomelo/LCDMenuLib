@@ -124,21 +124,27 @@ uint8_t		LCDMenuLib::selectElementDirect(LCDMenu &p_m, uint8_t p_search)
 void		LCDMenuLib::goRoot()
 /* ******************************************************************** */
 {
-	//go back to root layer
-	while(layer > 0) 
-	{ 
-		Button_quit(); 
-	}	
-	//ends the last aktive function or do nothing
-	Button_quit();
-	
-	//reset buttons and cursor position
-	button = 0;
-	cursor_pos = 0;
-	curloc = 0;
-	scroll = 0;	
+	if(function != _LCDML_NO_FUNC) {
+		bitSet(control, _LCDML_control_go_root);
+		Button_quit();
+	} else {
+		bitClear(control, _LCDML_control_go_root);
+		//go back to root layer
+		while(layer > 0) 
+		{ 
+			goBack(); 
+		}			
+		cursor_pos = 0;
+		curloc = 0;
+		scroll = 0;
+			
+		//reset buttons and cursor position
+		button = 0;
+	}		
 	//display menu
 	display();
+	bitSet(control, _LCDML_control_disp_update);
+	
 }
 
 /* ******************************************************************** *
@@ -149,8 +155,9 @@ void		LCDMenuLib::goRoot()
  * ******************************************************************** */
 void		LCDMenuLib::jumpToElement(uint8_t p_element)
 /* ******************************************************************** */
-{
+{	
 	Button_quit();
+	function = _LCDML_NO_FUNC;	
 	goRoot();		
 	
 	bitSet(control, _LCDML_control_disable_hidden);
@@ -306,15 +313,20 @@ uint8_t    LCDMenuLib::countChilds()
 	uint8_t j = 0;
 
 	//check if element has childs
-	if ((tmp = curMenu->getChild(0)) != NULL) {		
-		while ((tmp = tmp->getSibling(1)) != NULL)
-		{
+	if ((tmp = curMenu->getChild(0)) != NULL) {	
+		do
+		{				
 			if (bitRead(group_en, tmp->disp) || bitRead(control, _LCDML_control_disable_hidden)) {				
 				j++;
-			} 		
-		}		
+			} 
+		} while ((tmp = tmp->getSibling(1)) != NULL);		
 	}	
-	return j;
+
+	if(j == 0) {
+		return 0;
+	} else {	
+		return --j;
+	}
 }
 
 /* ******************************************************************** *
@@ -323,18 +335,13 @@ uint8_t    LCDMenuLib::countChilds()
  * @return
  * ******************************************************************** */
 void LCDMenuLib::display_clear()
-{
-		
+{		
 	for(uint8_t n=0; n<_LCDML_DISP_cfg_max_rows;n++) {
 		for(uint8_t nc=0; nc<_LCDML_DISP_cfg_max_string_length;nc++) {
 			content[n][nc] = ' ';			
 		}		
 	}	
 }
-
-
-
-
 
 
 /* ******************************************************************** *
@@ -353,19 +360,16 @@ void	LCDMenuLib::display()
 	char buffer[_LCDML_DISP_cfg_max_string_length];
 
 	child_cnt = countChilds();	
-
 	//check children
 	if ((tmp = curMenu->getChild(i))) {
 		if (!bitRead(control, _LCDML_control_search_display)) {
 			//clear lcd
-			display_clear();
-
+			display_clear();			
 			//show menu structure
 			do
 			{				
-				if (bitRead(group_en, tmp->disp)) {
-					// reset cursor
-					strcpy_P(content[i-scroll], (char*)pgm_read_word(&(flash_table[tmp->name])));
+				if (bitRead(group_en, tmp->disp)) {					
+					strcpy_P(content[i-scroll], (char*)pgm_read_word(&(flash_table[tmp->name])));					
 					i++;					
 				}
 
@@ -412,7 +416,7 @@ void	LCDMenuLib::setCursor()
  * ******************************************************************** */
 void	LCDMenuLib::doScroll()
 /* ******************************************************************** */
-{
+{	
 	//only allow it to go up to menu element   
 	while (curloc>0 && !curMenu->getChild(curloc))
 	{
@@ -482,15 +486,14 @@ void	LCDMenuLib::Button_quit()
  * ******************************************************************** */
 void	LCDMenuLib::Button_udlr(uint8_t but)
 /* ******************************************************************** */
-{	
+{		
 	if (function == _LCDML_NO_FUNC) {	//check menu lock	
 		//enable up and down button for menu mode and scroll		
 		switch(but)
 		{
-			case _LCDML_button_up:   if(curloc > 0) { curloc--; }	break;
-			case _LCDML_button_down: if (curloc < child_cnt) { curloc++; } break;
-		}
-		doScroll();
+			case _LCDML_button_up:   if (curloc > 0) 		 { curloc--; doScroll();} break;
+			case _LCDML_button_down: if (curloc < child_cnt) { curloc++; doScroll();} break;
+		}		
 	}
 	else {
 		bitSet(button, but);
@@ -534,7 +537,7 @@ uint8_t	LCDMenuLib::getLayer()
  * ******************************************************************** */
 uint8_t	LCDMenuLib::getCursorPos()
 /* ******************************************************************** */
-{
+{	
 	return (cursor_pos); //return the current cursor position
 }
 

@@ -1,14 +1,7 @@
 // ============================================================ 
 //                                                              
-// Example: LCDML_002_lcd_test                         
+// Example: LCDML_105_menu_with_parameter                         
 //                                                            
-// ============================================================ 
-// This example shows you, how to use this lib with LiquidCrystal
-// lib. The LCD object have to create in this tab. In "LCDML_DISO"
-// you can edit the layout of the menu. (content, cursor, scrollbar)
-//
-// When you rewrite this function, you can use every other LCD 
-// or graphic LCD Lib with this menu.
 // ============================================================ 
 
   // include libs
@@ -45,7 +38,7 @@
   // create menu
   // menu element count - last element id
   // this value must be the same as the last menu element
-  #define _LCDML_DISP_cnt    11
+  #define _LCDML_DISP_cnt    9
   
   // LCDML_root        => layer 0 
   // LCDML_root_X      => layer 1 
@@ -54,20 +47,20 @@
   // LCDML_root_... 	 => layer ... 
   
   // LCDMenuLib_add(id, group, prev_layer_element, new_element_num, lang_char_array, callback_function)
-  LCDML_DISP_init(_LCDML_DISP_cnt);
-  LCDML_DISP_add      (0  , _LCDML_G1  , LCDML_root        , 1  , "Information"        , LCDML_FUNC_information);
-  LCDML_DISP_add      (1  , _LCDML_G1  , LCDML_root        , 2  , "Time info"          , LCDML_FUNC_timer_info);
-  LCDML_DISP_add      (2  , _LCDML_G1  , LCDML_root        , 3  , "Settings"           , LCDML_FUNC);
-  LCDML_DISP_add      (3  , _LCDML_G1  , LCDML_root_3      , 1  , "Change value"       , LCDML_FUNC);
-  LCDML_DISP_add      (4  , _LCDML_G1  , LCDML_root_3      , 2  , "Something"          , LCDML_FUNC);
-  LCDML_DISP_add      (5  , _LCDML_G1  , LCDML_root        , 4  , "Program"            , LCDML_FUNC);
-  LCDML_DISP_add      (6  , _LCDML_G1  , LCDML_root_4      , 1  , "Program 1"          , LCDML_FUNC);
-  LCDML_DISP_add      (7  , _LCDML_G1  , LCDML_root_4_1    , 1  , "P1 start"           , LCDML_FUNC);
-  LCDML_DISP_add      (8  , _LCDML_G1  , LCDML_root_4_1    , 2  , "Settings"           , LCDML_FUNC);
-  LCDML_DISP_add      (9  , _LCDML_G1  , LCDML_root_4_1_2  , 1  , "Warm"               , LCDML_FUNC);
-  LCDML_DISP_add      (10 , _LCDML_G1  , LCDML_root_4_1_2  , 2  , "Long"               , LCDML_FUNC);
-  LCDML_DISP_add      (11 , _LCDML_G1  , LCDML_root_4      , 2  , "Program 2"          , LCDML_FUNC_p2);
+  //LCDML_DISP_init(_LCDML_DISP_cnt);
+  LCDML_DISP_initParam(_LCDML_DISP_cnt); // enbable parameters (needs one byte per menu element)
+  LCDML_DISP_add      (0  , _LCDML_G1  , LCDML_root        , 1  , "Settings"           , LCDML_FUNC);
+  LCDML_DISP_addParam (1  , _LCDML_G2  , LCDML_root_1      , 1  , "En Program"         , LCDML_FUNC_program_change, 0);
+  LCDML_DISP_addParam (2  , _LCDML_G3  , LCDML_root_1      , 2  , "Dis Program"        , LCDML_FUNC_program_change, 1);
+  LCDML_DISP_add      (3  , _LCDML_G3  , LCDML_root        , 2  , "Program"            , LCDML_FUNC);
+  LCDML_DISP_add      (4  , _LCDML_G3  , LCDML_root_2      , 1  , "Program 1"          , LCDML_FUNC);
+  LCDML_DISP_add      (5  , _LCDML_G3  , LCDML_root_2_1    , 1  , "P1 start"           , LCDML_FUNC);
+  LCDML_DISP_add      (6  , _LCDML_G3  , LCDML_root_2_1    , 2  , "Settings"           , LCDML_FUNC);
+  LCDML_DISP_add      (7  , _LCDML_G3  , LCDML_root_2_1_2  , 1  , "Warm"               , LCDML_FUNC);
+  LCDML_DISP_add      (8  , _LCDML_G3  , LCDML_root_2_1_2  , 2  , "Long"               , LCDML_FUNC);
+  LCDML_DISP_add      (9  , _LCDML_G3  , LCDML_root_2      , 2  , "Program 2"          , LCDML_FUNC);
   LCDML_DISP_createMenu(_LCDML_DISP_cnt);
+
 
 
 
@@ -102,8 +95,9 @@
     lcd.createChar(3, (uint8_t*)scroll_bar[3]);
     lcd.createChar(4, (uint8_t*)scroll_bar[4]);
   
-    // Enable all items with _LCDML_G1
+    // Enable all items with _LCDML_G1 and _LCDML_G2
     LCDML_DISP_groupEnable(_LCDML_G1); // enable group 1
+    LCDML_DISP_groupEnable(_LCDML_G2); // enable group 2
   
     // LCDMenu Setup
     LCDML_setup(_LCDML_BACK_cnt);  

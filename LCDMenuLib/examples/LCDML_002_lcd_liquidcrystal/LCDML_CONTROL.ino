@@ -3,77 +3,78 @@
 // CONTROL
 //
 // =====================================================================
+// *********************************************************************
+// *********************************************************************
+// content:
+// (0) Control over serial interface
+// (1) Control over one analog input 
+// (2) Control over 4 - 6 digital input pins (internal pullups enabled)
+// (3) Control over encoder (internal pullups enabled)
+// (4) Control with Keypad
+// *********************************************************************
+
+#define _LCDML_CONTROL_cfg      0  // serial
+
+//#define _LCDML_CONTROL_cfg    1  // analog
+//#define _LCDML_CONTROL_cfg    2  // digital
+//#define _LCDML_CONTROL_cfg    3  // encoder
+//#define _LCDML_CONTROL_cfg    4  // keypad
+
+// therory:
+// "#if" is a preprocessor directive and no error, look here:
+// (english) https://en.wikipedia.org/wiki/C_preprocessor
+// (german)  https://de.wikipedia.org/wiki/C-Pr%C3%A4prozessor
+
 
 // *********************************************************************
+// CONTROL TASK, DO NOT CHANGE
 // *********************************************************************
 void LCDML_BACK_setup(LCDML_BACKEND_control)      
 // *********************************************************************
 {
-  // setup of this backend function is called only at first start or reset
-  // you can init here pins or do nothing
-   
-  /*
-  // control digital
-    pinMode(_LCDML_CONTROL_digital_enter      , INPUT_PULLUP);
-    pinMode(_LCDML_CONTROL_digital_up         , INPUT_PULLUP);
-    pinMode(_LCDML_CONTROL_digital_down       , INPUT_PULLUP);  
-  # if(_LCDML_CONTROL_digital_enable_quit == 1)
-      pinMode(_LCDML_CONTROL_digital_quit     , INPUT_PULLUP);
-  # endif
-  # if(_LCDML_CONTROL_digital_enable_lr == 1)
-    pinMode(_LCDML_CONTROL_digital_left       , INPUT_PULLUP);
-    pinMode(_LCDML_CONTROL_digital_right      , INPUT_PULLUP);
-  # endif
-  */
-
-  /*
-  // control encoder
-  
-    pinMode(_LCDML_CONTROL_encoder_pin_a      , INPUT_PULLUP);
-    pinMode(_LCDML_CONTROL_encoder_pin_b      , INPUT_PULLUP);
-    pinMode(_LCDML_CONTROL_encoder_pin_button , INPUT_PULLUP);
-  */
-      
+  // call setup   
+  LCDML_CONTROL_setup();      
 }
-
+// backend loop
 boolean LCDML_BACK_loop(LCDML_BACKEND_control)
 {    
-   // check control settings of lcdml
-  
-    LCDML_CONTROL_serial();           
- 
-   // LCDML_CONTROL_analog();     
- 
-    //LCDML_CONTROL_digital();     
- 
-    //LCDML_CONTROL_encoder();
- 
-    //LCDML_CONTROL_keypad();  
-  
- 
+  // call loop
+  LCDML_CONTROL_loop();
+
+  // go to next backend function and do not block it
   return true;  
 }
-
+// backend stop stable
 void LCDML_BACK_stable(LCDML_BACKEND_control)
 {
 }
 
 
 
+
 // *********************************************************************
-void LCDML_CONTROL_serial()
+// *************** (0) CONTROL OVER SERIAL INTERFACE *******************
 // *********************************************************************
-{ 
-  // settings
+#if(_LCDML_CONTROL_cfg == 0)
+// settings
   # define _LCDML_CONTROL_serial_enter           'e'
   # define _LCDML_CONTROL_serial_up              'w'
   # define _LCDML_CONTROL_serial_down            's'
   # define _LCDML_CONTROL_serial_left            'a'
   # define _LCDML_CONTROL_serial_right           'd'
   # define _LCDML_CONTROL_serial_quit            'q'
-
-  
-  if (Serial.available()) {   
+// *********************************************************************
+// setup
+void LCDML_CONTROL_setup()
+{
+}
+// *********************************************************************
+// loop
+void LCDML_CONTROL_loop()
+{
+  // check if new serial input is available  
+  if (Serial.available()) {
+    // read one char from input buffer   
     switch (Serial.read())
     {
       case _LCDML_CONTROL_serial_enter:  LCDML_BUTTON_enter(); break;
@@ -86,17 +87,19 @@ void LCDML_CONTROL_serial()
     } 
   }
 }
-
-
-
-
-
-/*
 // *********************************************************************
-void LCDML_CONTROL_analog()
+// ******************************* END *********************************
 // *********************************************************************
-{  
-  // settings
+
+
+
+
+
+// *********************************************************************
+// *************** (1) CONTROL OVER ONE ANALOG PIN *********************
+// *********************************************************************
+#elif(_LCDML_CONTROL_cfg == 1)
+// settings
   #define _LCDML_CONTROL_analog_pin              0
   // when you did not use a button set the value to zero
   #define _LCDML_CONTROL_analog_enter_min        850     // Button Enter
@@ -111,10 +114,18 @@ void LCDML_CONTROL_analog()
   #define _LCDML_CONTROL_analog_left_max         500   
   #define _LCDML_CONTROL_analog_right_min        610     // Button Right
   #define _LCDML_CONTROL_analog_right_max        680
-  
-  
+// *********************************************************************
+// setup
+void LCDML_CONTROL_setup()
+{
+}
+// *********************************************************************
+// loop
+void LCDML_CONTROL_loop()
+{
+  // check debounce timer  
   if((millis() - g_LCDML_DISP_press_time) >= _LCDML_DISP_cfg_button_press_time) {
-    g_LCDML_DISP_press_time = millis(); // reset press time
+    g_LCDML_DISP_press_time = millis(); // reset debounce timer
     
     uint16_t value = analogRead(_LCDML_CONTROL_analog_pin);  // analogpin for keypad
     
@@ -126,17 +137,20 @@ void LCDML_CONTROL_analog()
     if (value >= _LCDML_CONTROL_analog_back_min  && value <= _LCDML_CONTROL_analog_back_max)  { LCDML_BUTTON_quit();  }
   }
 }
-*/
-
-
-
-
-/*
 // *********************************************************************
-void LCDML_CONTROL_digital()
+// ******************************* END *********************************
 // *********************************************************************
-{  
-  // settings
+
+
+
+
+
+
+// *********************************************************************
+// *************** (2) CONTROL OVER DIGITAL PINS ***********************
+// *********************************************************************
+#elif(_LCDML_CONTROL_cfg == 2)
+// settings
   #define _LCDML_CONTROL_digital_low_active      0    // (0 = low active (pullup), 1 = high active (pulldown) button
                                                       // http://playground.arduino.cc/CommonTopics/PullUpDownResistor
   #define _LCDML_CONTROL_digital_enable_quit     1
@@ -147,7 +161,26 @@ void LCDML_CONTROL_digital()
   #define _LCDML_CONTROL_digital_quit            11
   #define _LCDML_CONTROL_digital_left            12
   #define _LCDML_CONTROL_digital_right           13
-  
+// *********************************************************************
+// setup
+void LCDML_CONTROL_setup()
+{
+  // init buttons
+  pinMode(_LCDML_CONTROL_digital_enter      , INPUT_PULLUP);
+  pinMode(_LCDML_CONTROL_digital_up         , INPUT_PULLUP);
+  pinMode(_LCDML_CONTROL_digital_down       , INPUT_PULLUP);  
+  # if(_LCDML_CONTROL_digital_enable_quit == 1)
+    pinMode(_LCDML_CONTROL_digital_quit     , INPUT_PULLUP);
+  # endif
+  # if(_LCDML_CONTROL_digital_enable_lr == 1)
+    pinMode(_LCDML_CONTROL_digital_left     , INPUT_PULLUP);
+    pinMode(_LCDML_CONTROL_digital_right    , INPUT_PULLUP);
+  # endif
+}
+// *********************************************************************
+// loop
+void LCDML_CONTROL_loop()
+{
   #if(_LCDML_CONTROL_digital_low_active == 1)
   #  define _LCDML_CONTROL_digital_a !
   #else
@@ -180,88 +213,117 @@ void LCDML_CONTROL_digital()
     }    
   }
 }
-*/
-
-
-
-/*
 // *********************************************************************
-uint8_t  g_LCDML_CONTROL_encoder_t_prev = 0;
-uint8_t  g_LCDML_CONTROL_encoder_a_prev = 0;
-uint32_t g_LCDML_CONTROL_encoder_timer  = 0;
-void LCDML_CONTROL_encoder()
+// ******************************* END *********************************
 // *********************************************************************
-{ 
-  // settings
+
+
+
+
+
+
+// *********************************************************************
+// *************** (3) CONTROL WITH ENCODER ****************************
+// *********************************************************************
+#elif(_LCDML_CONTROL_cfg == 3)
+// settings
   #define _LCDML_CONTROL_encoder_pin_a           10 // pin encoder b
   #define _LCDML_CONTROL_encoder_pin_b           11 // pin encoder a
   #define _LCDML_CONTROL_encoder_pin_button      12 // pin taster
   #define _LCDML_CONTROL_encoder_high_active     0  // (0 = low active (pullup), 1 = high active (pulldown)) button
-                                                    // // http://playground.arduino.cc/CommonTopics/PullUpDownResistor
-  #define _LCDML_CONTROL_encoder_time            20
+                                                      // // http://playground.arduino.cc/CommonTopics/PullUpDownResistor
+// global defines
+  uint8_t  g_LCDML_CONTROL_encoder_t_prev = 0;
+  uint8_t  g_LCDML_CONTROL_encoder_a_prev = 0;
 
-   
-  // check encoder time
-  if((millis() - g_LCDML_CONTROL_encoder_timer) >= _LCDML_CONTROL_encoder_time) {
-    g_LCDML_CONTROL_encoder_timer = millis(); // reset encoder time
-    
-    // read encoder status
-    unsigned char a = digitalRead(_LCDML_CONTROL_encoder_pin_a);
-    unsigned char b = digitalRead(_LCDML_CONTROL_encoder_pin_b);
-    unsigned char t = digitalRead(_LCDML_CONTROL_encoder_pin_button);
-    
-    // change button status if high and low active are switched
-    if (_LCDML_CONTROL_encoder_high_active == 1) {
-      t != t;
-    }
-    
-    // check encoder status and set control menu
-    if (!a && g_LCDML_CONTROL_encoder_a_prev) {
-      g_LCDML_CONTROL_encoder_t_prev = 1;
-      
-      if (!b) { LCDML_BUTTON_up();   }
-      else    { LCDML_BUTTON_down(); }            
-    } 
-    else {
-      // check button press time for enter
-      if((millis() - g_LCDML_DISP_press_time) >= _LCDML_DISP_cfg_button_press_time) {
-        g_LCDML_DISP_press_time = millis(); // reset button press time
-        
-        // press button once
-        if (!t && g_LCDML_CONTROL_encoder_t_prev == 0) {          
-            LCDML_BUTTON_enter();          
-        } 
-        else {
-          g_LCDML_CONTROL_encoder_t_prev = 0;
-        }
-      }      
-    }
-    g_LCDML_CONTROL_encoder_a_prev = a;  // set new encoder status 
-  }
-}
-*/
-
-
-/*
 // *********************************************************************
-// settings
-// more information under http://playground.arduino.cc/Main/KeypadTutorial
-#include <Keypad.h>
-#define _LCDML_CONTROL_keypad_rows = 4; // Four rows
-#define _LCDML_CONTROL_keypad_cols = 3; // Three columns
-char keys[_LCDML_CONTROL_keypad_rows][_LCDML_CONTROL_keypad_cols] = { 
-  {'1','2','3'},
-  {'4','5','6'},
-  {'7','8','9'},
-  {'#','0','*'}
-};  
-byte rowPins[_LCDML_CONTROL_keypad_rows] = { 9, 8, 7, 6 };  // Connect keypad COL0, COL1 and COL2 to these Arduino pins.
-byte colPins[_LCDML_CONTROL_keypad_cols] = { 12, 11, 10 };  // Create the Keypad
-Keypad kpd = Keypad( makeKeymap(keys), rowPins, colPins, _LCDML_CONTROL_keypad_rows, _LCDML_CONTROL_keypad_cols );
-// *********************************************************************
-void LCDML_CONTROL_keypad()
-// *********************************************************************
+// setup
+void LCDML_CONTROL_setup()
 {
+  // set encoder update intervall time 
+  LCDML_BACK_dynamic_setLoopTime(LCDML_BACKEND_control, 5UL);  // 5ms 
+
+  // init pins  
+  pinMode(_LCDML_CONTROL_encoder_pin_a      , INPUT_PULLUP);
+  pinMode(_LCDML_CONTROL_encoder_pin_b      , INPUT_PULLUP);
+  pinMode(_LCDML_CONTROL_encoder_pin_button , INPUT_PULLUP); 
+}
+// *********************************************************************
+// loop
+void LCDML_CONTROL_loop()
+{    
+  // read encoder status
+  unsigned char a = digitalRead(_LCDML_CONTROL_encoder_pin_a);
+  unsigned char b = digitalRead(_LCDML_CONTROL_encoder_pin_b);
+  unsigned char t = digitalRead(_LCDML_CONTROL_encoder_pin_button);
+  
+  // change button status if high and low active are switched
+  if (_LCDML_CONTROL_encoder_high_active == 1) {
+    t != t;
+  }
+  
+  // check encoder status and set control menu
+  if (!a && g_LCDML_CONTROL_encoder_a_prev) {
+    g_LCDML_CONTROL_encoder_t_prev = 1;
+    
+    if (!b) { LCDML_BUTTON_up();   }
+    else    { LCDML_BUTTON_down(); }            
+  } 
+  else {
+    // check button press time for enter
+    if((millis() - g_LCDML_DISP_press_time) >= _LCDML_DISP_cfg_button_press_time) {
+      g_LCDML_DISP_press_time = millis(); // reset button press time
+      
+      // press button once
+      if (!t && g_LCDML_CONTROL_encoder_t_prev == 0) {          
+          LCDML_BUTTON_enter();          
+      } 
+      else {
+        g_LCDML_CONTROL_encoder_t_prev = 0;
+      }
+    }      
+  }
+  g_LCDML_CONTROL_encoder_a_prev = a;  // set new encoder status 
+  
+}
+// *********************************************************************
+// ******************************* END *********************************
+// *********************************************************************
+
+
+
+
+
+// *********************************************************************
+// *************** (4) CONTROL WITH A KEYPAD ***************************
+// *********************************************************************
+#elif(_LCDML_CONTROL_cfg == 4)
+// include
+  // more information under http://playground.arduino.cc/Main/KeypadTutorial
+  #include <Keypad.h>
+// settings
+  #define _LCDML_CONTROL_keypad_rows = 4; // Four rows
+  #define _LCDML_CONTROL_keypad_cols = 3; // Three columns
+// global vars
+  char keys[_LCDML_CONTROL_keypad_rows][_LCDML_CONTROL_keypad_cols] = { 
+    {'1','2','3'},
+    {'4','5','6'},
+    {'7','8','9'},
+    {'#','0','*'}
+  };  
+  byte rowPins[_LCDML_CONTROL_keypad_rows] = { 9, 8, 7, 6 };  // Connect keypad COL0, COL1 and COL2 to these Arduino pins.
+  byte colPins[_LCDML_CONTROL_keypad_cols] = { 12, 11, 10 };  // Create the Keypad
+// objects
+  Keypad kpd = Keypad( makeKeymap(keys), rowPins, colPins, _LCDML_CONTROL_keypad_rows, _LCDML_CONTROL_keypad_cols );
+// *********************************************************************
+// setup
+void LCDML_CONTROL_setup()
+{
+}
+// *********************************************************************
+// loop
+void LCDML_CONTROL_loop()
+{    
   char key = kpd.getKey();
   if(key)  // Check for a valid key.
   {
@@ -275,9 +337,13 @@ void LCDML_CONTROL_keypad()
       case '*': LCDML_BUTTON_quit();  break;
       default: break;       
     }
-  }  
+  } 
 }
-*/
+// *********************************************************************
+// ******************************* END *********************************
+// *********************************************************************
 
-
+#else
+  #error _LCDML_CONTROL_cfg is not defined or not in range
+#endif
 

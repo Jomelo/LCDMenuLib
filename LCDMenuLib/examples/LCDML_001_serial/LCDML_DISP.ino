@@ -29,9 +29,9 @@ void LCDML_lcd_menu_display()
       {
         //set cursor char
         if (n == LCDML.getCursorPos()) {
-          Serial.print("- ");          
+          Serial.print("(x) ");          
         } else {
-          Serial.print("  ");
+          Serial.print("( ) ");
         }                
         // set content
         Serial.println(LCDML.content[n]);
@@ -50,7 +50,6 @@ void LCDML_lcd_menu_clear()
     Serial.println();
   }
 }
-
 
 
 
