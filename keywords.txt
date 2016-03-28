@@ -1,0 +1,309 @@
+# ******************************************************************** 
+#																		
+#						LCDMenuLib (LCDML)								
+#																		
+# ******************************************************************** 
+# Autor:			Nils Feldkämper										
+# Create:			03.02.2008											
+# Edit:				05.01.2016											
+# ******************************************************************** 
+#
+# ******************************************************************** 
+# ============															
+# Description:															
+# ============															
+# With this library, you can create menus with layers on base on the   
+# Nested-Set-Model. For every menu element can be create a function    
+# to control the content. This function is called automatical from the 
+# library and can runs in a loop, without blocking other programm parts
+# ******************************************************************** 
+#
+# ******************************************************************** 
+# ======================												
+# Beschreibung (german):												
+# ======================												
+# Mit der Lib können LCD Menüs über mehrere Ebenen mit Hilfe des   	
+# Nested Set Models generiert werden. Jeder Menüpunkt kann mit einer   
+# Funktion hinterlegt werden die durch die Lib aufgerufen wird, sobald 
+# der Menüpunkt aktiviert wird.										
+# ******************************************************************** 
+#
+# ******************************************************************** 
+# error reporting (english / german)									
+#	https://github.com/Jomelo/LCDMenuLib/issues							
+# support (german):													
+# 	http://forum.arduino.cc/index.php?topic=73816.0						
+# ******************************************************************** 
+
+
+LcdMenu	KEYWORD1
+LCDMenuLib	KEYWORD1
+
+lcd	KEYWORD3
+LCDML	KEYWORD3
+
+LCDML_run	KEYWORD2
+LCDML_setup	KEYWORD2
+LCDML_loop	KEYWORD2
+
+LCDML_FuncPtr	KEYWORD3
+
+#######################################
+# CONTROL / BUTTONS 
+#######################################
+g_LCDML_DISP_press_time	LITERAL1
+
+LCDML_BUTTON_enter	KEYWORD2
+LCDML_BUTTON_up	KEYWORD2
+LCDML_BUTTON_down	KEYWORD2
+LCDML_BUTTON_left	KEYWORD2
+LCDML_BUTTON_right	KEYWORD2
+LCDML_BUTTON_quit	KEYWORD2
+
+LCDML_BUTTON_checkAll	KEYWORD2
+LCDML_BUTTON_checkAny	KEYWORD2
+LCDML_BUTTON_checkLeft	KEYWORD2
+LCDML_BUTTON_checkRight	KEYWORD2
+LCDML_BUTTON_checkUp	KEYWORD2
+LCDML_BUTTON_checkDown	KEYWORD2
+LCDML_BUTTON_checkEnter	KEYWORD2
+
+LCDML_BUTTON_resetAll	KEYWORD2
+LCDML_BUTTON_resetEnter	KEYWORD2
+LCDML_BUTTON_resetLeft	KEYWORD2
+LCDML_BUTTON_resetRight	KEYWORD2
+LCDML_BUTTON_resetUp	KEYWORD2
+LCDML_BUTTON_resetDown	KEYWORD2
+
+LCDML_CONTROL_setup	KEYWORD2
+LCDML_CONTROL_loop	KEYWORD2
+_LCDML_CONTROL_cfg	LITERAL1
+
+_LCDML_VERSION	LITERAL1
+
+_LCDML_CONTROL_serial_enter	LITERAL1
+_LCDML_CONTROL_serial_up	LITERAL1          
+_LCDML_CONTROL_serial_down	LITERAL1
+_LCDML_CONTROL_serial_left	LITERAL1      
+_LCDML_CONTROL_serial_right	LITERAL1
+_LCDML_CONTROL_serial_quit	LITERAL1
+
+_LCDML_CONTROL_analog_pin	LITERAL1
+_LCDML_CONTROL_analog_enter_min	LITERAL1
+_LCDML_CONTROL_analog_enter_max	LITERAL1
+_LCDML_CONTROL_analog_up_min	LITERAL1
+_LCDML_CONTROL_analog_up_max	LITERAL1
+_LCDML_CONTROL_analog_down_min	LITERAL1
+_LCDML_CONTROL_analog_down_max	LITERAL1
+_LCDML_CONTROL_analog_enable_quit	LITERAL1
+_LCDML_CONTROL_analog_back_min	LITERAL1
+_LCDML_CONTROL_analog_back_max	LITERAL1
+_LCDML_CONTROL_analog_enable_lr	LITERAL1
+_LCDML_CONTROL_analog_left_min	LITERAL1
+_LCDML_CONTROL_analog_left_max	LITERAL1
+_LCDML_CONTROL_analog_right_min	LITERAL1
+_LCDML_CONTROL_analog_right_max	LITERAL1
+
+_LCDML_CONTROL_digital_low_active	LITERAL1
+_LCDML_CONTROL_digital_a	LITERAL1
+_LCDML_CONTROL_digital_enable_quit	LITERAL1
+_LCDML_CONTROL_digital_enable_lr	LITERAL1
+_LCDML_CONTROL_digital_enter	LITERAL1
+_LCDML_CONTROL_digital_up	LITERAL1
+_LCDML_CONTROL_digital_down	LITERAL1
+_LCDML_CONTROL_digital_quit	LITERAL1
+_LCDML_CONTROL_digital_left	LITERAL1
+_LCDML_CONTROL_digital_right	LITERAL1
+
+_LCDML_CONTROL_encoder_enable	LITERAL1
+_LCDML_CONTROL_encoder_pin_a	LITERAL1
+_LCDML_CONTROL_encoder_pin_b	LITERAL1
+_LCDML_CONTROL_encoder_pin_button	LITERAL1
+_LCDML_CONTROL_encoder_high_active	LITERAL1
+
+
+_LCDML_CONTROL_keypad_rows	LITERAL1
+_LCDML_CONTROL_keypad_cols	LITERAL1
+
+g_LCDML_CONTROL_encoder_t_prev	LITERAL1
+g_LCDML_CONTROL_encoder_a_prev	LITERAL1
+
+
+_LCDML_DISP_cfg_max_string_length	LITERAL1
+
+
+#######################################
+# DISPLAY / MENU 
+#######################################
+
+# class methods #
+display	KEYWORD2
+goRoot	KEYWORD2
+getFunction	KEYWORD2
+getLayer	KEYWORD2
+getCursorPos	KEYWORD2
+getChilds	KEYWORD2
+getCursorPosAbs	KEYWORD2
+
+# LCD class Methods
+setCursor	KEYWORD2
+clear   KEYWORD2
+
+LCDML_root	KEYWORD2
+
+LCDML_FUNC	KEYWORD2
+LCDML_FUNC_initscreen	KEYWORD2
+LCDML_FUNC_back	KEYWORD2
+
+LCDML_DISP_triggerMenu	KEYWORD2
+LCDML_DISP_triggerControl	KEYWORD2
+LCDML_DISP_update	KEYWORD2
+
+LCDML_DISP_add	KEYWORD2
+LCDML_DISP_addMenu	KEYWORD2
+LCDML_DISP_addFunc	KEYWORD2
+LCDML_DISP_addParam	KEYWORD2
+LCDML_DISP_createMenu	KEYWORD2
+LCDML_DISP_init	KEYWORD2
+LCDML_DISP_initParam	KEYWORD2
+LCDML_DISP_setup	KEYWORD2
+LCDML_DISP_loop	KEYWORD2
+LCDML_DISP_loop_end	KEYWORD2
+LCDML_DISP_groupEnable	KEYWORD2
+LCDML_DISP_groupDisable	KEYWORD2
+LCDML_DISP_initObjects	KEYWORD2
+LCDML_DISP_initFunction	KEYWORD2
+LCDML_DISP_lang	KEYWORD2
+LCDML_DISP_jumpToFunc	KEYWORD2
+LCDML_DISP_disableLoop	KEYWORD2
+LCDML_DISP_disableLoopEnd	KEYWORD2
+LCDML_DISP_funcend	KEYWORD2
+LCDML_DISP_resetIsTimer	KEYWORD2
+LCDML_DISP_getParameter	KEYWORD2
+LCDML_DISP_update_end	KEYWORD2
+LCDML_DISP_update_content	KEYWORD2
+LCDML_DISP_update_cursor	KEYWORD2
+LCDML_lcd_menu_display	KEYWORD2
+LCDML_lcd_menu_clear	KEYWORD2
+
+g_lcdml_initscreen	LITERAL1
+
+_LCDML_G1	LITERAL1
+_LCDML_G2	LITERAL1
+_LCDML_G3	LITERAL1
+_LCDML_G4	LITERAL1
+_LCDML_G5	LITERAL1
+_LCDML_G6	LITERAL1
+_LCDML_G7	LITERAL1
+_LCDML_G8	LITERAL1
+
+_LCDML_DISP_cols	LITERAL1
+_LCDML_DISP_rows	LITERAL1
+_LCDML_DISP_rs	LITERAL1
+_LCDML_DISP_e	LITERAL1
+_LCDML_DISP_rw	LITERAL1
+_LCDML_DISP_dat0	LITERAL1
+_LCDML_DISP_dat1	LITERAL1
+_LCDML_DISP_dat2	LITERAL1
+_LCDML_DISP_dat3	LITERAL1
+_LCDML_DISP_dat4	LITERAL1
+_LCDML_DISP_dat5	LITERAL1
+_LCDML_DISP_dat6	LITERAL1
+_LCDML_DISP_dat7	LITERAL1
+_LCDML_DISP_backlight	LITERAL1
+_LCDML_DISP_backlight_pol	LITERAL1
+_LCDML_DISP_addr	LITERAL1
+_LCDML_DISP_srdata	LITERAL1
+_LCDML_DISP_srclk	LITERAL1
+_LCDML_DISP_strobe	LITERAL1
+_LCDML_DISP_enable	LITERAL1
+_LCDML_DogLCD_type	LITERAL1
+_LCDML_DogLCD_SI	LITERAL1
+_LCDML_DogLCD_CLK	LITERAL1
+_LCDML_DogLCD_RS	LITERAL1
+_LCDML_DogLCD_CSB	LITERAL1
+_LCDML_DogLCD_RESET	LITERAL1
+_LCDML_DogLCD_LIGHT	LITERAL1
+
+_LCDML_DISP_cfg_control	LITERAL1
+_LCDML_DISP_cfg_button_press_time	LITERAL1
+_LCDML_DISP_cfg_scrollbar	LITERAL1
+_LCDML_DISP_cfg_cursor	LITERAL1
+_LCDML_DISP_cfg_press_time	LITERAL1
+_LCDML_DISP_cfg_initscreen	LITERAL1
+_LCDML_DISP_cfg_initscreen_time	LITERAL1
+_LCDML_DISP_cfg_max_rows	LITERAL1
+_LCDML_DISP_cnt	LITERAL1
+
+
+#######################################
+# BACKEND 
+#######################################
+
+LCDML_BACK_create	KEYWORD2
+
+_LCDML_BACK_cnt	LITERAL1
+
+_LCDML_priority	LITERAL1
+_LCDML_no_priority	LITERAL1
+_LCDML_stop	LITERAL1
+_LCDML_start	LITERAL1
+_LCDML_stable	LITERAL1
+
+LCDML_BACKEND_trigger	LITERAL1
+LCDML_BACKEND_control	LITERAL1
+LCDML_BACKEND_menu	LITERAL1
+
+LCDML_BACK_setup	KEYWORD3
+LCDML_BACK_loop	KEYWORD3
+LCDML_BACK_stable	KEYWORD3
+
+LCDML_BACK	KEYWORD2
+LCDML_BACK_init	KEYWORD2
+LCDML_BACK_initSetup	KEYWORD2
+LCDML_BACK_priority	KEYWORD2
+
+LCDML_BACK_new_timebased_static	KEYWORD2
+LCDML_BACK_new_timebased_dynamic	KEYWORD2
+LCDML_BACK_new_eventbased	KEYWORD2
+
+LCDML_BACK_start	KEYWORD2
+LCDML_BACK_stop	KEYWORD2
+LCDML_BACK_stopStable	KEYWORD2
+LCDML_BACK_reset	KEYWORD2
+LCDML_BACK_restart	KEYWORD2
+
+LCDML_BACK_all_start	KEYWORD2
+LCDML_BACK_all_stop	KEYWORD2
+LCDML_BACK_all_reset	KEYWORD2
+LCDML_BACK_all_restart	KEYWORD2
+
+LCDML_BACK_event_start	KEYWORD2
+LCDML_BACK_event_reset	KEYWORD2
+LCDML_BACK_event_restart	KEYWORD2
+
+LCDML_BACK_group	KEYWORD2
+LCDML_BACK_group_init	KEYWORD2
+LCDML_BACK_group_start	KEYWORD2 
+LCDML_BACK_group_stop	KEYWORD2
+LCDML_BACK_group_stopStable	KEYWORD2
+LCDML_BACK_group_reset	KEYWORD2
+LCDML_BACK_group_restart	KEYWORD2
+
+LCDML_BACK_signal	KEYWORD2
+LCDML_BACK_signal_init	KEYWORD2
+LCDML_BACK_signal_set	KEYWORD2
+LCDML_BACK_signal_get	KEYWORD2
+LCDML_BACK_signal_clear	KEYWORD2
+
+LCDML_BACK_isRun	KEYWORD2
+LCDML_BACK_dynamic_setLoopTime	KEYWORD2
+LCDML_BACK_dynamic_getLoopTime	KEYWORD2
+LCDML_BACK_dynamic_setDefaultTime	KEYWORD2
+LCDML_BACK_dynamic_restartTimer	KEYWORD2
+LCDML_BACK_dynamic_timeToZero	KEYWORD2
+
+LCDML_BACK_call	KEYWORD2
+LCDML_BACK_call_loop	KEYWORD2
+LCDML_BACK_call_setup	KEYWORD2
+LCDML_BACK_call_stable	KEYWORD2
