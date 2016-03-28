@@ -302,8 +302,8 @@ void LCDML_CONTROL_loop()
   // more information under http://playground.arduino.cc/Main/KeypadTutorial
   #include <Keypad.h>
 // settings
-  #define _LCDML_CONTROL_keypad_rows = 4; // Four rows
-  #define _LCDML_CONTROL_keypad_cols = 3; // Three columns
+  #define _LCDML_CONTROL_keypad_rows 4 // Four rows
+  #define _LCDML_CONTROL_keypad_cols 3 // Three columns
 // global vars
   char keys[_LCDML_CONTROL_keypad_rows][_LCDML_CONTROL_keypad_cols] = { 
     {'1','2','3'},
@@ -346,5 +346,4 @@ void LCDML_CONTROL_loop()
 #else
   #error _LCDML_CONTROL_cfg is not defined or not in range
 #endif
-
 
