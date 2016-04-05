@@ -1,18 +1,14 @@
 // ============================================================ 
 //                                                              
-// Example: LCDML_001_lcd_liquidcrystal                         
+// Example: LCDML_002_lcd_i2c                         
 //                                                            
 // ============================================================ 
-// This example shows you, how to use this lib with LiquidCrystal
-// lib. The LCD object have to create in this tab. In "LCDML_DISO"
-// you can edit the layout of the menu. (content, cursor, scrollbar)
-//
-// When you rewrite this function, you can use every other LCD 
-// or graphic LCD Lib with this menu.
+// todo
 // ============================================================ 
 
   // include libs
-  #include <LiquidCrystal.h>
+  #include <Wire.h> 
+  #include <LiquidCrystal_I2C.h>
   #include <LCDMenuLib.h>
   
   // lib config
@@ -28,8 +24,11 @@
   #define _LCDML_DISP_rows             4  
 
   // lcd object
-  // liquid crystal needs (rs, e, dat4, dat5, dat6, dat7)
-  LiquidCrystal lcd(4,5,6,7,8,9);
+  //LiquidCrystal_I2C lcd(0x27);  // Set the LCD I2C address
+  //LiquidCrystal_I2C lcd(0x27, BACKLIGHT_PIN, POSITIVE);  // Set the LCD I2C address
+  LiquidCrystal_I2C lcd(0x27, 2, 1, 0, 4, 5, 6, 7, 3, POSITIVE);  // Set the LCD I2C address
+
+  
   
   const uint8_t scroll_bar[5][8] = {
     {B10001, B10001, B10001, B10001, B10001, B10001, B10001, B10001}, // scrollbar top
@@ -45,7 +44,7 @@
   // create menu
   // menu element count - last element id
   // this value must be the same as the last menu element
-  #define _LCDML_DISP_cnt    11
+  #define _LCDML_DISP_cnt    12
   
   // LCDML_root        => layer 0 
   // LCDML_root_X      => layer 1 
@@ -67,6 +66,7 @@
   LCDML_DISP_add      (9  , _LCDML_G1  , LCDML_root_4_1_2  , 1  , "Warm"               , LCDML_FUNC);
   LCDML_DISP_add      (10 , _LCDML_G1  , LCDML_root_4_1_2  , 2  , "Long"               , LCDML_FUNC);
   LCDML_DISP_add      (11 , _LCDML_G1  , LCDML_root_4      , 2  , "Program 2"          , LCDML_FUNC_p2);
+  LCDML_DISP_add      (12 , _LCDML_G1  , LCDML_root        , 5  , "Last Point"         , LCDML_FUNC);
   LCDML_DISP_createMenu(_LCDML_DISP_cnt);
 
 
@@ -95,12 +95,16 @@
     
     // LCD Begin
     lcd.begin(_LCDML_DISP_cols,_LCDML_DISP_rows);  
+    
+    lcd.home ();                   // go home       
     // set special chars for scrollbar
     lcd.createChar(0, (uint8_t*)scroll_bar[0]);
     lcd.createChar(1, (uint8_t*)scroll_bar[1]);
     lcd.createChar(2, (uint8_t*)scroll_bar[2]);
     lcd.createChar(3, (uint8_t*)scroll_bar[3]);
     lcd.createChar(4, (uint8_t*)scroll_bar[4]);
+    lcd.setCursor(0,0);
+    lcd.print(F("booting"));
   
     // Enable all items with _LCDML_G1
     LCDML_DISP_groupEnable(_LCDML_G1); // enable group 1

@@ -1,6 +1,6 @@
 // ============================================================ 
 //                                                              
-// Example: LCDML_104_hidden menu elements                         
+// Example: LCDML_103_hidden_menu_elemnts                        
 //                                                            
 // ============================================================ 
 // In this example menu elements are in different groups. 

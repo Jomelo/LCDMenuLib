@@ -1,6 +1,6 @@
 // ============================================================ 
 //                                                              
-// Example: LCDML_006_dynamnic_menu                         
+// Example: LCDML_102_dynamic_menu                         
 //                                                            
 // ============================================================ 
 // This example shows you, how to generate a dynamic menu list

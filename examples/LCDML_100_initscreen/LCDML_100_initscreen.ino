@@ -1,6 +1,6 @@
 // ============================================================ 
 //                                                              
-// Example: lcdml_003_initscreen                         
+// Example: LCDML_100_initscreen                        
 //                                                            
 // ============================================================
 // This example shows you how the initscreen or standbyscreen 

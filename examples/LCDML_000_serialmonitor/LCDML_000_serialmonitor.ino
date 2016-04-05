@@ -1,6 +1,6 @@
 // ============================================================ 
 //                                                              
-// Example: LCDML_001_serial menu                         
+// Example: LCDML_000_serialmonitor menu                         
 //                                                            
 // ============================================================ 
 // This example shows how the menu works without any LCD.

@@ -1,23 +1,17 @@
 // ============================================================ 
 //                                                              
-// Example: LCDML_001_lcd_liquidcrystal                         
+// Example: LCDML_003_glcd_u8glib                         
 //                                                            
 // ============================================================ 
-// This example shows you, how to use this lib with LiquidCrystal
-// lib. The LCD object have to create in this tab. In "LCDML_DISO"
-// you can edit the layout of the menu. (content, cursor, scrollbar)
-//
-// When you rewrite this function, you can use every other LCD 
-// or graphic LCD Lib with this menu.
+// todo
 // ============================================================ 
 
   // include libs
-  #include <LiquidCrystal.h>
   #include <LCDMenuLib.h>
+  #include <U8glib.h>
   
   // lib config
   #define _LCDML_DISP_cfg_button_press_time          200    // button press time in ms
-  #define _LCDML_DISP_cfg_scrollbar                  1      // enable a scrollbar
   #define _LCDML_DISP_cfg_cursor                     0x7E   // cursor Symbol 
 
 // ********************************************************************* 
@@ -27,17 +21,6 @@
   #define _LCDML_DISP_cols             20
   #define _LCDML_DISP_rows             4  
 
-  // lcd object
-  // liquid crystal needs (rs, e, dat4, dat5, dat6, dat7)
-  LiquidCrystal lcd(4,5,6,7,8,9);
-  
-  const uint8_t scroll_bar[5][8] = {
-    {B10001, B10001, B10001, B10001, B10001, B10001, B10001, B10001}, // scrollbar top
-    {B11111, B11111, B10001, B10001, B10001, B10001, B10001, B10001}, // scroll state 1 
-    {B10001, B10001, B11111, B11111, B10001, B10001, B10001, B10001}, // scroll state 2
-    {B10001, B10001, B10001, B10001, B11111, B11111, B10001, B10001}, // scroll state 3
-    {B10001, B10001, B10001, B10001, B10001, B10001, B11111, B11111}  // scrollbar bottom
-  }; 
 
 // *********************************************************************
 // LCDML MENU/DISP
@@ -79,8 +62,19 @@
   
   LCDML_BACK_init(_LCDML_BACK_cnt);
   LCDML_BACK_new_timebased_dynamic (0  , ( 20UL )         , _LCDML_start  , LCDML_BACKEND_control);
-  LCDML_BACK_new_timebased_dynamic (1  , ( 1000UL )       , _LCDML_stop   , LCDML_BACKEND_menu);
+  LCDML_BACK_new_timebased_dynamic (1  , ( 10000000UL )   , _LCDML_stop   , LCDML_BACKEND_menu);
   LCDML_BACK_create();
+
+
+// *********************************************************************
+// U8GLIB
+// *********************************************************************
+// setup u8g object, please remove comment from one of the following constructor calls
+// IMPORTANT NOTE: The following list is incomplete. The complete list of supported 
+// devices with all constructor calls is here: https://github.com/olikraus/u8glib/wiki/device
+U8GLIB_ST7920_128X64 u8g(13, 11, 12, U8G_PIN_NONE); 
+
+
 
 
 // *********************************************************************
@@ -92,16 +86,7 @@
     while(!Serial);                    // wait until serial ready
     Serial.begin(9600);                // start serial    
     Serial.println(F(_LCDML_VERSION)); // only for examples
-    
-    // LCD Begin
-    lcd.begin(_LCDML_DISP_cols,_LCDML_DISP_rows);  
-    // set special chars for scrollbar
-    lcd.createChar(0, (uint8_t*)scroll_bar[0]);
-    lcd.createChar(1, (uint8_t*)scroll_bar[1]);
-    lcd.createChar(2, (uint8_t*)scroll_bar[2]);
-    lcd.createChar(3, (uint8_t*)scroll_bar[3]);
-    lcd.createChar(4, (uint8_t*)scroll_bar[4]);
-  
+      
     // Enable all items with _LCDML_G1
     LCDML_DISP_groupEnable(_LCDML_G1); // enable group 1
   

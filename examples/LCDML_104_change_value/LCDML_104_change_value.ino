@@ -1,6 +1,6 @@
 // ============================================================ 
 //                                                              
-// Example: LCDML_007_change_values                         
+// Example: LCDML_104_change_value                         
 //                                                            
 // ============================================================ 
 // This example shows different methods to change values
