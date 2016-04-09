@@ -16,7 +16,7 @@
 #ifndef LCDMenuLib_h
 #	define LCDMenuLib_h
 
-#	define _LCDML_VERSION							"LCDML v2.1.0 beta 3"
+#	define _LCDML_VERSION							"LCDML v2.1.0"
 
 /* config */
 #	define _LCDML_DISP_cfg_cursor_deep				6		// save the last position of the cursor until layer xx
