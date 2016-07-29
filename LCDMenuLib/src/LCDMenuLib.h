@@ -16,7 +16,7 @@
 #ifndef LCDMenuLib_h
 #	define LCDMenuLib_h
 
-#	define _LCDML_VERSION							"LCDML v2.1.0"
+#	define _LCDML_VERSION							"LCDML v2.1.3"
 
 /* config */
 #	define _LCDML_DISP_cfg_cursor_deep				6		// save the last position of the cursor until layer xx
@@ -91,11 +91,7 @@
 	private:
 		/* Menu Objects */
 		LCDMenu		*rootMenu;
-		LCDMenu		*curMenu;
-		
-	
-		
-	
+		LCDMenu		*curMenu;	
 		/* Saves the string position from menu elments in flash memory */
 		const char * const *flash_table;
 		/* display cols */
@@ -123,9 +119,7 @@
 		/* scroll the menu */
 		void		doScroll();
 		/* go to a menu element */
-		void		goMenu(LCDMenu &m);
-		
-		
+		void		goMenu(LCDMenu &m);	
 		/* works with jump to element on globale function */
 		uint8_t		selectElementDirect(LCDMenu &p_m, uint8_t p_search);
 		/* how many childs exists on next layer */
@@ -152,10 +146,10 @@
 		void		goRoot();
 		/* move to the parent menu */
 		void		goBack();
-		
+		/* update display content */
 		void 		display_update();
+		/* clear display content */
 		void		display_clear();
-
 		/* jump to menu element */
 		void		jumpToElement(uint8_t element);		
 		/* go in a menu element */
@@ -172,11 +166,9 @@
 		uint8_t		getCursorPos();	
 		/* get the corrent cursor position */
 		uint8_t		getCursorPosAbs();	
-		
-		uint8_t 	getChilds();
-		
+		/* get childs of an element */
+		uint8_t 	getChilds();		
 	};
-
 #endif
 
 
