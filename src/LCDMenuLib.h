@@ -16,7 +16,7 @@
 #ifndef LCDMenuLib_h
 #	define LCDMenuLib_h
 
-#	define _LCDML_VERSION							"LCDML v2.1.4"
+#	define _LCDML_VERSION							"LCDML v2.1.5"
 
 /* config */
 #	define _LCDML_DISP_cfg_cursor_deep				6		// save the last position of the cursor until layer xx
@@ -136,6 +136,7 @@
 		uint8_t		function;
 		
 		char content[_LCDML_DISP_cfg_max_rows][_LCDML_DISP_cfg_max_string_length];	
+		uint8_t content_id[_LCDML_DISP_cfg_max_rows];
 		
 		/* Constructor */
 		LCDMenuLib(LCDMenu &p_r, const char * const *p_flash_table, const uint8_t p_rows, const uint8_t p_cols);

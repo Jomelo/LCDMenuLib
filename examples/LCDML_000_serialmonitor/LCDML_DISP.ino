@@ -29,12 +29,17 @@ void LCDML_lcd_menu_display()
       {
         //set cursor char
         if (n == LCDML.getCursorPos()) {
-          Serial.print("(x) ");          
+          Serial.print(F("(x) "));          
         } else {
-          Serial.print("( ) ");
+          Serial.print(F("( ) "));
         }                
-        // set content
-        Serial.println(LCDML.content[n]);
+        // print content
+        Serial.print(LCDML.content[n]);
+        // print content id
+        // with content id you can add special content to your static menu
+        Serial.print(F(" - ID("));
+        Serial.print(LCDML.content_id[n]);
+        Serial.println(F(")"));
       }
     }   
   }

@@ -1,33 +1,38 @@
-/* ******************************************************************** */
-/*																		*/
-/*						LCDMenuLib (LCDML)								*/
-/*																		*/
-/* ******************************************************************** */
-/* Autor:			Nils Feldkämper										*/
-/* Create:			03.02.2008											*/
-/* Edit:			05.01.2016											*/
-/* ******************************************************************** */
-/* error reporting (english / german)									*/
-/*	https://github.com/Jomelo/LCDMenuLib/issues							*/
-/* support (german):													*/
-/* 	http://forum.arduino.cc/index.php?topic=73816.0						*/
-/* ******************************************************************** */
+// ********************************************************************
+//																		
+//						LCDMenuLib (LCDML)								
+//																		
+// ********************************************************************
+//
+// Autor:			Nils Feldkaemper				
+// Create:			03.02.2008											
+// Edit:			27.10.2016																					
+//
+// ********************************************************************
+//
+// error reporting: 									
+//	https://github.com/Jomelo/LCDMenuLib/issues							
+//
+// forum thread:													
+// 	http://forum.arduino.cc/index.php?topic=73816.0						
+//
+// ********************************************************************
 
 #	include <LCDMenuLib.h>
 
-
-/* ******************************************************************** */
-/* constructor
- *	@param
- *		menu instance
- *		LCD instance
- *		flash table for menu elements
- *		lcd rows
- *		lcd colls
- *	@return
- * ******************************************************************** */
+// ********************************************************************
+// constructor
+// @param
+// 		menu instance
+//		LCD instance
+//		flash table for menu elements
+//		lcd rows
+//		lcd colls
+// @return
+//		---
+// ********************************************************************
 LCDMenuLib::LCDMenuLib(LCDMenu &p_r, const char * const *p_flash_table, const uint8_t p_rows, const uint8_t p_cols)
-/* ******************************************************************** */
+// ********************************************************************
 {
 	// initialisation
     rootMenu        = &p_r;
@@ -156,6 +161,10 @@ void		LCDMenuLib::goRoot()
 void		LCDMenuLib::jumpToElement(uint8_t p_element)
 /* ******************************************************************** */
 {	
+	// check if function is active
+	if(function == p_element) {
+		return;
+	}
 	Button_quit();
 	function = _LCDML_NO_FUNC;	
 	goRoot();		
@@ -339,7 +348,8 @@ void LCDMenuLib::display_clear()
 	for(uint8_t n=0; n<_LCDML_DISP_cfg_max_rows;n++) {
 		for(uint8_t nc=0; nc<_LCDML_DISP_cfg_max_string_length;nc++) {
 			content[n][nc] = ' ';			
-		}		
+		}
+		content_id[n] = _LCDML_NO_FUNC;
 	}	
 }
 
@@ -352,7 +362,6 @@ void LCDMenuLib::display_clear()
 void	LCDMenuLib::display()
 /* ******************************************************************** */
 {
-
 	//declaration
 	LCDMenu * tmp;
 	uint8_t i = scroll;
@@ -369,7 +378,8 @@ void	LCDMenuLib::display()
 			do
 			{				
 				if (bitRead(group_en, tmp->disp)) {					
-					strcpy_P(content[i-scroll], (char*)pgm_read_word(&(flash_table[tmp->name])));					
+					strcpy_P(content[i-scroll], (char*)pgm_read_word(&(flash_table[tmp->name])));
+					content_id[i-scroll] = tmp->name;
 					i++;					
 				}
 
