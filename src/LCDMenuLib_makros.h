@@ -1,3 +1,27 @@
+/*
+ * MIT License
+ * 
+ * Copyright (c) [2017] [Nils Feldkämper]
+ * 
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ * 
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ * 
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
+
 // ********************************************************************
 //																		
 //						LCDMenuLib (LCDML)								
@@ -6,7 +30,8 @@
 //
 // Autor:			Nils Feldkaemper				
 // Create:			03.02.2008											
-// Edit:			31.07.2016																				
+// Edit:			31.07.2016											
+// License:			MIT License											
 //
 // ********************************************************************
 //
@@ -29,11 +54,25 @@
 /* ******************************************************************** */
 /* DISPLAY UPDATE MENU													*/
 /* ******************************************************************** */
-#	define LCDML_DISP_update() 	(LCDML.getFunction() == _LCDML_NO_FUNC || bitRead(LCDML.control, _LCDML_control_funcend))
-#	define LCDML_DISP_update_content() (bitRead(LCDML.control, _LCDML_control_disp_update))
-#	define LCDML_DISP_update_cursor()  (bitRead(LCDML.control, _LCDML_control_cursor_update))
-#	define LCDML_DISP_update_end()      bitClear(LCDML.control, _LCDML_control_disp_update); bitClear(LCDML.control, _LCDML_control_cursor_update)
+#	define LCDML_DISP_update() 			(LCDML.getFunction() == _LCDML_NO_FUNC || bitRead(LCDML.control, _LCDML_control_funcend) || bitRead(LCDML.control, _LCDML_control_update_direct))
+#	define LCDML_DISP_update_content() 	(bitRead(LCDML.control, _LCDML_control_disp_update) || bitRead(LCDML.control, _LCDML_control_update_direct))
+#	define LCDML_DISP_update_cursor()  	(bitRead(LCDML.control, _LCDML_control_cursor_update))
 
+#	define LCDML_DISP_update_end() \
+		bitClear(LCDML.control, _LCDML_control_disp_update); \
+		bitClear(LCDML.control, _LCDML_control_cursor_update); \
+		bitClear(LCDML.control, _LCDML_control_update_direct)
+
+#	define LCDML_DISP_update_menu_direct(id) \
+		if(LCDML.getFunction() == _LCDML_NO_FUNC) { \
+			for(int i=0; i < ((LCDML.getChilds() >= _LCDML_DISP_rows) ? _LCDML_DISP_rows : (LCDML.getChilds())); i++) { \
+				if(LCDML.content_id[i] == id) { \
+					bitSet(LCDML.control, _LCDML_control_update_direct); \
+					LCDML_lcd_menu_display(); \
+					break; \
+				} \
+			} \
+		}
 
 /* ******************************************************************** */
 /* CONTROL / BUTTONS													*/
@@ -89,6 +128,10 @@
 		bitClear(LCDML.button,  _LCDML_button_quit);\
 		LCDML_lcd_menu_display(); \
 	}
+	
+	
+	
+	
 # 	define LCDML_DISP_triggerMenu(time)\
 		LCDML_BACK_dynamic_setLoopTime(LCDML_BACKEND_menu, time);\
 		LCDML_BACK_start(LCDML_BACKEND_menu)

@@ -193,6 +193,7 @@ LCDML_DISP_getParameter	KEYWORD2
 LCDML_DISP_update_end	KEYWORD2
 LCDML_DISP_update_content	KEYWORD2
 LCDML_DISP_update_cursor	KEYWORD2
+LCDML_DISP_update_menu_direct	KEYWORD2
 LCDML_lcd_menu_display	KEYWORD2
 LCDML_lcd_menu_clear	KEYWORD2
 

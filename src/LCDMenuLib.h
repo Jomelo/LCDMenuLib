@@ -1,3 +1,27 @@
+/*
+ * MIT License
+ * 
+ * Copyright (c) [2017] [Nils Feldkämper]
+ * 
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ * 
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ * 
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */ 
+
 /* ******************************************************************** */
 /*																		*/
 /*						LCDMenuLib (LCDML)								*/
@@ -16,12 +40,12 @@
 #ifndef LCDMenuLib_h
 #	define LCDMenuLib_h
 
-#	define _LCDML_VERSION							"LCDML v2.1.5"
+#	define _LCDML_VERSION							"LCDML v2.2.0"
 
 /* config */
 #	define _LCDML_DISP_cfg_cursor_deep				6		// save the last position of the cursor until layer xx
 #	define _LCDML_DISP_cfg_max_string_length		20		// max string length witch can be display
-#	define _LCDML_DISP_cfg_max_rows					4
+#	define _LCDML_DISP_cfg_max_rows					10
 
 
 	
@@ -57,7 +81,7 @@
 #	define _LCDML_control_disp_update			6
 #	define _LCDML_control_cursor_update			5
 #	define _LCDML_control_go_root				4
-#	define _LCDML_control_free3					3
+#	define _LCDML_control_update_direct			3
 #	define _LCDML_control_search_display		2
 #	define _LCDML_control_funcend				1
 #	define _LCDML_control_disable_hidden		0
