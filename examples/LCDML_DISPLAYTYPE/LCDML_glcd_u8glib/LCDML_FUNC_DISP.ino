@@ -45,7 +45,7 @@ void LCDML_DISP_setup(LCDML_FUNC_information)
 // *********************************************************************
 {
   // setup function
-  u8g.setFont(u8g_font_6x13);
+  u8g.setFont(_LCDML_DISP_font);
   u8g.firstPage();  
   do {
     u8g.drawStr( 0, 13, F("To close this"));
@@ -82,7 +82,7 @@ void LCDML_DISP_setup(LCDML_FUNC_timer_info)
   char buf[20];
   sprintf (buf, "wait %d secounds", 10);
   
-  u8g.setFont(u8g_font_6x13);
+  u8g.setFont(_LCDML_DISP_font);
   u8g.firstPage();  
   do {
     u8g.drawStr( 0, 13, buf);
@@ -108,7 +108,7 @@ void LCDML_DISP_loop(LCDML_FUNC_timer_info)
     char buf[20];
     sprintf (buf, "wait %d secounds", g_func_timer_info);
     
-    u8g.setFont(u8g_font_6x13);
+    u8g.setFont(_LCDML_DISP_font);
     u8g.firstPage();  
     do {
       u8g.drawStr( 0, 13, buf);
@@ -144,7 +144,7 @@ void LCDML_DISP_setup(LCDML_FUNC_p2)
   char buf[17];
   sprintf (buf, "count: %d of 3", 0);
   
-  u8g.setFont(u8g_font_6x13);
+  u8g.setFont(_LCDML_DISP_font);
   u8g.firstPage();  
   do {
     u8g.drawStr( 0, 13, F("press a or w button"));
@@ -172,7 +172,7 @@ void LCDML_DISP_loop(LCDML_FUNC_p2)
       char buf[17];
       sprintf (buf, "count: %d of 3", g_button_value);
       
-      u8g.setFont(u8g_font_6x13);
+      u8g.setFont(_LCDML_DISP_font);
       u8g.firstPage();  
       do {
         u8g.drawStr( 0, 13, F("press a or w button"));

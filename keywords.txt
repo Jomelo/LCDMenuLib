@@ -1,12 +1,17 @@
-# ******************************************************************** 
-#																		
-#						LCDMenuLib (LCDML)								
-#																		
-# ******************************************************************** 
-# Autor:			Nils Feldkämper										
-# Create:			03.02.2008											
-# Edit:				09.04.2016											
-# ******************************************************************** 
+/* ******************************************************************** */
+/*																		*/
+/*						LCDMenuLib (LCDML)								*/
+/*																		*/
+/* ******************************************************************** */
+/* Autor:			Nils Feldkämper										*/
+/* Create:			03.02.2008											*/
+/* Edit:			12.01.2016											*/
+/* ******************************************************************** */
+/* error reporting (english / german)									*/
+/*	https://github.com/Jomelo/LCDMenuLib/issues							*/
+/* support (german):													*/
+/* 	http://forum.arduino.cc/index.php?topic=73816.0						*/
+/* ******************************************************************** */ 
 #
 # ******************************************************************** 
 # ============															
@@ -27,13 +32,7 @@
 # Funktion hinterlegt werden die durch die Lib aufgerufen wird, sobald 
 # der Menüpunkt aktiviert wird.										
 # ******************************************************************** 
-#
-# ******************************************************************** 
-# error reporting (english / german)									
-#	https://github.com/Jomelo/LCDMenuLib/issues							
-# support (german):													
-# 	http://forum.arduino.cc/index.php?topic=73816.0						
-# ******************************************************************** 
+
 
 
 LcdMenu	KEYWORD1
@@ -141,6 +140,25 @@ _LCDML_u8g_rows_max	LITERAL1
 _LCDML_u8g_rows	LITERAL1
 _LCDML_u8g_cols	LITERAL1
 _LCDML_u8g_scrollbar_w	LITERAL1
+
+
+_LCDML_DISP_w	LITERAL1
+_LCDML_DISP_h	LITERAL1
+_LCDML_DISP_font	LITERAL1
+_LCDML_DISP_font_w	LITERAL1
+_LCDML_DISP_font_h	LITERAL1
+_LCDML_DISP_cursor_char	LITERAL1
+_LCDML_DISP_cur_space_before	LITERAL1
+_LCDML_DISP_cur_space_behind	LITERAL1
+_LCDML_DISP_box_x0	LITERAL1
+_LCDML_DISP_box_y0	LITERAL1
+_LCDML_DISP_box_x1	LITERAL1
+_LCDML_DISP_box_y1	LITERAL1
+_LCDML_DISP_draw_frame	LITERAL1
+_LCDML_DISP_scrollbar_w	LITERAL1
+_LCDML_DISP_cols_max	LITERAL1
+_LCDML_DISP_rows_max	LITERAL1
+
 
 #######################################
 # DISPLAY / MENU 

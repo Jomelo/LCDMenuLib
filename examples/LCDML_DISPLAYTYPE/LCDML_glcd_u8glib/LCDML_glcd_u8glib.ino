@@ -1,11 +1,14 @@
 // ============================================================                                                            
-// Example:     LCDML: grafik display with u8glib                        
+// Example:     LCDML: grafik display with u8g                        
 // ============================================================
 // Autor:       Nils Feldkämper
 // Last update: 08.01.2017
 // License:     MIT                                     
 // ============================================================ 
-// Descripton:  
+// Descripton: 
+// This example shows how to use the u8glib with the lcdmenulib
+// The menu can placed in a box that can be placed anywhere on 
+// the screen.  
 // ============================================================ 
 
   // include libs
@@ -24,29 +27,37 @@
   U8GLIB_ST7920_128X64 u8g(13, 11, 12, U8G_PIN_NONE); 
   
   // settings for u8g lib and lcd
-  #define _LCDML_u8g_lcd_w       128            // lcd width
-  #define _LCDML_u8g_lcd_h       64             // lcd height
-  #define _LCDML_u8g_font        u8g_font_6x13  // u8glib font (more fonts under u8g.h line 1520 ...)
-  #define _LCDML_u8g_font_w      6              // u8glib font width
-  #define _LCDML_u8g_font_h      13             // u8glib font heigt
+  #define _LCDML_DISP_w                 128            // lcd width
+  #define _LCDML_DISP_h                 64             // lcd height
+  // font settings
+  #define _LCDML_DISP_font              u8g_font_6x13  // u8glib font (more fonts under u8g.h line 1520 ...)
+  #define _LCDML_DISP_font_w            6              // font width
+  #define _LCDML_DISP_font_h            13             // font heigt  
+  // cursor settings
+  #define _LCDML_DISP_cursor_char       "X"            // cursor char
+  #define _LCDML_DISP_cur_space_before  2              // cursor space between
+  #define _LCDML_DISP_cur_space_behind  4              // cursor space between  
+  // menu position and size
+  #define _LCDML_DISP_box_x0            0              // start point (x0, y0)
+  #define _LCDML_DISP_box_y0            0              // start point (x0, y0)
+  #define _LCDML_DISP_box_x1            128            // width x  (x0 + width)
+  #define _LCDML_DISP_box_y1            64             // hight y  (y0 + height)
+  #define _LCDML_DISP_draw_frame        1              // draw a box around the menu
+   // scrollbar width
+  #define _LCDML_DISP_scrollbar_w       6  // scrollbar width (if this value is < 3, the scrollbar is disabled)    
 
   // nothing change here
-  #define _LCDML_u8g_cols_max    (_LCDML_u8g_lcd_w/_LCDML_u8g_font_w)  
-  #define _LCDML_u8g_rows_max    (_LCDML_u8g_lcd_h/_LCDML_u8g_font_h) 
+  #define _LCDML_DISP_cols_max          ((_LCDML_DISP_box_x1-_LCDML_DISP_box_x0)/_LCDML_DISP_font_w) 
+  #define _LCDML_DISP_rows_max          ((_LCDML_DISP_box_y1-_LCDML_DISP_box_y0-((_LCDML_DISP_box_y1-_LCDML_DISP_box_y0)/_LCDML_DISP_font_h))/_LCDML_DISP_font_h) 
 
   // rows and cols 
   // when you use more rows or cols as allowed change in LCDMenuLib.h the define "_LCDML_DISP_cfg_max_rows" and "_LCDML_DISP_cfg_max_string_length"
   // the program needs more ram with this changes
-  #define _LCDML_u8g_rows        _LCDML_u8g_rows_max  // max rows 
-  #define _LCDML_u8g_cols        20                   // max cols
-
-  // scrollbar width
-  #define _LCDML_u8g_scrollbar_w 6  // scrollbar width  
-
-
-  // old defines with new content
-  #define _LCDML_DISP_cols      _LCDML_u8g_cols
-  #define _LCDML_DISP_rows      _LCDML_u8g_rows  
+  #define _LCDML_DISP_rows              _LCDML_DISP_rows_max  // max rows 
+  #define _LCDML_DISP_cols              20                   // max cols
+ 
+ 
+   
 
 
 // *********************************************************************
@@ -120,13 +131,10 @@
 // LOOP
 // *********************************************************************
   void loop()
-  { 
+  {
     // this function must called here, do not delete it
     LCDML_run(_LCDML_priority); 
   }
-
-
-
 
 // *********************************************************************
 // check some errors - do not change here anything
@@ -134,6 +142,15 @@
 # if(_LCDML_DISP_rows > _LCDML_DISP_cfg_max_rows)
 # error change value of _LCDML_DISP_cfg_max_rows in LCDMenuLib.h
 # endif
+
 # if(_LCDML_DISP_cols > _LCDML_DISP_cfg_max_string_length)
 # error change value of _LCDML_DISP_cfg_max_string_length in LCDMenuLib.h
+# endif
+
+# if(_LCDML_glcd_tft_box_x1 > _LCDML_glcd_tft_w)
+# error _LCDML_glcd_tft_box_x1 is to big
+# endif
+
+# if(_LCDML_glcd_tft_box_y1 > _LCDML_glcd_tft_h)
+# error _LCDML_glcd_tft_box_y1 is to big
 # endif

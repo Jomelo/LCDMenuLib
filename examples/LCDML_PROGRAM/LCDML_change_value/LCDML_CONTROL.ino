@@ -11,14 +11,12 @@
 // (2) Control over 4 - 6 digital input pins (internal pullups enabled)
 // (3) Control over encoder (internal pullups enabled)
 // (4) Control with Keypad
+// (5) Control with an ir remote
+// (6) Control with a youstick
 // *********************************************************************
 
-#define _LCDML_CONTROL_cfg      0  // serial
+#define _LCDML_CONTROL_cfg      0  
 
-//#define _LCDML_CONTROL_cfg    1  // analog
-//#define _LCDML_CONTROL_cfg    2  // digital
-//#define _LCDML_CONTROL_cfg    3  // encoder
-//#define _LCDML_CONTROL_cfg    4  // keypad
 
 // therory:
 // "#if" is a preprocessor directive and no error, look here:
@@ -342,6 +340,108 @@ void LCDML_CONTROL_loop()
 // *********************************************************************
 // ******************************* END *********************************
 // *********************************************************************
+
+
+// *********************************************************************
+// *************** (5) CONTROL WITH IR REMOTE ***************************
+// *********************************************************************
+#elif(_LCDML_CONTROL_cfg == 5)
+	// ir include (this lib have to be installed) 
+	#include <IRremote.h>
+	// ir global vars
+	int RECV_PIN = 11; 
+	// ir objects
+	IRrecv irrecv(RECV_PIN);
+	decode_results results;
+  
+// *********************************************************************
+// setup (nothing change here)
+void LCDML_CONTROL_setup()
+{
+	irrecv.enableIRIn(); // Start the receiver
+}
+// *********************************************************************
+// loop
+// change in this function the ir values to your values
+void LCDML_CONTROL_loop()
+{  
+	if (irrecv.decode(&results))
+	{
+		// comment this line out, to check the correct code 
+		//Serial.println(results.value, HEX);
+    
+		// in this switch case you have to change the value 0x...1 to the correct ir code
+		switch (results.value)
+		{
+			case 0x00000001: LCDML_BUTTON_enter(); break;  
+			case 0x00000002: LCDML_BUTTON_up();    break;
+			case 0x00000003: LCDML_BUTTON_down();  break;
+			case 0x00000004: LCDML_BUTTON_left();  break;
+			case 0x00000005: LCDML_BUTTON_right(); break;
+			case 0x00000006: LCDML_BUTTON_quit();  break;
+			default: break;       
+		}
+	} 
+}
+// *********************************************************************
+// ******************************* END *********************************
+// *********************************************************************
+
+
+
+/ *********************************************************************
+// *************** (6) CONTROL OVER JOYSTICK *********************
+// *********************************************************************
+#elif(_LCDML_CONTROL_cfg == 6)
+	// settings
+	#define _LCDML_CONTROL_analog_pinx A0
+	#define _LCDML_CONTROL_analog_piny A1
+	#define _LCDML_CONTROL_digitalread 33 //don't work with u8glib
+
+	// when you did not use a button set the value to zero
+	#define _LCDML_CONTROL_analog_up_min 612 // Button Up
+	#define _LCDML_CONTROL_analog_up_max 1023
+	#define _LCDML_CONTROL_analog_down_min 0 // Button Down
+	#define _LCDML_CONTROL_analog_down_max 412
+	#define _LCDML_CONTROL_analog_left_min 612 // Button Left
+	#define _LCDML_CONTROL_analog_left_max 1023
+	#define _LCDML_CONTROL_analog_right_min 0 // Button Right
+	#define _LCDML_CONTROL_analog_right_max 412
+// *********************************************************************
+// setup
+void LCDML_CONTROL_setup()
+{	
+	pinMode (_LCDML_CONTROL_digitalread, INPUT);
+}
+// *********************************************************************
+// loop
+void LCDML_CONTROL_loop()
+{
+	// check debounce timer
+	if((millis() - g_LCDML_DISP_press_time) >= _LCDML_DISP_cfg_button_press_time) {
+		g_LCDML_DISP_press_time = millis(); // reset debounce timer
+
+		uint16_t valuex = analogRead(_LCDML_CONTROL_analog_pinx);  // analogpinx
+		uint16_t valuey = analogRead(_LCDML_CONTROL_analog_piny);  // analogpinx
+		uint16_t valuee = digitalRead(_LCDML_CONTROL_digitalread);  //digitalpinenter
+
+		
+		if (valuey >= _LCDML_CONTROL_analog_up_min && valuey <= _LCDML_CONTROL_analog_up_max) { LCDML_BUTTON_up(); }		// up
+		if (valuey >= _LCDML_CONTROL_analog_down_min && valuey <= _LCDML_CONTROL_analog_down_max) { LCDML_BUTTON_down(); }	// down
+		if (valuex >= _LCDML_CONTROL_analog_left_min && valuex <= _LCDML_CONTROL_analog_left_max) { LCDML_BUTTON_left(); } 	// left
+		if (valuex >= _LCDML_CONTROL_analog_right_min && valuex <= _LCDML_CONTROL_analog_right_max) { LCDML_BUTTON_right(); }	// right
+		
+		if(valuee == true) {LCDML_BUTTON_enter();}	// enter
+
+		// back buttons have to be included as menuitem 
+		// lock at the examle LCDML_back_button
+
+	}
+}
+// *********************************************************************
+// ******************************* END *********************************
+// *********************************************************************
+
 
 #else
   #error _LCDML_CONTROL_cfg is not defined or not in range
