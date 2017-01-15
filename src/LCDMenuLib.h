@@ -29,7 +29,7 @@
 /* ******************************************************************** */
 /* Autor:			Nils Feldkämper										*/
 /* Create:			03.02.2008											*/
-/* Edit:			12.01.2016											*/
+/* Edit:			15.01.2017											*/
 /* ******************************************************************** */
 /* error reporting (english / german)									*/
 /*	https://github.com/Jomelo/LCDMenuLib/issues							*/
@@ -40,7 +40,7 @@
 #ifndef LCDMenuLib_h
 #	define LCDMenuLib_h
 
-#	define _LCDML_VERSION							"LCDML v2.2.1"
+#	define _LCDML_VERSION							"LCDML v2.2.2"
 
 /* config */
 #	define _LCDML_DISP_cfg_cursor_deep				6		// save the last position of the cursor until layer xx

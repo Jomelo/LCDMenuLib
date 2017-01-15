@@ -30,7 +30,7 @@
 //
 // Autor:			Nils Feldkaemper				
 // Create:			03.02.2008											
-// Edit:			31.07.2016											
+// Edit:			15.01.2017											
 // License:			MIT License											
 //
 // ********************************************************************
@@ -534,6 +534,8 @@
 
 //help macros
 	// macro: thread timer with return
+	// attention: when the wait_time is bigger then millis on startup the result ist true 
+	// to fix this, the timer_var have to be initialise with the waittime 
 	#define LCDML_BACK_TIMER(timer_var, wait_time)\
 		if(!((millis() - timer_var) >= wait_time)) {  return; }\
 		timer_var = millis();
@@ -554,11 +556,12 @@
 		void LCDML_BACK_function_##name(void)\
 		{\
 			LCDML_BACK_THREAD_isRun(name);\
-			LCDML_BACK_TIMER(g_LCDML_BACK_timer[g_LCDML_BACK_id__##name], time);\
 			if(LCDML_BACK_GET_reset(name) == false) {\
 				LCDML_BACK_UNSET_reset(name);\
 				LCDML_BACK_setup_##name();\
+				g_LCDML_BACK_timer[g_LCDML_BACK_id__##name] = time; \
 			}\
+			LCDML_BACK_TIMER(g_LCDML_BACK_timer[g_LCDML_BACK_id__##name], time);\
 			g_LCDML_BACK_loop_status = (LCDML_BACK_loop_##name()) ? true : false;\
 		}
 
