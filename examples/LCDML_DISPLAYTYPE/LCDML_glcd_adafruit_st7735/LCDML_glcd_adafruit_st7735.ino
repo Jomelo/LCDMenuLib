@@ -133,9 +133,10 @@
       
     // Enable all items with _LCDML_G1
     LCDML_DISP_groupEnable(_LCDML_G1); // enable group 1
-  
+
+    SPI.begin();
     // clear lcd
-    display.fillScreen(_LCDML_ADAFRUIT_BACKGROUND_COLOR);
+    display.initR(INITR_BLACKTAB);
     // set text color / Textfarbe setzen
     display.setTextColor(_LCDML_ADAFRUIT_TEXT_COLOR);  
     // set text size / Textgroesse setzen
