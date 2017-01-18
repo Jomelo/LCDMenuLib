@@ -24,7 +24,6 @@
 // *********************************************************************
 // https://learn.adafruit.com/1-8-tft-display/graphics-library
   
-  #define _ADAFRUIT_I2C_ADR    0x3C
   #define _LCDML_ADAFRUIT_TEXT_COLOR       ST7735_WHITE
   #define _LCDML_ADAFRUIT_BACKGROUND_COLOR ST7735_BLACK 
   
@@ -135,8 +134,25 @@
     LCDML_DISP_groupEnable(_LCDML_G1); // enable group 1
 
     SPI.begin();
+
+    // Our supplier changed the 1.8" display slightly after Jan 10, 2012
+    // so that the alignment of the TFT had to be shifted by a few pixels
+    // this just means the init code is slightly different. Check the
+    // color of the tab to see which init code to try. If the display is
+    // cut off or has extra 'random' pixels on the top & left, try the
+    // other option!
+    // If you are seeing red and green color inversion, use Black Tab
+  
+    // If your TFT's plastic wrap has a Black Tab, use the following:
+    display.initR(INITR_BLACKTAB);   // initialize a ST7735S chip, black tab
+    // If your TFT's plastic wrap has a Red Tab, use the following:
+    //tft.initR(INITR_REDTAB);   // initialize a ST7735R chip, red tab
+    // If your TFT's plastic wrap has a Green Tab, use the following:
+    //tft.initR(INITR_GREENTAB); // initialize a ST7735R chip, green tab
+
     // clear lcd
-    display.initR(INITR_BLACKTAB);
+    display.fillScreen(_LCDML_ADAFRUIT_BACKGROUND_COLOR);
+    
     // set text color / Textfarbe setzen
     display.setTextColor(_LCDML_ADAFRUIT_TEXT_COLOR);  
     // set text size / Textgroesse setzen
