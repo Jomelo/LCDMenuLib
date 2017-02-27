@@ -30,7 +30,7 @@
 //
 // Autor:			Nils Feldkaemper				
 // Create:			03.02.2008											
-// Edit:			31.07.2016											
+// Edit:			27.02.2017											
 // License:			MIT License											
 //
 // ********************************************************************
@@ -402,8 +402,12 @@ void	LCDMenuLib::display()
 			//show menu structure
 			do
 			{				
-				if (bitRead(group_en, tmp->disp)) {					
-					strcpy_P(content[i-scroll], (char*)pgm_read_word(&(flash_table[tmp->name])));
+				if (bitRead(group_en, tmp->disp)) {	
+					#if defined ( ESP8266 )
+						strcpy_P(content[i-scroll], (char*)(flash_table[tmp->name]));
+					#else
+						strcpy_P(content[i-scroll], (char*)pgm_read_word(&(flash_table[tmp->name])));
+					#endif
 					content_id[i-scroll] = tmp->name;
 					i++;					
 				}

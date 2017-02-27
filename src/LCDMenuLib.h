@@ -29,7 +29,7 @@
 /* ******************************************************************** */
 /* Autor:			Nils Feldkämper										*/
 /* Create:			03.02.2008											*/
-/* Edit:			15.01.2017											*/
+/* Edit:			27.02.2017											*/
 /* ******************************************************************** */
 /* error reporting (english / german)									*/
 /*	https://github.com/Jomelo/LCDMenuLib/issues							*/
@@ -40,16 +40,12 @@
 #ifndef LCDMenuLib_h
 #	define LCDMenuLib_h
 
-#	define _LCDML_VERSION							"LCDML v2.2.2"
+#	define _LCDML_VERSION							"LCDML v2.3.0"
 
 /* config */
 #	define _LCDML_DISP_cfg_cursor_deep				6		// save the last position of the cursor until layer xx
 #	define _LCDML_DISP_cfg_max_string_length		20		// max string length witch can be display
 #	define _LCDML_DISP_cfg_max_rows					10
-
-
-	
-
 
 
 /* include arduino ios */
@@ -100,7 +96,11 @@
 #	ifndef __PROG_TYPES_COMPAT__
 #		define __PROG_TYPES_COMPAT__
 #	endif
-#	include <avr/pgmspace.h>
+
+#	if defined ( ESP8266 )
+#	else
+#		include <avr/pgmspace.h>
+#	endif
 
 /* include lcd menu lib, this generates the menu items */
 #	include "LCDMenuLib_menu.h"

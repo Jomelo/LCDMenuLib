@@ -47,7 +47,6 @@
 #	define LCDMenu_h
 
 #	include "Arduino.h"
-#	include <avr/pgmspace.h>
 
 	class LCDMenu
 	{
