@@ -74,9 +74,7 @@
 // SETUP
 // *********************************************************************
   void setup()
-  {  
-    // serial init; only be needed if serial control is used 
-    while(!Serial);                    // wait until serial ready
+  {     
     Serial.begin(9600);                // start serial    
     Serial.println(F(_LCDML_VERSION)); // only for examples
       

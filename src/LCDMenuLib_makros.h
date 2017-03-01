@@ -180,78 +180,108 @@
 			
 #	if defined ( ESP8266 )
 
-#	define LCDML_DISP_add(name, disp, item_parent, item_child, content, function)\
-		const char g_LCDML_DISP_lang_ ## name ##_var[] = {content};\
-		void function ## _loop_setup(); \
-		void function ## _loop(); \
-		void function ## _loop_end(); \
-		LCDMenu item_parent ## _ ## item_child(name, disp); \
-		void LCDML_DISP_##name##_function() { g_LCDML_DISP_functions_loop_setup[name] = function##_loop_setup;  g_LCDML_DISP_functions_loop[name] = function##_loop; g_LCDML_DISP_functions_loop_end[name] = function##_loop_end; item_parent.addChild(item_parent ## _ ## item_child); }
+#		define LCDML_DISP_add(name, disp, item_parent, item_child, content, function)\
+			const char g_LCDML_DISP_lang_ ## name ##_var[] = {content};\
+			void function ## _loop_setup(); \
+			void function ## _loop(); \
+			void function ## _loop_end(); \
+			LCDMenu item_parent ## _ ## item_child(name, disp); \
+			void LCDML_DISP_##name##_function() { g_LCDML_DISP_functions_loop_setup[name] = function##_loop_setup;  g_LCDML_DISP_functions_loop[name] = function##_loop; g_LCDML_DISP_functions_loop_end[name] = function##_loop_end; item_parent.addChild(item_parent ## _ ## item_child); }
 
-#	define LCDML_DISP_addMenu(name, disp, item_parent, item_child, content)\
-		const char g_LCDML_DISP_lang_ ## name ##_var[] = {content};\
-		void function ## _loop_setup(); \
-		void function ## _loop(); \
-		void function ## _loop_end(); \
-		LCDMenu item_parent ## _ ## item_child(name, disp); \
-		void LCDML_DISP_##name##_function() { g_LCDML_DISP_functions_loop_setup[name] = LCDML_FUNC_loop_setup;  g_LCDML_DISP_functions_loop[name] = LCDML_FUNC_loop; g_LCDML_DISP_functions_loop_end[name] = LCDML_FUNC_loop_end; item_parent.addChild(item_parent ## _ ## item_child); }
+#		define LCDML_DISP_addMenu(name, disp, item_parent, item_child, content)\
+			const char g_LCDML_DISP_lang_ ## name ##_var[] = {content};\
+			void function ## _loop_setup(); \
+			void function ## _loop(); \
+			void function ## _loop_end(); \
+			LCDMenu item_parent ## _ ## item_child(name, disp); \
+			void LCDML_DISP_##name##_function() { g_LCDML_DISP_functions_loop_setup[name] = LCDML_FUNC_loop_setup;  g_LCDML_DISP_functions_loop[name] = LCDML_FUNC_loop; g_LCDML_DISP_functions_loop_end[name] = LCDML_FUNC_loop_end; item_parent.addChild(item_parent ## _ ## item_child); }
 
-#	define LCDML_DISP_addFunc(name, disp, item_parent, item_child, content, function)\
-		const char g_LCDML_DISP_lang_ ## name ##_var[] = {content};\
-		void function ## _loop_setup(); \
-		void function ## _loop(); \
-		void function ## _loop_end(); \
-		LCDMenu item_parent ## _ ## item_child(name, disp); \
-		void LCDML_DISP_##name##_function() { g_LCDML_DISP_functions_loop_setup[name] = function##_loop_setup;  g_LCDML_DISP_functions_loop[name] = function##_loop; g_LCDML_DISP_functions_loop_end[name] = function##_loop_end; item_parent.addChild(item_parent ## _ ## item_child); }
+#		define LCDML_DISP_addFunc(name, disp, item_parent, item_child, content, function)\
+			const char g_LCDML_DISP_lang_ ## name ##_var[] = {content};\
+			void function ## _loop_setup(); \
+			void function ## _loop(); \
+			void function ## _loop_end(); \
+			LCDMenu item_parent ## _ ## item_child(name, disp); \
+			void LCDML_DISP_##name##_function() { g_LCDML_DISP_functions_loop_setup[name] = function##_loop_setup;  g_LCDML_DISP_functions_loop[name] = function##_loop; g_LCDML_DISP_functions_loop_end[name] = function##_loop_end; item_parent.addChild(item_parent ## _ ## item_child); }
+			
+
+#		define LCDML_DISP_addParam(name, disp, item_parent, item_child, content, function, para)\
+			const char g_LCDML_DISP_lang_ ## name ##_var[] = { content }; \
+			void function ## _loop_setup(); \
+			void function ## _loop(); \
+			void function ## _loop_end(); \
+			LCDMenu item_parent ## _ ## item_child(name, disp); \
+			void LCDML_DISP_##name##_function() { g_LCDML_DISP_functions_loop_setup[name] = function##_loop_setup;  g_LCDML_DISP_functions_loop[name] = function##_loop; g_LCDML_DISP_functions_loop_end[name] = function##_loop_end; item_parent.addChild(item_parent ## _ ## item_child); g_lcdml_param[name] = para;  }
+
+#		define LCDML_DISP_createMenu(N)\
+			const char * const g_LCDML_DISP_lang_table[] = { LCDML_DISP_lang_repeat(N) }; LCDML_DISP_initObjects()
 		
+#		define LCDML_DISP_getElementName(var, element_id) \
+			if(element_id != _LCDML_NO_FUNC && (sizeof(g_LCDML_DISP_lang_table)-1) >= element_id) {\
+				strcpy_P(var, (char*)(g_LCDML_DISP_lang_table[element_id]));\
+			}\
 
-#	define LCDML_DISP_addParam(name, disp, item_parent, item_child, content, function, para)\
-		const char g_LCDML_DISP_lang_ ## name ##_var[] = { content }; \
-		void function ## _loop_setup(); \
-		void function ## _loop(); \
-		void function ## _loop_end(); \
-		LCDMenu item_parent ## _ ## item_child(name, disp); \
-		void LCDML_DISP_##name##_function() { g_LCDML_DISP_functions_loop_setup[name] = function##_loop_setup;  g_LCDML_DISP_functions_loop[name] = function##_loop; g_LCDML_DISP_functions_loop_end[name] = function##_loop_end; item_parent.addChild(item_parent ## _ ## item_child); g_lcdml_param[name] = para;  }
-
+#		define LCDML_DISP_getElementNameCheck(var, element_id, check) \
+			if(element_id != _LCDML_NO_FUNC && (sizeof(g_LCDML_DISP_lang_table)-1) >= element_id) {\
+				strcpy_P(var, (char*)(g_LCDML_DISP_lang_table[element_id]));\
+				check = true;\
+			} else {\
+				check = false;\
+			}			
+			
 #	else
 
-#	define LCDML_DISP_add(name, disp, item_parent, item_child, content, function)\
-		const char g_LCDML_DISP_lang_ ## name ##_var[] PROGMEM = {content};\
-		void function ## _loop_setup(); \
-		void function ## _loop(); \
-		void function ## _loop_end(); \
-		LCDMenu item_parent ## _ ## item_child(name, disp); \
-		void LCDML_DISP_##name##_function() { g_LCDML_DISP_functions_loop_setup[name] = function##_loop_setup;  g_LCDML_DISP_functions_loop[name] = function##_loop; g_LCDML_DISP_functions_loop_end[name] = function##_loop_end; item_parent.addChild(item_parent ## _ ## item_child); }
+#		define LCDML_DISP_add(name, disp, item_parent, item_child, content, function)\
+			const char g_LCDML_DISP_lang_ ## name ##_var[] PROGMEM = {content};\
+			void function ## _loop_setup(); \
+			void function ## _loop(); \
+			void function ## _loop_end(); \
+			LCDMenu item_parent ## _ ## item_child(name, disp); \
+			void LCDML_DISP_##name##_function() { g_LCDML_DISP_functions_loop_setup[name] = function##_loop_setup;  g_LCDML_DISP_functions_loop[name] = function##_loop; g_LCDML_DISP_functions_loop_end[name] = function##_loop_end; item_parent.addChild(item_parent ## _ ## item_child); }
 
-#	define LCDML_DISP_addMenu(name, disp, item_parent, item_child, content)\
-		const char g_LCDML_DISP_lang_ ## name ##_var[] PROGMEM = {content};\
-		void function ## _loop_setup(); \
-		void function ## _loop(); \
-		void function ## _loop_end(); \
-		LCDMenu item_parent ## _ ## item_child(name, disp); \
-		void LCDML_DISP_##name##_function() { g_LCDML_DISP_functions_loop_setup[name] = LCDML_FUNC_loop_setup;  g_LCDML_DISP_functions_loop[name] = LCDML_FUNC_loop; g_LCDML_DISP_functions_loop_end[name] = LCDML_FUNC_loop_end; item_parent.addChild(item_parent ## _ ## item_child); }
+#		define LCDML_DISP_addMenu(name, disp, item_parent, item_child, content)\
+			const char g_LCDML_DISP_lang_ ## name ##_var[] PROGMEM = {content};\
+			void function ## _loop_setup(); \
+			void function ## _loop(); \
+			void function ## _loop_end(); \
+			LCDMenu item_parent ## _ ## item_child(name, disp); \
+			void LCDML_DISP_##name##_function() { g_LCDML_DISP_functions_loop_setup[name] = LCDML_FUNC_loop_setup;  g_LCDML_DISP_functions_loop[name] = LCDML_FUNC_loop; g_LCDML_DISP_functions_loop_end[name] = LCDML_FUNC_loop_end; item_parent.addChild(item_parent ## _ ## item_child); }
 
-#	define LCDML_DISP_addFunc(name, disp, item_parent, item_child, content, function)\
-		const char g_LCDML_DISP_lang_ ## name ##_var[] PROGMEM = {content};\
-		void function ## _loop_setup(); \
-		void function ## _loop(); \
-		void function ## _loop_end(); \
-		LCDMenu item_parent ## _ ## item_child(name, disp); \
-		void LCDML_DISP_##name##_function() { g_LCDML_DISP_functions_loop_setup[name] = function##_loop_setup;  g_LCDML_DISP_functions_loop[name] = function##_loop; g_LCDML_DISP_functions_loop_end[name] = function##_loop_end; item_parent.addChild(item_parent ## _ ## item_child); }
+#		define LCDML_DISP_addFunc(name, disp, item_parent, item_child, content, function)\
+			const char g_LCDML_DISP_lang_ ## name ##_var[] PROGMEM = {content};\
+			void function ## _loop_setup(); \
+			void function ## _loop(); \
+			void function ## _loop_end(); \
+			LCDMenu item_parent ## _ ## item_child(name, disp); \
+			void LCDML_DISP_##name##_function() { g_LCDML_DISP_functions_loop_setup[name] = function##_loop_setup;  g_LCDML_DISP_functions_loop[name] = function##_loop; g_LCDML_DISP_functions_loop_end[name] = function##_loop_end; item_parent.addChild(item_parent ## _ ## item_child); }
+			
+
+#		define LCDML_DISP_addParam(name, disp, item_parent, item_child, content, function, para)\
+			const char g_LCDML_DISP_lang_ ## name ##_var[] PROGMEM = { content }; \
+			void function ## _loop_setup(); \
+			void function ## _loop(); \
+			void function ## _loop_end(); \
+			LCDMenu item_parent ## _ ## item_child(name, disp); \
+			void LCDML_DISP_##name##_function() { g_LCDML_DISP_functions_loop_setup[name] = function##_loop_setup;  g_LCDML_DISP_functions_loop[name] = function##_loop; g_LCDML_DISP_functions_loop_end[name] = function##_loop_end; item_parent.addChild(item_parent ## _ ## item_child); g_lcdml_param[name] = para;  }
+
+#		define LCDML_DISP_createMenu(N)\
+			const char * const g_LCDML_DISP_lang_table[] PROGMEM = { LCDML_DISP_lang_repeat(N) }; LCDML_DISP_initObjects()
 		
+#		define LCDML_DISP_getElementName(var, element_id) \
+			if(element_id != _LCDML_NO_FUNC && (sizeof(g_LCDML_DISP_lang_table)-1) >= element_id) {\
+				strcpy_P(var, (char*)pgm_read_word(&(g_LCDML_DISP_lang_table[element_id])));\
+			}\
 
-#	define LCDML_DISP_addParam(name, disp, item_parent, item_child, content, function, para)\
-		const char g_LCDML_DISP_lang_ ## name ##_var[] PROGMEM = { content }; \
-		void function ## _loop_setup(); \
-		void function ## _loop(); \
-		void function ## _loop_end(); \
-		LCDMenu item_parent ## _ ## item_child(name, disp); \
-		void LCDML_DISP_##name##_function() { g_LCDML_DISP_functions_loop_setup[name] = function##_loop_setup;  g_LCDML_DISP_functions_loop[name] = function##_loop; g_LCDML_DISP_functions_loop_end[name] = function##_loop_end; item_parent.addChild(item_parent ## _ ## item_child); g_lcdml_param[name] = para;  }
-
+#		define LCDML_DISP_getElementNameCheck(var, element_id, check) \
+			if(element_id != _LCDML_NO_FUNC && (sizeof(g_LCDML_DISP_lang_table)-1) >= element_id) {\
+				strcpy_P(var, (char*)pgm_read_word(&(g_LCDML_DISP_lang_table[element_id])));\
+				check = true;\
+			} else {\
+				check = false;\
+			}	
 
 #	endif
 
-		
 		
 
 #	define	LCDML_DISP_getParameter()\
@@ -283,31 +313,6 @@
 		LCDML_BUTTON_resetAll()
 		
 		
-#	if defined ( ESP8266 )
-		
-#	define LCDML_DISP_createMenu(N)\
-		const char * const g_LCDML_DISP_lang_table[] = { LCDML_DISP_lang_repeat(N) }; LCDML_DISP_initObjects()
-
-#	else
-	
-#	define LCDML_DISP_createMenu(N)\
-		const char * const g_LCDML_DISP_lang_table[] PROGMEM = { LCDML_DISP_lang_repeat(N) }; LCDML_DISP_initObjects()
-
-# 	endif	
-		
-		
-#	define LCDML_DISP_getElementName(var, element_id) \
-		if(element_id != _LCDML_NO_FUNC && (sizeof(g_LCDML_DISP_lang_table)-1) >= element_id) {\
-			strcpy_P(var, (char*)pgm_read_word(&(g_LCDML_DISP_lang_table[element_id])));\
-		}\
-
-#	define LCDML_DISP_getElementNameCheck(var, element_id, check) \
-		if(element_id != _LCDML_NO_FUNC && (sizeof(g_LCDML_DISP_lang_table)-1) >= element_id) {\
-			strcpy_P(var, (char*)pgm_read_word(&(g_LCDML_DISP_lang_table[element_id])));\
-			check = true;\
-		} else {\
-			check = false;\
-		}
 	
 /* ******************************************************************** */
 /* BACKEND																*/
@@ -390,29 +395,29 @@
 	
 #	if defined ( ESP8266 )	
 	
-#	define LCDML_BACK_init(cnt)\
-		LCDML_FuncPtr g_LCDML_BACK_priority[cnt+1];\
-		const uint8_t g_LCDML_BACK_cnt = cnt+1;\
-		uint8_t g_LCDML_BACK_start_stop[((cnt+1)/7)+1];\
-		uint8_t g_LCDML_BACK_reset[((cnt+1)/7)+1];\
-		uint8_t g_LCDML_BACK_loop_status = true;\
-		uint8_t g_LCDML_BACK_lastFunc = _LCDML_NO_FUNC;\
-		unsigned long g_LCDML_BACK_timer[(cnt+1)];\
-		void LCDML_CONTROL_setup();\
-		void LCDML_CONTROL_loop()
+#		define LCDML_BACK_init(cnt)\
+			LCDML_FuncPtr g_LCDML_BACK_priority[cnt+1];\
+			const uint8_t g_LCDML_BACK_cnt = cnt+1;\
+			uint8_t g_LCDML_BACK_start_stop[((cnt+1)/7)+1];\
+			uint8_t g_LCDML_BACK_reset[((cnt+1)/7)+1];\
+			uint8_t g_LCDML_BACK_loop_status = true;\
+			uint8_t g_LCDML_BACK_lastFunc = _LCDML_NO_FUNC;\
+			unsigned long g_LCDML_BACK_timer[(cnt+1)];\
+			void LCDML_CONTROL_setup();\
+			void LCDML_CONTROL_loop()
 		
 #	else
 	
-#	define LCDML_BACK_init(cnt)\
-		LCDML_FuncPtr g_LCDML_BACK_priority[cnt+1];\
-		const PROGMEM uint8_t g_LCDML_BACK_cnt = cnt+1;\
-		uint8_t g_LCDML_BACK_start_stop[((cnt+1)/7)+1];\
-		uint8_t g_LCDML_BACK_reset[((cnt+1)/7)+1];\
-		uint8_t g_LCDML_BACK_loop_status = true;\
-		uint8_t g_LCDML_BACK_lastFunc = _LCDML_NO_FUNC;\
-		unsigned long g_LCDML_BACK_timer[(cnt+1)];\
-		void LCDML_CONTROL_setup();\
-		void LCDML_CONTROL_loop()
+#		define LCDML_BACK_init(cnt)\
+			LCDML_FuncPtr g_LCDML_BACK_priority[cnt+1];\
+			const PROGMEM uint8_t g_LCDML_BACK_cnt = cnt+1;\
+			uint8_t g_LCDML_BACK_start_stop[((cnt+1)/7)+1];\
+			uint8_t g_LCDML_BACK_reset[((cnt+1)/7)+1];\
+			uint8_t g_LCDML_BACK_loop_status = true;\
+			uint8_t g_LCDML_BACK_lastFunc = _LCDML_NO_FUNC;\
+			unsigned long g_LCDML_BACK_timer[(cnt+1)];\
+			void LCDML_CONTROL_setup();\
+			void LCDML_CONTROL_loop()
 	
 #	endif
 		
@@ -437,38 +442,38 @@
 #	if defined ( ESP8266 )
 // thread create
 	// macro: help to create a new thread: generate weak functions
-#	define LCDML_BACK_help_new_thread(id, name, status)\
-		const uint8_t g_LCDML_BACK_id__##name  = id;\
-		void LCDML_BACK_setup_##name(void);\
-		boolean LCDML_BACK_loop_##name(void);\
-		void LCDML_BACK_stable_##name(void);\
-		void LCDML_BACK_function_##name(void);\
-		void LCDML_BACK_setupInit_##id(void){ g_LCDML_BACK_priority[id] = LCDML_BACK_function_##name; if(status == 1) {LCDML_BACK_start(name);} else if(status == 2) { LCDML_BACK_stopStable(name); }}
+#		define LCDML_BACK_help_new_thread(id, name, status)\
+			const uint8_t g_LCDML_BACK_id__##name  = id;\
+			void LCDML_BACK_setup_##name(void);\
+			boolean LCDML_BACK_loop_##name(void);\
+			void LCDML_BACK_stable_##name(void);\
+			void LCDML_BACK_function_##name(void);\
+			void LCDML_BACK_setupInit_##id(void){ g_LCDML_BACK_priority[id] = LCDML_BACK_function_##name; if(status == 1) {LCDML_BACK_start(name);} else if(status == 2) { LCDML_BACK_stopStable(name); }}
 
 	// macro: create a new thread with dynamc times
-#	define LCDML_BACK_new_timebased_dynamic(id, init_time, status, name)\
-		LCDML_BACK_help_new_thread(id, name, status);\
-		const uint32_t   _LCDML_BACK_time_default__##name  = (uint32_t)(init_time);\
-		unsigned long g_LCDML_BACK_dynTime_##name = (uint32_t)(init_time); \
-		LCDML_BACK_THREAD_FUNCTION_TIME_BASED(name, g_LCDML_BACK_dynTime_##name); 
+#		define LCDML_BACK_new_timebased_dynamic(id, init_time, status, name)\
+			LCDML_BACK_help_new_thread(id, name, status);\
+			const uint32_t   _LCDML_BACK_time_default__##name  = (uint32_t)(init_time);\
+			unsigned long g_LCDML_BACK_dynTime_##name = (uint32_t)(init_time); \
+			LCDML_BACK_THREAD_FUNCTION_TIME_BASED(name, g_LCDML_BACK_dynTime_##name); 
 
 #	else
 	// thread create
 	// macro: help to create a new thread: generate weak functions
-#	define LCDML_BACK_help_new_thread(id, name, status)\
-		const PROGMEM uint8_t g_LCDML_BACK_id__##name  = id;\
-		void LCDML_BACK_setup_##name(void);\
-		boolean LCDML_BACK_loop_##name(void);\
-		void LCDML_BACK_stable_##name(void);\
-		void LCDML_BACK_function_##name(void);\
-		void LCDML_BACK_setupInit_##id(void){ g_LCDML_BACK_priority[id] = LCDML_BACK_function_##name; if(status == 1) {LCDML_BACK_start(name);} else if(status == 2) { LCDML_BACK_stopStable(name); }}
+#		define LCDML_BACK_help_new_thread(id, name, status)\
+			const PROGMEM uint8_t g_LCDML_BACK_id__##name  = id;\
+			void LCDML_BACK_setup_##name(void);\
+			boolean LCDML_BACK_loop_##name(void);\
+			void LCDML_BACK_stable_##name(void);\
+			void LCDML_BACK_function_##name(void);\
+			void LCDML_BACK_setupInit_##id(void){ g_LCDML_BACK_priority[id] = LCDML_BACK_function_##name; if(status == 1) {LCDML_BACK_start(name);} else if(status == 2) { LCDML_BACK_stopStable(name); }}
 
 	// macro: create a new thread with dynamc times
-#	define LCDML_BACK_new_timebased_dynamic(id, init_time, status, name)\
-		LCDML_BACK_help_new_thread(id, name, status);\
-		const PROGMEM uint32_t   _LCDML_BACK_time_default__##name  = (uint32_t)(init_time);\
-		unsigned long g_LCDML_BACK_dynTime_##name = (uint32_t)(init_time); \
-		LCDML_BACK_THREAD_FUNCTION_TIME_BASED(name, g_LCDML_BACK_dynTime_##name); 	
+#		define LCDML_BACK_new_timebased_dynamic(id, init_time, status, name)\
+			LCDML_BACK_help_new_thread(id, name, status);\
+			const PROGMEM uint32_t   _LCDML_BACK_time_default__##name  = (uint32_t)(init_time);\
+			unsigned long g_LCDML_BACK_dynTime_##name = (uint32_t)(init_time); \
+			LCDML_BACK_THREAD_FUNCTION_TIME_BASED(name, g_LCDML_BACK_dynTime_##name); 	
 #	endif
 		
 		
