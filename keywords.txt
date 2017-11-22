@@ -1,4 +1,4 @@
-/* ******************************************************************** */
+﻿/* ******************************************************************** */
 /*																		*/
 /*						LCDMenuLib (LCDML)								*/
 /*																		*/
@@ -172,6 +172,9 @@ getLayer	KEYWORD2
 getCursorPos	KEYWORD2
 getChilds	KEYWORD2
 getCursorPosAbs	KEYWORD2
+getParent	KEYWORD2
+enRollover	KEYWORD2
+disRollover	KEYWORD2
 
 # LCD class Methods
 setCursor	KEYWORD2

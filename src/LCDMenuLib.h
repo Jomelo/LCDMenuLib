@@ -40,7 +40,7 @@
 #ifndef LCDMenuLib_h
 #	define LCDMenuLib_h
 
-#	define _LCDML_VERSION							"LCDML v2.3.2"
+#	define _LCDML_VERSION							"LCDML v2.3.3"
 
 /* config */
 #	define _LCDML_DISP_cfg_cursor_deep				6		// save the last position of the cursor until layer xx
@@ -82,6 +82,17 @@
 #	define _LCDML_control_funcend				1
 #	define _LCDML_control_disable_hidden		0
 
+//control 2
+#	define _LCDML_control2_free7                7
+#	define _LCDML_control2_free6                6
+#	define _LCDML_control2_free5                5
+#	define _LCDML_control2_free4                4
+#	define _LCDML_control2_free3                3
+#	define _LCDML_control2_free2                2
+#	define _LCDML_control2_free1                1
+#	define _LCDML_control2_rollover  		    0
+
+
 // groups
 #	define _LCDML_G8							7
 #	define _LCDML_G7							6
@@ -97,7 +108,7 @@
 #		define __PROG_TYPES_COMPAT__
 #	endif
 
-#	if defined ( ESP8266 )
+#	if defined ( ESP8266 ) || defined ( ESP32 )
 #	else
 #		include <avr/pgmspace.h>
 #	endif
@@ -154,6 +165,8 @@
 		uint8_t		button;
 		/* control bits */
 		uint8_t		control;
+        /* control2 bits */
+        uint8_t     control2;
 		/* save group_hidden_status */
 		uint8_t		group_en;
 		/* save the last id from a menu element, when a menu elmend is called */
@@ -192,7 +205,13 @@
 		/* get the corrent cursor position */
 		uint8_t		getCursorPosAbs();	
 		/* get childs of an element */
-		uint8_t 	getChilds();		
+		uint8_t 	getChilds();
+        /* get parent */
+        uint8_t     getParent();
+        /* enable rollover */
+        void        enRollover();
+        /* disable rollover */
+        void        disRollover();
 	};
 #endif
 

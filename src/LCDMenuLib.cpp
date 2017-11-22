@@ -64,6 +64,7 @@ LCDMenuLib::LCDMenuLib(LCDMenu &p_r, const char * const *p_flash_table, const ui
     curMenu         = rootMenu;
 	flash_table     = p_flash_table;
 	control			= 0; 
+    control2        = 0;
     cursor_pos      = 0;
     layer           = 0;
     layer_save[0]   = 0;
@@ -403,7 +404,7 @@ void	LCDMenuLib::display()
 			do
 			{				
 				if (bitRead(group_en, tmp->disp)) {	
-					#if defined ( ESP8266 )
+					#if defined ( ESP8266 ) || defined ( ESP32 )
 						strcpy_P(content[i-scroll], (char*)(flash_table[tmp->name]));
 					#else
 						strcpy_P(content[i-scroll], (char*)pgm_read_word(&(flash_table[tmp->name])));
@@ -530,8 +531,44 @@ void	LCDMenuLib::Button_udlr(uint8_t but)
 		//enable up and down button for menu mode and scroll		
 		switch(but)
 		{
-			case _LCDML_button_up:   if (curloc > 0) 		 { curloc--; doScroll();} break;
-			case _LCDML_button_down: if (curloc < child_cnt) { curloc++; doScroll();} break;
+			case _LCDML_button_up:   
+                if (curloc > 0) 		 
+                { 
+                    curloc--; 
+                    doScroll();
+                } 
+                else 
+                {
+                    if(bitRead(control2, _LCDML_control2_rollover))
+                    {
+                        // jump to the end of the menu
+                        curloc = child_cnt;
+                        if(child_cnt-rows < 0) {
+                            scroll = 0;
+                        } else {
+                            scroll = child_cnt-rows;
+                        }                    
+                        doScroll();
+                        display();
+                    }
+                }
+                break;
+			case _LCDML_button_down: 
+                if (curloc < child_cnt) 
+                { 
+                    curloc++; 
+                    doScroll();
+                } else {
+                    if(bitRead(control2, _LCDML_control2_rollover))
+                    {
+                        // jump to the first line
+                        curloc = 0;
+                        scroll = 0;                
+                        doScroll();
+                        display();                
+                    }
+                }
+                break;
 		}		
 	}
 	else {
@@ -592,10 +629,40 @@ uint8_t	LCDMenuLib::getCursorPosAbs()
 	return (curloc + curloc_correction()); //return the current cursor position
 }
 
+/* ******************************************************************** */
 uint8_t LCDMenuLib::getChilds()
+/* ******************************************************************** */
 {
 	return child_cnt+1;
 }
+
+/* ******************************************************************** */
+uint8_t LCDMenuLib::getParent()
+/* ******************************************************************** */
+{ 
+    //if(curMenu->getParent() != NULL)
+    //{
+        return curMenu->name;
+    //}   
+   
+    //return 0;
+}
+
+/* ******************************************************************** */
+void    LCDMenuLib::enRollover()
+/* ******************************************************************** */
+{
+    bitSet(control2, _LCDML_control2_rollover);
+}
+
+/* ******************************************************************** */
+void    LCDMenuLib::disRollover()
+/* ******************************************************************** */
+{
+    bitClear(control2, _LCDML_control2_rollover);
+}
+
+
 
 
 

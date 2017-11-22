@@ -178,7 +178,7 @@
 		
 
 			
-#	if defined ( ESP8266 )
+#	if defined ( ESP8266 ) || defined ( ESP32 )
 
 #		define LCDML_DISP_add(name, disp, item_parent, item_child, content, function)\
 			const char g_LCDML_DISP_lang_ ## name ##_var[] = {content};\
