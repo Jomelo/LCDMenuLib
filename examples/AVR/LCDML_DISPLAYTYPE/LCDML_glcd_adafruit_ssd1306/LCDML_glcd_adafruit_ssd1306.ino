@@ -117,16 +117,18 @@
 // *********************************************************************
   void setup()
   {  
-    // serial init; only be needed if serial control is used 
-    while(!Serial);                    // wait until serial ready
+    // serial init; only be needed if serial control is used    
     Serial.begin(9600);                // start serial    
     Serial.println(F(_LCDML_VERSION)); // only for examples
       
     // Enable all items with _LCDML_G1
     LCDML_DISP_groupEnable(_LCDML_G1); // enable group 1
+    
+    // Enable menu rollover if needed
+    //LCDML.enRollover();
   
-	  // initialize with the I2C addr / mit I2C-Adresse initialisieren
-	  display.begin(SSD1306_SWITCHCAPVCC, _ADAFRUITE_I2C_ADR);
+	// initialize with the I2C addr / mit I2C-Adresse initialisieren
+	display.begin(SSD1306_SWITCHCAPVCC, _ADAFRUITE_I2C_ADR);
     
     // clear lcd
     display.clearDisplay();
