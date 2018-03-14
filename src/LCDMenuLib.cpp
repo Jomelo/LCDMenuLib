@@ -662,6 +662,12 @@ void    LCDMenuLib::disRollover()
     bitClear(control2, _LCDML_control2_rollover);
 }
 
+/* ******************************************************************** */
+LCDMenu *   LCDMenuLib::getMenuObject()
+/* ******************************************************************** */
+{
+    return curMenu;
+}
 
 
 

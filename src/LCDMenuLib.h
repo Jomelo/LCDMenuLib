@@ -40,7 +40,7 @@
 #ifndef LCDMenuLib_h
 #	define LCDMenuLib_h
 
-#	define _LCDML_VERSION							"LCDML v2.3.4"
+#	define _LCDML_VERSION							"LCDML v2.3.5"
 
 /* config */
 #	define _LCDML_DISP_cfg_cursor_deep				6		// save the last position of the cursor until layer xx
@@ -212,6 +212,8 @@
         void        enRollover();
         /* disable rollover */
         void        disRollover();
+        /* return the object of the current menu position */
+        LCDMenu *   getMenuObject();
 	};
 #endif
 

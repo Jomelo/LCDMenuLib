@@ -153,7 +153,7 @@
 		void LCDML_FUNC_loop_end(){}\
 		unsigned long g_LCDML_DISP_press_time = 0;\
 		unsigned long g_lcdml_initscreen = millis();\
-		LCDMenu LCDML_Item (0, true);\
+		LCDMenu LCDML_Item (255, true);\
 		void LCDML_lcd_menu_display(); \
 		void LCDML_lcd_menu_clear();\
 		uint8_t g_lcdml_jump_func = _LCDML_NO_FUNC
