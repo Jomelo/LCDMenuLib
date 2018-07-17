@@ -178,7 +178,7 @@ disRollover	KEYWORD2
 
 # LCD class Methods
 setCursor	KEYWORD2
-clear   KEYWORD2
+clear	KEYWORD2
 
 LCDML_root	KEYWORD2
 
