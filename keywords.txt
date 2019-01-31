@@ -1,17 +1,17 @@
-﻿/* ******************************************************************** */
-/*																		*/
-/*						LCDMenuLib (LCDML)								*/
-/*																		*/
-/* ******************************************************************** */
-/* Autor:			Nils Feldkämper										*/
-/* Create:			03.02.2008											*/
-/* Edit:			12.01.2016											*/
-/* ******************************************************************** */
-/* error reporting (english / german)									*/
-/*	https://github.com/Jomelo/LCDMenuLib/issues							*/
-/* support (german):													*/
-/* 	http://forum.arduino.cc/index.php?topic=73816.0						*/
-/* ******************************************************************** */ 
+# ********************************************************************
+#																		
+#						LCDMenuLib (LCDML)								
+#																		
+# ********************************************************************
+# Autor:			Nils Feldkämper										
+# Create:			03.02.2008											
+# Edit:			12.01.2016											
+# ********************************************************************
+# error reporting (english / german)									
+#	https://github.com/Jomelo/LCDMenuLib/issues							
+# support (german):													
+# 	http://forum.arduino.cc/index.php?topic=73816.0						
+# ********************************************************************
 #
 # ******************************************************************** 
 # ============															
@@ -178,7 +178,7 @@ disRollover	KEYWORD2
 
 # LCD class Methods
 setCursor	KEYWORD2
-clear   KEYWORD2
+clear	KEYWORD2
 
 LCDML_root	KEYWORD2
 
