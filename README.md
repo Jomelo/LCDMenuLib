@@ -15,13 +15,28 @@ Display System:
 *  different triggers for display function
 *  many small function for other things								
 
-Backend System
+Backend System 
 * max 255 backend function 
 * backend function work with different ms times, not with interrupts
 * backend function can be stopped and started
 * backend function use three functions setup,loop,stable
 * backend function can be grouped, groups can start / stop together
 * backend signals use one bit to transfer a status bit between backend functions
+
+LCDMenuLib vs LCDMenuLib2
+* LCDMenuLib2 is a new version and not backward compatible to this version
+* The following things have been changed
+** complete rewritten version of LCDMenuLib, because the scope of the makros was too complex to add new functionality.
+** remove the backend system (you can use every other task system)
+** remove the hidden groups (limited to 8) and add a new system to handle hidden elements without a limitation
+** add: a screensaver functionality
+** add: esp32 and esp8266 support without using special makros
+** add: a method to change parameters directly in the menu (without calling a menu function) or add a time
+** add: multi language support (not all special characters [based on the hd44780]) 
+** add: parameters can used on jumpToFunc or jumpToID functions
+** add: a function to set the cursor direct to an element of the menu
+
+The LCDMenuLib2 is complexer for beginners. All normal menus with no special things can be released with LCDMenuLib. 
 
 Description (german):
 http://forum.arduino.cc/index.php?topic=73816.0
